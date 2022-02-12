@@ -1,10 +1,76 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
-<h1 style="text-align: center">Главная страница</h1>
+<div class="container">
+    <div class="header__container">
+        <div class="header">
+            <nav class="header__wrapper">
+                <div class="header__ribbon">
+                    <div class="header__items">
+                        <div class="item">
+                            <div class="menu">
+                                <div class="ds">Пациент</div>
+                                <div class="ds">Расписание</div>
+
+                                {#                            <div class="menu__left__container">#}
+                                {##}
+                                {#                            </div>#}
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div id="logo">
+                                <a href="#" class="logo__brand">
+                                    <h3>Salutem</h3>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="menu">
+                                <div class="ds">Профиль</div>
+                                <div class="ds">Выход</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="content__container">
+        <h1 class="search__patient">Выберите пациента</h1>
+        <div class="content__main">
+            <ul class="object__tools">
+                <li>
+                    <a href="" class="AddLink">
+                        <span class="Add">Добавить пользователя</span>
+                        <span class="Plus"></span>
+                    </a>
+                </li>
+            </ul>
+            <div class="module" id="changelist">
+                <div class="changelist__form">
+                <div class="toolbar">
+                    <form method="get" id="changelist__search">
+                        <div class="search__item">
+                            <label for="searchbar">
+                                <img src="{% static 'img/search.svg' %}" alt="Search">
+                            </label>
+                            <input type="text" size="40" name="q" value id="searchbar" autofocus>
+                            <input type="submit" value="Найти">
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>

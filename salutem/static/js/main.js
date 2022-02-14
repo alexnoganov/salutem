@@ -19,9 +19,9 @@ function TableSort() {
     })
 
     function columnSort(itemEvent, colName) {
-        document.querySelectorAll('.table__header .cell').forEach(item => {
-            item.classList.remove("active");
-        });
+        // document.querySelectorAll('.table__header .cell').forEach(item => {
+        //     item.classList.remove("active");
+        // });
         row = Array.from(document.querySelectorAll('.table .row:not(.table__header)'));
         let type = isNaN(row[0].querySelector('.cell[data-title="' + colName + '"]').textContent - row[1].querySelector('.cell[data-title="' + colName + '"]').textContent);
         /*if (colName === "Date of Birth") {
@@ -38,11 +38,11 @@ function TableSort() {
                 return x.querySelector('.cell[data-title="' + colName + '"]').textContent - y.querySelector('.cell[data-title="' + colName + '"]').textContent;
             };
         }
-        if (sortDirection) {
+        if (!itemEvent.classList.contains("active")) {
             row.sort(sortArrayFunc);
             itemEvent.classList.add("active");
             sortDirection = false;
-        } else {
+        } else if(itemEvent.classList.contains("active")) {
             row.reverse()
             itemEvent.classList.remove("active");
             sortDirection = true;

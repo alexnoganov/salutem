@@ -35,7 +35,7 @@
                                     <label for="searchbar">
                                         <img src="{% static 'img/search.svg' %}" alt="Search">
                                     </label>
-                                    <input type="text" size="40" name="q" value id="searchbar" autofocus>
+                                    <input type="text" size="40" name="q" value="{{ request.GET.q }}" id="searchbar" autofocus>
                                     <input type="submit" value="Найти">
                                 </div>
                             </form>

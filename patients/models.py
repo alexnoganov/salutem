@@ -9,13 +9,13 @@ class Patients(models.Model):
     Date_of_birth = models.DateField(blank=True)
     Place_of_residence = models.CharField(max_length=100)
     Blood_type = models.CharField(max_length=10, choices=(('I+', 'I+'), ('II+', 'II+'), ('III+', 'III+'),
-                                                         ('IV+', 'IV+'), ('I-', 'I-'), ('II-', 'II-'), ('III-',
-                                                                                                        'III-'),
-                                                         ('IV-', 'IV-')))
+                                                          ('IV+', 'IV+'), ('I-', 'I-'), ('II-', 'II-'), ('III-',
+                                                                                                         'III-'),
+                                                          ('IV-', 'IV-')))
     Telephone = models.CharField(max_length=100)
     Email = models.CharField(max_length=30)
+
     # Medical_card = models.OneToOneField(on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Name + self.Surname
-

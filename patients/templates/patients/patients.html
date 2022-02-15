@@ -44,32 +44,44 @@
                             <div class="cell" id="header2">Номер телефона</div>
                             <div class="cell" id="header3">Дата рождения</div>
                             <div class="cell" id="header4">Адрес проживания</div>
+                            <div class="cell" id="header5">Дата Регистрации</div>
                         </div>
-                        <div class="row">
-                            <div class="cell" data-title="FIO">bSolid oak work table</div>
-                            <div class="cell" data-title="Phone">800</div>
-                            <div class="cell" data-title="Date of Birth">10</div>
-                            <div class="cell" data-title="Address">02-15-2014</div>
-                        </div>
-                        <div class="row">
-                            <div class="cell" data-title="FIO">aLeather iPhone wallet</div>
-                            <div class="cell" data-title="Phone">45</div>
-                            <div class="cell" data-title="Date of Birth">120</div>
-                            <div class="cell" data-title="Address">02-28-2014</div>
-                        </div>
-                        <div class="row">
-                            <div class="cell" data-title="FIO">d27" Apple Thunderbolt displays</div>
-                            <div class="cell" data-title="Phone">1000</div>
-                            <div class="cell" data-title="Date of Birth">25</div>
-                            <div class="cell" data-title="Address">02-10-2014</div>
-                        </div>
-                        <div class="row">
-                            <div class="cell" data-title="FIO">cBose studio headphones</div>
-                            <div class="cell" data-title="Phone">60</div>
-                            <div class="cell" data-title="Date of Birth">90</div>
-                            <div class="cell" data-title="Address">01-14-2014</div>
-                        </div>
+                        {% for patient in patients %}
+                            <div class="row">
+                                <div class="cell"
+                                     data-title="FIO">{{ patient.Name }} {{ patient.Patronymic }} {{ patient.Surname }}</div>
+                                <div class="cell" data-title="Phone">{{ patient.Telephone }}</div>
+                                <div class="cell" data-title="Date of Birth">{{ patient.Date_of_birth }}</div>
+                                <div class="cell" data-title="Address">{{ patient.Place_of_residence }}</div>
+                                <div class="cell"
+                                     data-title="Date of Registration">{{ patient.Date_of_Registration }}</div>
+                            </div>
+                        {% endfor %}
                     </div>
+                    {% if is_paginated %}
+                        <div class="pagination">
+                            <ul>
+                                {% if page_obj.has_previous %}
+                                    <li>
+                                        <a href="{% url 'patients' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                {% for f in page_obj.paginator.page_range %}
+                                    {% if f == page_obj.number %}
+                                        <li><a class="is-active" href="{% url 'patients' %}?page={{ f }}">{{ f }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li><a href="{% url 'patients' %}?page={{ f }}">{{ f }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li><a href="{% url 'patients' %}?page={{ page_obj.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

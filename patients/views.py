@@ -5,6 +5,11 @@ from django.views.generic import TemplateView, ListView
 from patients.models import Patients
 
 
+class EditingPatient(ListView):
+    template_name = 'patients/ActPatient.html'
+    model = Patients
+
+
 class PatientsView(ListView):
     template_name = 'patients/patients.html'
     model = Patients

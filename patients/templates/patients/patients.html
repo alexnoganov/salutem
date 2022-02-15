@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
+{% endblock %}
+{% block title %}
+    <title>Пациенты</title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="content__container">
+            <h1 class="search__patient">Выберите пациента</h1>
+            <div class="content__main">
+                <ul class="object__tools">
+                    <li>
+                        <a href="" class="AddLink">
+                            <span class="Add">Добавить пользователя</span>
+                            <span class="Plus">
+                            <svg width="13" height="13" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ffffff"
+                                  d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
+                            </svg>
+                        </span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="module" id="changelist">
+                    <div class="changelist__form">
+                        <div class="toolbar">
+                            <form method="get" id="changelist__search">
+                                <div class="search__item">
+                                    <label for="searchbar">
+                                        <img src="{% static 'img/search.svg' %}" alt="Search">
+                                    </label>
+                                    <input type="text" size="40" name="q" value id="searchbar" autofocus>
+                                    <input type="submit" value="Найти">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table">
+                        <div class="row table__header">
+                            <div class="cell" id="header1">ФИО</div>
+                            <div class="cell" id="header2">Номер телефона</div>
+                            <div class="cell" id="header3">Дата рождения</div>
+                            <div class="cell" id="header4">Адрес проживания</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell" data-title="FIO">bSolid oak work table</div>
+                            <div class="cell" data-title="Phone">800</div>
+                            <div class="cell" data-title="Date of Birth">10</div>
+                            <div class="cell" data-title="Address">02-15-2014</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell" data-title="FIO">aLeather iPhone wallet</div>
+                            <div class="cell" data-title="Phone">45</div>
+                            <div class="cell" data-title="Date of Birth">120</div>
+                            <div class="cell" data-title="Address">02-28-2014</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell" data-title="FIO">d27" Apple Thunderbolt displays</div>
+                            <div class="cell" data-title="Phone">1000</div>
+                            <div class="cell" data-title="Date of Birth">25</div>
+                            <div class="cell" data-title="Address">02-10-2014</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell" data-title="FIO">cBose studio headphones</div>
+                            <div class="cell" data-title="Phone">60</div>
+                            <div class="cell" data-title="Date of Birth">90</div>
+                            <div class="cell" data-title="Address">01-14-2014</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/patients.js' %}"></script>
+{% endblock %}

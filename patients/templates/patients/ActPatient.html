@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
+    <link rel="stylesheet" href="{% static 'css/EditingPatient.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>Пациенты</title>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="content__container">
+            <h1 class="search__patient">Профиль пациента</h1>
+            <div class="page_patient">
+                <div class="page_slice">
+                    <div class="page_patient_left page_throw">
+                        <div class="image_patient">
+                            <div class="image">
+                                <img src="{% static 'img/unnamed.jpg' %}" alt="аватар" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page_patient_right page_throw">
+                        <div class="page_patient_button">
+                            <div class="page_button">
+                                <button class="bot8" >Запись на анализы</button>
+                                <button class="bot8">Медицинская книжка</button>
+                                <button class="bot8">История посещений</button>
+                            </div>
+                        </div>
+
+                        <div class="page_form">
+                            <section class="content-block-list">
+                                <div class="content-block-list__container">
+                                    <div class="hpc-order-form-template__form">
+                                        <form  name="field" class=" " action="/" method="post" novalidate="">
+                                            <div class="form__section">
+                                                <fieldset class="fieldset">
+                                                    <legend class="fieldset__legend">Данные: </legend>
+                                                    <div class="fieldset__row">
+                                                        <div class="form-block">
+                                                            <div>
+                                                                <label for="powermail_field_anrede" title="">
+                                                                 <span class="input-field-wrapper__label">
+                                                                     Обращение
+                                                                 </span>
+                                                                    <div class="select">
+                                                                        <select class="select__control" id="powermail_field_anrede">
+                                                                            <option value="Frau">Женщина</option>
+                                                                            <option value="Herr">Мужчина</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                                        <div class="form-block">
+                                                            <div>
+                                                                <label for="powermail_field_vorname" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Имя
+                                                                    </span>
+                                                                    <input placeholder="Александр" class="text-input
+                                                                    powermail_input" id="powermail_field_vorname" type="text" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-block">
+                                                            <div class="input-field-wrapper">
+                                                                <label for="powermail_field_nachname" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Фамилия
+                                                                    </span>
+                                                                    <input placeholder="Белоусов" class="text-input powermail_input" id="powermail_field_nachname" type="text" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="form__section">
+                                                <fieldset class="fieldset">
+                                                    <div class="fieldset__row">
+                                                        <div class="form-block">
+                                                            <div class="input-field-wrapper">
+                                                                <label for="powermail_field_geburtsdatum" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Дата рождения
+                                                                    </span>
+                                                                    <input placeholder="dd.mm.yyyy" class="text-input
+                                                                    powermail_input" id="powermail_field_geburtsdatum" type="text" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="form__section">
+                                                <fieldset class="fieldset">
+                                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                                        <div class="form-block">
+                                                            <div class="input-field-wrapper">
+                                                                <label for="powermail_field_telefonnummer" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Номер телефона
+                                                                    </span>
+                                                                    <input placeholder="012345678910" class="text-input powermail_input" id="powermail_field_telefonnummer" type="text" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-block">
+                                                            <div class="input-field-wrapper">
+                                                                <label for="powermail_field_e_mail" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        E-Mail
+                                                                    </span>
+                                                                    <input placeholder="mustermann@gmail.com"
+                                                                           class="text-input powermail_input" id="powermail_field_e_mail" type="text" value="">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    {#    <script src="{% static 'js/patients.js' %}"></script>#}
+{% endblock %}

@@ -14,3 +14,10 @@ class PatientsView(ListView):
         context = super().get_context_data(**kwargs)
         print()
         return context
+
+
+class EditingPatient(ListView):
+    template_name = 'patients/ActPatient.html'
+    model = Patients
+
+

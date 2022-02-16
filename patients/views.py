@@ -1,13 +1,14 @@
 from django.db.models import Q
-from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView, ListView, DetailView
 
 from patients.models import Patients
 
 
-class EditingPatient(ListView):
+class EditingPatient(DetailView):
     template_name = 'patients/ActPatient.html'
     model = Patients
+    context_object_name = 'profile'
 
 
 class PatientsView(ListView):

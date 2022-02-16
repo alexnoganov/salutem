@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.PatientsView.as_view(), name='patients'),
-    path('gl/', views.EditingPatient.as_view(),),
+    path('profile/<int:pk>/', views.EditingPatient.as_view(), name='profile'),
 ]

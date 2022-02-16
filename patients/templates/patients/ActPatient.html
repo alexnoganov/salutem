@@ -12,6 +12,9 @@
 
 {% block content %}
 
+
+
+
     <div class="container">
         <div class="content__container">
             <h1 class="search__patient">Профиль пациента</h1>
@@ -67,7 +70,8 @@
                                                                         Имя
                                                                     </span>
                                                                     <input placeholder="Александр" class="text-input
-                                                                    powermail_input" id="powermail_field_vorname" type="text" value="">
+                                                                    powermail_input" id="powermail_field_vorname"
+                                                                           type="text" value="{{ profile.Name }}">
                                                                 </label>
                                                             </div>
                                                         </div>

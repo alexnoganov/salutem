@@ -52,7 +52,12 @@
                         {% for patient in patients %}
                             <div class="row">
                                 <div class="cell"
-                                     data-title="FIO">{{ patient.Name }} {{ patient.Patronymic }} {{ patient.Surname }}</div>
+                                     data-title="FIO">
+                                    <a href="{% url 'profile' patient.pk %}">
+                                    {{ patient.Name }} {{ patient.Patronymic }}
+                                    {{ patient.Surname }}
+                                    </a>
+                                </div>
                                 <div class="cell" data-title="Phone">{{ patient.Telephone }}</div>
                                 <div class="cell" data-title="Date of Birth">{{ patient.Date_of_birth }}</div>
                                 <div class="cell" data-title="Address">{{ patient.Place_of_residence }}</div>

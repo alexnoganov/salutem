@@ -1,226 +1,3 @@
-* {
-    padding: 0;
-    margin: 0;
-    border: 0
-}
-
-*,
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-:active,
-:focus {
-    outline: 0
-}
-
-a:active,
-a:focus {
-    outline: 0
-}
-
-aside,
-footer,
-header,
-nav {
-    display: block
-}
-
-body,
-html {
-    height: 100%;
-    width: 100%;
-    line-height: 1;
-    font-size: 14px;
-    -ms-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%
-}
-
-button,
-input,
-textarea {
-    font-family: inherit
-}
-
-input::-ms-clear {
-    display: none
-}
-
-button {
-    cursor: pointer
-}
-
-button::-moz-focus-inner {
-    padding: 0;
-    border: 0
-}
-
-a,
-a:visited {
-    text-decoration: none
-}
-
-a:hover {
-    text-decoration: none
-}
-
-ul li {
-    list-style: none
-}
-
-img {
-    vertical-align: top
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-size: inherit;
-    font-weight: inherit
-}
-
-body {
-    font-family: "Montserrat", serif;
-}
-
-@font-face {
-    font-family: "Montserrat";
-    src: url("../fonts/Montserrat/Montserrat-Regular.ttf") format("truetype");
-    font-style: normal;
-    font-weight: auto;
-}
-
-@font-face {
-    font-family: "GilroyExtraBold";
-    src: url("../fonts/Gilroy/Gilroy-ExtraBold.otf") format("opentype");
-    font-style: normal;
-    font-weight: auto;
-}
-
-.container {
-    margin: 0 auto;
-    max-width: 1400px;
-}
-
-.header__container {
-    background: #fff;
-    font-family: minionpro, Baskerville, Georgia, Palatino, "Times New Roman", serif;
-    font-weight: lighter;
-    color: #000;
-    font-size: 16px;
-    line-height: 1.3;
-    -webkit-box-shadow: 0 1px 5px grey;
-    box-shadow: 0 1px 5px grey;
-}
-
-.header {
-    display: block !important;
-}
-
-.header__wrapper {
-    position: relative;
-    box-sizing: border-box;
-    text-align: center;
-    display: block;
-    margin: 0 auto 60px;
-}
-
-.header__ribbon {
-    max-width: 1140px;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    display: flex;
-    justify-content: center;
-}
-
-.header__items {
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-    display: flex;
-    align-items: center;
-}
-
-.menu {
-    width: 100%;
-    font-size: 14px;
-    text-align: center;
-    float: none;
-}
-
-.ds {
-    margin: 0 30px;
-    padding: 0;
-    display: inline-block;
-    font-weight: 600;
-    color: #000;
-    font-size: 17px;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    font-family: "Century Gothic", serif;
-    cursor: pointer;
-}
-
-.ds:hover {
-    color: #27ae60;
-}
-
-.ds.active {
-    color: #27ae60;
-}
-
-.ds.active:after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 2px;
-    margin: 2px 0 0 0;
-    background-color: #27ae60;
-    z-index: 1;
-    opacity: 1;
-}
-
-.ds:hover:after {
-    opacity: 1;
-}
-
-.ds:after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 2px;
-    margin: 2px 0 0 0;
-    background-color: #27ae60;
-    opacity: 0;
-    z-index: 1;
-    transition: opacity .15s linear;
-}
-
-a {
-    color: #000;
-    text-decoration: none;
-}
-
-.logo__brand {
-    width: 100%;
-    display: inline-block;
-    font-size: 40px;
-    line-height: inherit;
-    white-space: nowrap;
-    font-family: "GilroyExtraBold", serif;
-    cursor: default;
-}
-
-
 /*-----------------MAIN CONTENT----------------*/
 
 .content__main {
@@ -257,11 +34,6 @@ a {
     right: 12px;
 }
 
-a:link {
-    text-decoration: none;
-    transition: color 0.15s, background 0.15s;
-}
-
 .object__tools a:link, .object__tools a:visited {
     padding: 7px 38px 7px 12px;
     display: block;
@@ -282,10 +54,6 @@ a:link {
     fill: #27ae60;
 }
 
-form {
-    margin: 0;
-    padding: 0;
-}
 
 .module {
     border: none;
@@ -335,7 +103,7 @@ form {
     font-weight: 600;
 }
 
-.toolbar form input[type="submit"] {
+.toolbar form input[type="submit"] , .toolbar form input[type="reset"]{
     border: 1px solid #353535;
     font-size: 13px;
     padding: 4px 8px;
@@ -346,7 +114,18 @@ form {
     cursor: pointer;
     color: #eeeeee;
     border-radius: 4px;
-    font-weight: 400;
+    font-weight: 600;
+}
+
+.toolbar form input[type="reset"] {
+    background-color: #d7d7d7;
+    color: #000;
+    border: 0;
+}
+
+.toolbar form input[type="reset"]:hover {
+    background-color: #27ae60;
+    transition: .15s linear;
 }
 
 .toolbar form input[type="submit"]:hover {

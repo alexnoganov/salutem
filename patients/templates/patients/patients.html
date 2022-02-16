@@ -35,8 +35,11 @@
                                     <label for="searchbar">
                                         <img src="{% static 'img/search.svg' %}" alt="Search">
                                     </label>
-                                    <input type="text" size="40" name="q" value="{{ request.GET.q }}" id="searchbar" autofocus>
+                                    <input type="text" size="40" name="q" value="{{ request.GET.q }}" id="searchbar"
+                                           autofocus>
                                     <input type="submit" value="Найти">
+                                    <input type="reset" value="Сбросить"
+                                           onclick="window.location.href = {% url 'patients' %}">
                                 </div>
                             </form>
                         </div>
@@ -50,20 +53,15 @@
                             <div class="cell" id="header5">Дата Регистрации</div>
                         </div>
                         {% for patient in patients %}
-                            <div class="row">
+                            <a href="{% url 'profile' patient.pk %}" class="row">
                                 <div class="cell"
-                                     data-title="FIO">
-                                    <a href="{% url 'profile' patient.pk %}">
-                                    {{ patient.Name }} {{ patient.Patronymic }}
-                                    {{ patient.Surname }}
-                                    </a>
-                                </div>
+                                     data-title="FIO">{{ patient.Name }} {{ patient.Patronymic }} {{ patient.Surname }}</div>
                                 <div class="cell" data-title="Phone">{{ patient.Telephone }}</div>
                                 <div class="cell" data-title="Date of Birth">{{ patient.Date_of_birth }}</div>
                                 <div class="cell" data-title="Address">{{ patient.Place_of_residence }}</div>
                                 <div class="cell"
                                      data-title="Date of Registration">{{ patient.Date_of_Registration }}</div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                     {% if is_paginated %}

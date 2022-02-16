@@ -26,29 +26,6 @@ function columnSort(itemEvent, colName) {
     document.querySelector(".table").append(...row);
 }
 
-function headerLinksHover() {
-    let headerLinks = document.querySelectorAll(".header .ds");
-    let currentHeaderLink;
-    headerLinks.forEach(item => {
-        if (item.href === location.href) {
-            item.classList.add("active");
-            currentHeaderLink = item;
-        }
-    });
-    headerLinks.forEach(item => {
-        if (item !== currentHeaderLink) {
-            item.addEventListener("mouseenter", evt => {
-                item.classList.add("active");
-                currentHeaderLink.classList.remove("active")
-            });
-            item.addEventListener("mouseleave", evt => {
-                item.classList.remove("active");
-                currentHeaderLink.classList.add("active")
-            });
-        }
-    });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", e => {
         if (e.target.id === "header1") {
@@ -63,5 +40,4 @@ document.addEventListener("DOMContentLoaded", () => {
             columnSort(document.querySelector("#header5"), "Date of Registration")
         }
     });
-    headerLinksHover();
 });

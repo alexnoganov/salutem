@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load widget_tweaks %}
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/EditingPatient.css' %}">
 {% endblock %}
@@ -39,7 +39,11 @@
                             <section class="content-block-list">
                                 <div class="content-block-list__container">
                                     <div class="hpc-order-form-template__form">
-                                        <form  name="field" class=" " action="/" method="post" novalidate="">
+                                    {{ form.non_field_errors }}
+                                        <form  name="field" method="post">
+
+                                            {% csrf_token %}
+
                                             <div class="form__section">
                                                 <fieldset class="fieldset">
                                                     <legend class="fieldset__legend">Данные: </legend>
@@ -48,15 +52,17 @@
                                                             <div>
                                                                 <label for="powermail_field_anrede" title="">
                                                                  <span class="input-field-wrapper__label">
-                                                                     Обращение
+                                                                     Пол
                                                                  </span>
-                                                                    <div class="select">
-                                                                        <select class="select__control" id="powermail_field_anrede">
-                                                                            <option value="Frau">Женщина</option>
-                                                                            <option value="Herr">Мужчина</option>
-                                                                        </select>
-                                                                    </div>
                                                                 </label>
+                                                                <div class="select">
+
+                                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" %}
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                {{ form.Sex.errors }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -68,10 +74,11 @@
                                                                         <span>*</span>
                                                                         Имя
                                                                     </span>
-                                                                    <input placeholder="Александр" class="text-input
-                                                                    powermail_input" id="powermail_field_vorname"
-                                                                           type="text" value="{{ profile.Name }}">
                                                                 </label>
+                                                                {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" value=profile.Name %}
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                {{ form.Name.errors }}
                                                             </div>
                                                         </div>
                                                         <div class="form-block">
@@ -81,8 +88,12 @@
                                                                         <span>*</span>
                                                                         Фамилия
                                                                     </span>
-                                                                    <input placeholder="Белоусов" class="text-input powermail_input" id="powermail_field_nachname" type="text" value="">
+                                                                    {% render_field form.Surname class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
+
                                                                 </label>
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                {{ form.Surname.errors }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -90,7 +101,21 @@
                                             </div>
                                             <div class="form__section">
                                                 <fieldset class="fieldset">
-                                                    <div class="fieldset__row">
+                                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                                        <div class="form-block">
+                                                            <div>
+                                                                <label for="powermail_field_vorname" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Отчество
+                                                                    </span>
+                                                                    {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
+                                                                </label>
+                                                                <div class="invalid-feedback">
+                                                                    {{ form.Patronymic.errors }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="form-block">
                                                             <div class="input-field-wrapper">
                                                                 <label for="powermail_field_geburtsdatum" title="">
@@ -98,9 +123,11 @@
                                                                         <span>*</span>
                                                                         Дата рождения
                                                                     </span>
-                                                                    <input placeholder="dd.mm.yyyy" class="text-input
-                                                                    powermail_input" id="powermail_field_geburtsdatum" type="text" value="">
                                                                 </label>
+                                                                {% render_field form.Date_of_birth class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                {{ form.Date_of_birth.errors }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -116,8 +143,12 @@
                                                                         <span>*</span>
                                                                         Номер телефона
                                                                     </span>
-                                                                    <input placeholder="012345678910" class="text-input powermail_input" id="powermail_field_telefonnummer" type="text" value="">
                                                                 </label>
+                                                                {% render_field form.Telephone class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
+
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                {{ form.Telephone.errors }}
                                                             </div>
                                                         </div>
                                                         <div class="form-block">
@@ -127,14 +158,61 @@
                                                                         <span>*</span>
                                                                         E-Mail
                                                                     </span>
-                                                                    <input placeholder="mustermann@gmail.com"
-                                                                           class="text-input powermail_input" id="powermail_field_e_mail" type="text" value="">
                                                                 </label>
+                                                                {% render_field form.Email class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
+
                                                             </div>
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            {{ form.Email.errors }}
                                                         </div>
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                            <div class="form__section">
+                                                <fieldset class="fieldset">
+                                                    <div class="fieldset__row">
+                                                        <div class="form-block">
+                                                            <div class="input-field-wrapper">
+                                                                <label for="powermail_field_residence" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Место проживания
+                                                                    </span>
+                                                                </label>
+                                                                {% render_field form.Place_of_residence class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            {{ form.Place_of_residence.errors }}
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="form__section">
+                                                <fieldset class="fieldset">
+
+                                                    <div class="fieldset__row">
+                                                        <div class="form-block">
+                                                            <div>
+                                                                <label for="powermail_field_blood" title="">
+                                                                 <span class="input-field-wrapper__label">
+                                                                     Группа крови
+                                                                 </span>
+                                                                </label>
+
+                                                                {% render_field form.Blood_type class="select__control" id="powermail_field_blood" %}
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </fieldset>
+                                            </div>
+
+                                            <button type="submit" class="submit__form">Сохранить</button>
+
                                         </form>
                                     </div>
                                 </div>
@@ -145,9 +223,13 @@
             </div>
         </div>
     </div>
+<div style="display: none" id="hiddenSex">{{ profile.Sex }}</div>
+<div style="display: none" id="hiddenBlood">{{ profile.Blood_type }}</div>
 
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/PatientProfile.js' %}"></script>
     {#    <script src="{% static 'js/patients.js' %}"></script>#}
 {% endblock %}

@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('', views.PatientsView.as_view(), name='patients'),
     path('profile/<int:pk>/', views.EditingPatient.as_view(), name='profile'),
+    path('save_profile/', views.profile_user, name="save_profile"),
 ]

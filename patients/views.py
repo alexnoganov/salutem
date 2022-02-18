@@ -1,14 +1,43 @@
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView, DetailView
-
+from django.http import JsonResponse
+from django.views.generic import ListView, DetailView
+from .forms import PatientForm
 from patients.models import Patients
+
+
+def profile_user(request):
+    if request.method == 'POST':
+        pk = request.POST.get('pk')
+        Sex = request.POST.get('Sex')
+        Username = request.POST.get('username')
+        Surname = request.POST.get('surname')
+        Patronymic = request.POST.get('Patronymic')
+        Date_of_birth = request.POST.get('Date_of_birth')
+        Phone = request.POST.get('phone')
+        Email = request.POST.get('email')
+        Place_of_residence = request.POST.get('Place_of_residence')
+        Blood_type = request.POST.get('Blood_type')
+
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            Patients.objects.filter(id=pk).update(Sex=Sex, Name=Username, Surname=Surname, Patronymic=Patronymic,
+                                                  Date_of_birth=Date_of_birth, Telephone=Phone, Email=Email,
+                                                  Place_of_residence=Place_of_residence, Blood_type=Blood_type)
+            return JsonResponse({'success': 'success'}, safe=False)
+    else:
+        form = PatientForm()
+    return JsonResponse({'errors': form.errors}, safe=False)
 
 
 class EditingPatient(DetailView):
     template_name = 'patients/ActPatient.html'
     model = Patients
     context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = PatientForm()
+        return context
 
 
 class PatientsView(ListView):

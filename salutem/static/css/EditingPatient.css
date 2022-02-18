@@ -75,7 +75,7 @@
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
     box-shadow: 0 1px 1px rgb(0 0 0 / 8%) inset;
-    margin-right: 145px;
+    margin-right: 140px;
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
     border-radius: 4px;
     color: #555555;
@@ -190,4 +190,27 @@
     display: flex;
     -ms-flex-pack: justify;
     justify-content: space-between;
+}
+
+.submit__form{
+    display: inline-block;
+	box-sizing: border-box;
+	padding: 0 25px;
+	margin: 30px 0 50px 0;
+	outline: none;
+ 	border: 1px solid #fff;
+	height: 46px;
+	line-height: 46px;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	color: #fff;
+	background-color: rgb(92,214,59);
+	box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+	cursor: pointer;
+	user-select: none;
+	appearance: none;
+	touch-action: manipulation;
+	vertical-align: top;
+	transition: box-shadow 0.2s;
 }

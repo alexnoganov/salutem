@@ -17,12 +17,11 @@
 {% block content %}
 
 {% endblock %}
-{% block script %}
-
-{% endblock %}
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/toastr.js' %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        let headerLinks = document.querySelectorAll(".header .ds");
+        let headerLinks = document.querySelectorAll("header .ds");
         let currentHeaderLink;
         headerLinks.forEach(item => {
             if (item.href === location.href) {
@@ -32,18 +31,26 @@
         });
         if (currentHeaderLink) {
             headerLinks.forEach(item => {
-            if (item !== currentHeaderLink) {
-                item.addEventListener("mouseenter", () => {
-                    item.classList.add("active");
-                    currentHeaderLink.classList.remove("active")
-                });
-                item.addEventListener("mouseleave", () => {
-                    item.classList.remove("active");
-                    currentHeaderLink.classList.add("active")
-                });
+                if (item !== currentHeaderLink) {
+                    item.addEventListener("mouseenter", () => {
+                        item.classList.add("active");
+                        currentHeaderLink.classList.remove("active")
+                    });
+                    item.addEventListener("mouseleave", () => {
+                        item.classList.remove("active");
+                        currentHeaderLink.classList.add("active")
+                    });
+                }
+            });
+        }
+        let notifyContainer = document.querySelector(".notification__container");
+        document.addEventListener("click", e => {
+            if (e.target.classList.contains("notify__btn")) {
+                notifyContainer.classList.toggle("active");
+            } else if (!e.target.classList.contains("notify__btn") && notifyContainer.classList.contains("active") && !e.target.classList.contains("notify")) {
+                notifyContainer.classList.remove("active");
             }
         });
-        }
     });
 </script>
 
@@ -63,6 +70,7 @@
         }
         return cookieValue;
     }
+
     const csrftoken = getCookie('csrftoken');
 
     function csrfSafeMethod(method) {
@@ -88,6 +96,10 @@
         }
     });
 </script>
+{% block script %}
+
+{% endblock %}
+
 
 </body>
 </html>

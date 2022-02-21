@@ -34,19 +34,14 @@ def profile_user(request):
             pk = photo.name.split("!", 1)[0]
             photo.name = photo.name.split("!", 1)[1]
 
-            print(type(datetime.now().strftime("%m/%d")))
-            print(datetime.now().strftime("%m/%d"))
-
             FileStorage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
             ).strftime("%m/%d"))
             FileStorage.save(photo.name, photo)
 
             PhotoProfile = Patients.objects.get(id=pk)
-            print(PhotoProfile)
-            PhotoProfile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + photo.name
-            PhotoProfile.save()
-            print("success")
 
+            PhotoProfile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name
+            PhotoProfile.save()
         except:
             print("execpt")
 

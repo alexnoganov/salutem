@@ -6,8 +6,22 @@ from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
+
+from user.models import AnalyzesType
 from .forms import PatientForm
 from patients.models import Patients
+
+
+def get_analysis(request):
+    if request.method == 'POST':
+        analysis_type = request.POST.get('analysisType')
+        analysis_date = request.POST.get('date')
+        print(request.POST)
+        print(analysis_type)
+        print(analysis_date)
+        return JsonResponse({'success': 'success'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
 
 
 def profile_user(request):
@@ -60,6 +74,7 @@ class EditingPatient(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = PatientForm()
+        context['analyzes'] = AnalyzesType.objects.all().order_by("title")
         return context
 
 

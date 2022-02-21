@@ -18,7 +18,7 @@ toastr.options = {
 
 
 let files
-let zxc  = document.querySelector(".info_edit_main_profile_avatar_delete");
+let zxc = document.querySelector(".info_edit_main_profile_avatar_delete");
 let cxz = document.querySelector(".info_edit_main_profile_avatar_reupload");
 cxz.addEventListener("click", () => {
     files = "update"
@@ -32,20 +32,19 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
     e.preventDefault();
     let fileName = document.querySelector("#update").files;
 
-    if(fileName.length>0 || files==='delete'){
+    if (fileName.length > 0 || files === 'delete') {
         let formData = new FormData();
 
         if (files === "update") {
             let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
-            let newFile  = new File(fileName, newFileName);
+            let newFile = new File(fileName, newFileName);
             formData.append("photo", newFile)
             image_ajax(formData)
-        }image_ajax(formData="default")
+        }
+        image_ajax(formData = "default")
 
 
     }
-
-
 
 
     $.ajax({
@@ -78,20 +77,20 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
         }
     })
 
-    function image_ajax(formData){
+    function image_ajax(formData) {
         $.ajax({
             url: '/patients/save_profile/',
             type: 'POST',
             contentType: false,
             dataType: 'json',
             processData: false,
-            data:  formData,
+            data: formData,
 
             success: (data) => {
-                if('errors' in data){
+                if ('errors' in data) {
                     console.log(1);
                 }
-                if('success' in data){
+                if ('success' in data) {
                     console.log(0);
                     // window.location.replace(window.location.origin + data.success)
                 }
@@ -101,6 +100,28 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
 
 })
 
+$("#submit__analysis").click((e) => {
+    e.preventDefault();
+    $.ajax({
+        url: '/patients/analysis/',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            analysisType: $("#analysisType").val(),
+            date: $("#analysisDate").val()
+        },
+
+        success: (data) => {
+            if ('errors' in data) {
+                console.log(1);
+            }
+            if ('success' in data) {
+                console.log(0);
+                // window.location.replace(window.location.origin + data.success)
+            }
+        }
+    });
+});
 
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -113,14 +134,14 @@ function readURL(input) {
     }
 }
 
-$(".info_edit_main_profile_avatar_reupload span").click(function(){
+$(".info_edit_main_profile_avatar_reupload span").click(function () {
     $('#update').click();
-    $("#update").change(function(){
+    $("#update").change(function () {
         readURL(this);
     });
 });
 
-$(".info_edit_main_profile_avatar_delete").click(function(){
+$(".info_edit_main_profile_avatar_delete").click(function () {
     $(".info_edit_main_profile_avatar").css("background-image", "");
     $("#update").val('');
 

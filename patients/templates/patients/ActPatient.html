@@ -2,6 +2,7 @@
 {% load static %}
 {% load widget_tweaks %}
 {% block style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
     <link rel="stylesheet" href="{% static 'css/EditingPatient.css' %}">
 {% endblock %}
 
@@ -22,32 +23,36 @@
                     <div class="page_patient_left page_throw">
                         <div class="image_patient">
                             <div class="image">
-                                <img src="{% static 'img/unnamed.jpg' %}" alt="аватар" >
+                                <img src="{% static 'img/unnamed.jpg' %}" alt="аватар">
                             </div>
-                        <form id="user" method="post">
-                            <div class="info_edit_item">
-                                <div class="info_edit_main_profile">
-                                    <div class="info_edit_main_profile_avatar" {% if not g.pf_image is None %} style="background-image: url('{{ MEDIA_URL }}{{ g.pf_image }}')" {% endif %}>
+                            <form id="user" method="post">
+                                <div class="info_edit_item">
+                                    <div class="info_edit_main_profile">
+                                        <div class="info_edit_main_profile_avatar" {% if not g.pf_image is None %}
+                                             style="background-image:
+                                                     url('{{ MEDIA_URL }}{{ g.pf_image }}')" {% endif %}>
 
-                                    </div>
-                                    <div class="info_edit_main_profile_avatar_reupload">
-                                        <span>Обновить</span>
+                                        </div>
+                                        <div class="info_edit_main_profile_avatar_reupload">
+                                            <span>Обновить</span>
 
-                                        {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
+                                            {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
 
-                                    </div>
-                                    <div class="info_edit_main_profile_avatar_delete">
-                                        <span>Удалить</span>
+                                        </div>
+                                        <div class="info_edit_main_profile_avatar_delete">
+                                            <span>Удалить</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                         </form>
+                            </form>
                         </div>
                     </div>
                     <div class="page_patient_right page_throw">
                         <div class="page_patient_button">
                             <div class="page_button">
-                                <button class="bot8" >Запись на анализы</button>
+                                <button class="bot8" id="analysisModalBtn" onclick="$('#analysisModal').modal();">Запись
+                                    на анализы
+                                </button>
                                 <button class="bot8">Медицинская книжка</button>
                                 <button class="bot8">История посещений</button>
                             </div>
@@ -58,13 +63,13 @@
                                 <div class="content-block-list__container">
                                     <div class="hpc-order-form-template__form">
                                         {{ form.non_field_errors }}
-                                        <form  name="field" method="post" id="jjdd">
+                                        <form name="field" method="post" id="jjdd">
 
                                             {% csrf_token %}
 
                                             <div class="form__section">
                                                 <fieldset class="fieldset">
-                                                    <legend class="fieldset__legend">Данные: </legend>
+                                                    <legend class="fieldset__legend">Данные:</legend>
                                                     <div class="fieldset__row">
                                                         <div class="form-block">
                                                             <div>
@@ -244,9 +249,42 @@
     <div style="display: none" id="hiddenSex">{{ profile.Sex }}</div>
     <div style="display: none" id="hiddenBlood">{{ profile.Blood_type }}</div>
 
+    <div id="analysisModal" class="modal" style="max-width: 700px">
+        <form method="post">
+        {% csrf_token %}
+            <fieldset class="fieldset">
+
+                <div class="fieldset__row">
+                    <div class="form-block">
+                        <div>
+                            <label for="analysisType" class="input-field-wrapper__label">Тип анализа</label>
+                            <select name="analysisType" id="analysisType" class="select__control">
+                                {% for analysis in analyzes %}
+                                    <option value="{{ analysis.title }}">{{ analysis.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fieldset__row">
+                        <div class="form-block">
+                            <div>
+                                <label for="analysisDate" class="input-field-wrapper__label">Дата сдачи</label>
+                                <input type="datetime-local" class="text-input powermail_input" id="analysisDate" name="analysisDate">
+                            </div>
+                        </div>
+                    </div>
+
+            </fieldset>
+            <div style="display:flex; justify-content: center;">
+                <button class="submit__form" id="submit__analysis" style="margin-bottom: 0">Записать</button>
+            </div>
+        </form>
+    </div>
+
 {% endblock %}
 
 {% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="{% static 'js/PatientProfile.js' %}"></script>
     {#    <script src="{% static 'js/patients.js' %}"></script>#}
 {% endblock %}

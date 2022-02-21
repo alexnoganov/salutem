@@ -15,3 +15,4 @@ class PatientForm(forms.Form):
     Telephone = forms.CharField(max_length=100, label="* НОМЕР ТЕЛЕФОНА", required=False)
     Email = forms.CharField(max_length=30, label="* E-MAIL", required=False)
     photo = forms.ImageField(required=False, max_length=200)
+

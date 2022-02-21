@@ -42,7 +42,7 @@ class Analyzes(models.Model):
     type = models.OneToOneField("AnalyzesType", on_delete=models.CASCADE)
     specialist = models.OneToOneField("Specialists", on_delete=models.CASCADE)
     patient = models.OneToOneField("Patients", on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True, editable=False, blank=True)
+    date = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20,
                               choices=(('Новый', 'Новый'), ('Ожидание', 'Ожидание'), ('Выполнен', 'Выполнен')))
 
@@ -58,7 +58,7 @@ class Specializations(models.Model):
 
 
 class AnalyzesType(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=240)
 
     def __str__(self):
         return self.title

@@ -1,4 +1,6 @@
+from django.core.files.storage import FileSystemStorage
 from django.db import models
+
 
 
 class Patients(models.Model):
@@ -14,7 +16,7 @@ class Patients(models.Model):
                                                           ('IV-', 'IV-')), blank=True)
     Telephone = models.CharField(max_length=100, blank=True)
     Email = models.CharField(max_length=30, blank=True)
-    # photo = models.CharField(max_length=30, blank=True)
+    photo = models.ImageField(blank=True, upload_to='photos/patient/%m/%d/', max_length=200)
     # Medical_card = models.OneToOneField(on_delete=models.CASCADE)
 
     def __str__(self):

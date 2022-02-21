@@ -24,6 +24,24 @@
                             <div class="image">
                                 <img src="{% static 'img/unnamed.jpg' %}" alt="аватар" >
                             </div>
+                        <form id="user" method="post">
+                            <div class="info_edit_item">
+                                <div class="info_edit_main_profile">
+                                    <div class="info_edit_main_profile_avatar" {% if not g.pf_image is None %} style="background-image: url('{{ MEDIA_URL }}{{ g.pf_image }}')" {% endif %}>
+
+                                    </div>
+                                    <div class="info_edit_main_profile_avatar_reupload">
+                                        <span>Обновить</span>
+
+                                        {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
+
+                                    </div>
+                                    <div class="info_edit_main_profile_avatar_delete">
+                                        <span>Удалить</span>
+                                    </div>
+                                </div>
+                            </div>
+                         </form>
                         </div>
                     </div>
                     <div class="page_patient_right page_throw">
@@ -39,8 +57,8 @@
                             <section class="content-block-list">
                                 <div class="content-block-list__container">
                                     <div class="hpc-order-form-template__form">
-                                    {{ form.non_field_errors }}
-                                        <form  name="field" method="post">
+                                        {{ form.non_field_errors }}
+                                        <form  name="field" method="post" id="jjdd">
 
                                             {% csrf_token %}
 
@@ -57,7 +75,7 @@
                                                                 </label>
                                                                 <div class="select">
 
-                                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" %}
+                                                                    {% render_field form.Sex class="select__control" id="powermail_field_anrede" %}
 
                                                                 </div>
                                                             </div>
@@ -223,8 +241,8 @@
             </div>
         </div>
     </div>
-<div style="display: none" id="hiddenSex">{{ profile.Sex }}</div>
-<div style="display: none" id="hiddenBlood">{{ profile.Blood_type }}</div>
+    <div style="display: none" id="hiddenSex">{{ profile.Sex }}</div>
+    <div style="display: none" id="hiddenBlood">{{ profile.Blood_type }}</div>
 
 {% endblock %}
 

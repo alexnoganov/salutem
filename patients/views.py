@@ -1,4 +1,5 @@
 import os
+from datetime import date, datetime
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -33,15 +34,16 @@ def profile_user(request):
             pk = photo.name.split("!", 1)[0]
             photo.name = photo.name.split("!", 1)[1]
 
-            # Patients.objects.filter(id=pk).update(photo=photo)
-            # print("success")
+            print(type(datetime.now().strftime("%m/%d")))
+            print(datetime.now().strftime("%m/%d"))
 
-            FileStorage = FileSystemStorage(location=settings.MEDIA_ROOT + "photos/patient/%m/%d/")
+            FileStorage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
+            ).strftime("%m/%d"))
             FileStorage.save(photo.name, photo)
 
             PhotoProfile = Patients.objects.get(id=pk)
             print(PhotoProfile)
-            PhotoProfile.photo = settings.MEDIA_ROOT + "photos/patient/%m/%d/" + photo.name
+            PhotoProfile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + photo.name
             PhotoProfile.save()
             print("success")
 

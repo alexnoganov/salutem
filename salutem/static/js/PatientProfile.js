@@ -30,18 +30,19 @@ zxc.addEventListener("click", () => {
 
 document.querySelector(".submit__form").addEventListener("click", (e) => {
     e.preventDefault();
-    let formData = new FormData();
-
     let fileName = document.querySelector("#update").files;
-    let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
-    let newFile  = new File(fileName, newFileName);
 
-    if(files === "delete"){
-        formData = "da";
-    }
+    if(fileName.length>0 || files==='delete'){
+        let formData = new FormData();
 
-    else if (files === "update") {
-        formData.append("photo", newFile)
+        if (files === "update") {
+            let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
+            let newFile  = new File(fileName, newFileName);
+            formData.append("photo", newFile)
+            image_ajax(formData)
+        }image_ajax(formData="default")
+
+
     }
 
 
@@ -77,24 +78,26 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
         }
     })
 
-    $.ajax({
-        url: '/patients/save_profile/',
-        type: 'POST',
-        contentType: false,
-        dataType: 'json',
-        processData: false,
-        data:  formData,
+    function image_ajax(formData){
+        $.ajax({
+            url: '/patients/save_profile/',
+            type: 'POST',
+            contentType: false,
+            dataType: 'json',
+            processData: false,
+            data:  formData,
 
-        success: (data) => {
-            if('errors' in data){
-                console.log(1);
+            success: (data) => {
+                if('errors' in data){
+                    console.log(1);
+                }
+                if('success' in data){
+                    console.log(0);
+                    // window.location.replace(window.location.origin + data.success)
+                }
             }
-            if('success' in data){
-                console.log(0);
-                // window.location.replace(window.location.origin + data.success)
-            }
-        }
-    })
+        })
+    }
 
 })
 

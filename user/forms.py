@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+from .models import Specialists
 
 
 class LoginForm(forms.Form):
@@ -17,3 +20,15 @@ class LoginForm(forms.Form):
             if not user.check_password(password):
                 raise forms.ValidationError("Неверный логин или пароль")
         return self.cleaned_data
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = Specialists
+        fields = ('email',)
+
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = Specialists
+        fields = ('email',)

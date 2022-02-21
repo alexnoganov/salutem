@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="text">Добро пожаловать, <a href="">{{ user.username }}</a> | <a
+            <div id="profile__text">Добро пожаловать, <a href="{{ user.pk }}">{{ user.last_name }} {{ user.first_name|first }}.{{ user.patronymic|first }}.</a> | <a
                     href="{% url 'logout' %}">Выход</a></div>
         </div>
     </nav>

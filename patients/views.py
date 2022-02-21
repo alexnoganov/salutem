@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 
-from user.models import AnalyzesType
+from .models import AnalyzesType
 from .forms import PatientForm
 from patients.models import Patients
 
@@ -16,9 +16,8 @@ def get_analysis(request):
     if request.method == 'POST':
         analysis_type = request.POST.get('analysisType')
         analysis_date = request.POST.get('date')
-        print(request.POST)
-        print(analysis_type)
-        print(analysis_date)
+        specialist_id = request.POST.get('specialistId')
+        patient_id = request.POST.get('patientId')
         return JsonResponse({'success': 'success'}, safe=False)
     else:
         return JsonResponse({'errors': 'error'}, safe=False)
@@ -27,37 +26,37 @@ def get_analysis(request):
 def profile_user(request):
     if request.method == 'POST':
         pk = request.POST.get('pk')
-        Sex = request.POST.get('Sex')
-        Username = request.POST.get('username')
-        Surname = request.POST.get('surname')
-        Patronymic = request.POST.get('Patronymic')
-        Date_of_birth = request.POST.get('Date_of_birth')
-        Phone = request.POST.get('phone')
-        Email = request.POST.get('email')
-        Place_of_residence = request.POST.get('Place_of_residence')
-        Blood_type = request.POST.get('Blood_type')
+        sex = request.POST.get('Sex')
+        username = request.POST.get('username')
+        surname = request.POST.get('surname')
+        patronymic = request.POST.get('Patronymic')
+        date_of_birth = request.POST.get('Date_of_birth')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        place_of_residence = request.POST.get('Place_of_residence')
+        blood_type = request.POST.get('Blood_type')
 
         form = PatientForm(request.POST)
 
         if form.is_valid():
-            Patients.objects.filter(id=pk).update(Sex=Sex, Name=Username, Surname=Surname, Patronymic=Patronymic,
-                                                  Date_of_birth=Date_of_birth, Telephone=Phone, Email=Email,
-                                                  Place_of_residence=Place_of_residence, Blood_type=Blood_type)
+            Patients.objects.filter(id=pk).update(Sex=sex, Name=username, Surname=surname, Patronymic=patronymic,
+                                                  Date_of_birth=date_of_birth, Telephone=phone, Email=email,
+                                                  Place_of_residence=place_of_residence, Blood_type=blood_type)
         try:
             photo = request.FILES['photo']
             pk = photo.name.split("!", 1)[0]
             photo.name = photo.name.split("!", 1)[1]
 
-            FileStorage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
+            file_storage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
             ).strftime("%m/%d"))
-            FileStorage.save(photo.name, photo)
+            file_storage.save(photo.name, photo)
 
-            PhotoProfile = Patients.objects.get(id=pk)
+            photo_profile = Patients.objects.get(id=pk)
 
-            PhotoProfile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name
-            PhotoProfile.save()
+            photo_profile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name
+            photo_profile.save()
         except:
-            print("execpt")
+            pass
 
         return JsonResponse({'success': 'success'}, safe=False)
 

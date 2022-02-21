@@ -1,53 +1,45 @@
+from django.contrib import admin
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser, Group, GroupManager, Permission
+from django.db.models import Value
+from django.db.models.functions import Concat
+from django.utils.translation import gettext_lazy as _
+
+from user.managers import SpecialistManager
 
 
-class Patients(models.Model):
-    Sex = models.CharField(max_length=20, choices=(('Женский', 'Женский'), ('Мужской', 'Мужской')))
-    Name = models.CharField(max_length=100)
-    Surname = models.CharField(max_length=100)
-    Patronymic = models.CharField(max_length=100)
-    Position = models.CharField(max_length=50)
-    Date_of_employment = models.DateField(blank=True)
-    Inn = models.CharField(max_length=50, blank=True)
-    Place_of_residence = models.CharField(max_length=100, blank=True)
-    Telephone = models.CharField(max_length=100)
-    Certificate = models.CharField(max_length=100)
-    photo = models.CharField(max_length=30, blank=True)
-    Email = models.CharField(max_length=30, blank=True)
+class Specialists(AbstractUser):
+    patronymic = models.CharField(max_length=100, verbose_name="Отчество", blank=True, )
+    photo = models.ImageField(blank=True, upload_to='photos/specialists/', max_length=210)
+    phone = models.CharField(max_length=100, verbose_name='Номер телефона', blank=True, )
+    sex = models.CharField(max_length=20, choices=(('Женский', 'Женский'), ('Мужской', 'Мужской')), verbose_name='Пол',
+                           blank=True, )
+    education = models.CharField(max_length=150, verbose_name='Образование', blank=True, )
+    passport_num = models.CharField(max_length=20, verbose_name='Серия и номер паспорта', blank=True, )
+    inn = models.CharField(max_length=50, verbose_name='ИНН', blank=True, )
+    date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
+    specialization = models.OneToOneField("Specializations", on_delete=models.SET_NULL, null=True, blank=True, )
 
-    def __str__(self):
-        return self.Surname + self.Name + self.Patronymic
+    REQUIRED_FIELDS = ["email"]
 
+    objects = SpecialistManager()
 
-class Specialists(models.Model):
-    name = models.CharField(max_length=100)
-    patronymic = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
-    photo = models.CharField(max_length=50, blank=True)
-    email = models.CharField(max_length=50, blank=True)
-    phone = models.CharField(max_length=100)
-    sex = models.CharField(max_length=20, choices=(('Женский', 'Женский'), ('Мужской', 'Мужской')))
-    education = models.CharField(max_length=150)
-    passport_num = models.CharField(max_length=20)
-    inn = models.CharField(max_length=50)
-    date_of_birth = models.DateField(blank=True)
-    specialization = models.OneToOneField("Specializations", on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return self.surname + self.name + self.patronymic
-
-
-class Analyzes(models.Model):
-    type = models.OneToOneField("AnalyzesType", on_delete=models.CASCADE)
-    specialist = models.OneToOneField("Specialists", on_delete=models.CASCADE)
-    patient = models.OneToOneField("Patients", on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=20,
-                              choices=(('Новый', 'Новый'), ('Ожидание', 'Ожидание'), ('Выполнен', 'Выполнен')))
+    class Meta:
+        # permissions = (
+        #     ('edit_tables', 'Может редактировать таблицы'),
+        #     ('add_lesson', 'Может добавлять занятие'),
+        #     ('add_workout', 'Может добавлять отработку/отмену'),
+        #     ('view_schedule', 'Может просматривать расписание')
+        # )
+        verbose_name_plural = 'Специалисты'
+        verbose_name = 'Специалист'
 
     def __str__(self):
-        return self.type.title + "(" + self.patient.Surname + self.patient.Name + self.patient.Patronymic + ")"
+        return self.last_name + ' ' + self.first_name + ' ' + self.patronymic
+
+    @admin.display(ordering=Concat('last_name', Value(' '), 'first_name', Value(' '), 'patronymic'), description='ФИО')
+    def full_name(self):
+        return self.last_name + ' ' + self.first_name + ' ' + self.patronymic
 
 
 class Specializations(models.Model):
@@ -57,17 +49,10 @@ class Specializations(models.Model):
         return self.title
 
 
-class AnalyzesType(models.Model):
-    title = models.CharField(max_length=240)
-
-    def __str__(self):
-        return self.title
-
-
-class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+class SpecialistGroup(Group):
     class Meta:
+        verbose_name = _('Группа')
+        verbose_name_plural = _('Группы')
         permissions = (
             ('edit_tables', 'Может редактировать таблицы'),
             ('add_lesson', 'Может добавлять занятие'),

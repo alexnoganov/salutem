@@ -1,23 +1,51 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin, GroupAdmin
+from django.contrib.auth.models import User, Group
 
-from .models import Employee
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import Specialists, SpecialistGroup
 
-
-# Define an inline admin descriptor for Employee model
-# which acts a bit like a singleton
-class EmployeeInline(admin.StackedInline):
-    model = Employee
-    can_delete = False
-    verbose_name_plural = 'employee'
+admin.site.unregister(Group)
 
 
-# Define a new User admin
-class UserAdmin(UserAdmin):
-    inlines = (EmployeeInline,)
+#
+#
+@admin.register(SpecialistGroup)
+class GroupAdmin(admin.ModelAdmin):
+    search_fields = ('name',)
+    ordering = ('name',)
+    filter_horizontal = ('permissions',)
+
+    def formfield_for_manytomany(self, db_field, request=None, **kwargs):
+        if db_field.name == 'permissions':
+            qs = kwargs.get('queryset', db_field.remote_field.model.objects)
+            # Avoid a major performance hit resolving permission names which
+            # triggers a content_type load:
+            kwargs['queryset'] = qs.select_related('content_type')
+        return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 
 
-# Re-register UserAdmin
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+@admin.register(Specialists)
+class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = Specialists
+    list_display = ('email', 'full_name', 'is_staff', 'is_active',)
+    list_filter = ('username', 'is_staff', 'is_active',)
+    fieldsets = (
+        ('Данные для авторизации', {'fields': ('username', 'password')}),
+        ('Личные данные',
+         {'fields': (
+             'first_name', 'patronymic', 'last_name', 'sex', 'date_of_birth', 'inn', 'passport_num', 'education',
+             'specialization', 'phone', 'email', 'photo')}),
+        ('Права доступа', {'fields': ('is_staff', 'is_active', 'last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2', 'is_staff', 'is_active')}
+         ),
+    )
+    readonly_fields = ['date_joined', 'last_login']
+    search_fields = ('email', 'username', 'first_name', 'last_name', 'patronymic')
+    ordering = ('username',)

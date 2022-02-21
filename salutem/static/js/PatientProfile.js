@@ -108,7 +108,9 @@ $("#submit__analysis").click((e) => {
         dataType: 'json',
         data: {
             analysisType: $("#analysisType").val(),
-            date: $("#analysisDate").val()
+            date: $("#analysisDate").val(),
+            specialistId: $("#profile__text").children('a')[0].href.split('/')[6], //TODO Переделать после изменения ссылки профиля специалиста
+            patientId: location.href.split('/')[5]
         },
 
         success: (data) => {

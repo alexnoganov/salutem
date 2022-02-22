@@ -19,8 +19,6 @@ class GroupAdmin(admin.ModelAdmin):
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name == 'permissions':
             qs = kwargs.get('queryset', db_field.remote_field.model.objects)
-            # Avoid a major performance hit resolving permission names which
-            # triggers a content_type load:
             kwargs['queryset'] = qs.select_related('content_type')
         return super().formfield_for_manytomany(db_field, request=request, **kwargs)
 
@@ -36,14 +34,14 @@ class CustomUserAdmin(UserAdmin):
         ('Данные для авторизации', {'fields': ('username', 'password')}),
         ('Личные данные',
          {'fields': (
-             'first_name', 'patronymic', 'last_name', 'sex', 'date_of_birth', 'inn', 'passport_num', 'education',
+             'last_name', 'first_name', 'patronymic', 'sex', 'date_of_birth', 'inn', 'passport_num', 'education',
              'specialization', 'phone', 'email', 'photo')}),
-        ('Права доступа', {'fields': ('is_staff', 'is_active', 'last_login', 'date_joined')}),
+        ('Права доступа', {'fields': ('groups', 'is_staff', 'is_active', 'last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'is_staff', 'is_active')}
+            'fields': ('username', 'email', 'password1', 'password2', 'is_staff', 'is_active')}
          ),
     )
     readonly_fields = ['date_joined', 'last_login']

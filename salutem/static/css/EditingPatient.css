@@ -93,8 +93,8 @@
     background-color: grey;
     background-size: cover;
     background-position: 50%;
-    border-radius: 50%;
     background-image: url("../img/unnamed.jpg");
+    border-radius: 50%;
     width: 80px;
     height: 80px;
     margin-right: 26px;

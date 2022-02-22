@@ -247,7 +247,7 @@
     </div>
     <div style="display: none" id="hiddenSex">{{ profile.Sex }}</div>
     <div style="display: none" id="hiddenBlood">{{ profile.Blood_type }}</div>
-
+{{ perms.user.edit_analyzes }}
     <div id="analysisModal" class="modal" style="max-width: 700px">
         <form method="post">
             {% csrf_token %}
@@ -259,7 +259,7 @@
                             <label for="analysisType" class="input-field-wrapper__label">Тип анализа</label>
                             <select name="analysisType" id="analysisType" class="select__control">
                                 {% for analysis in analyzes %}
-                                    <option value="{{ analysis.title }}">{{ analysis.title }}</option>
+                                    <option value="{{ analysis.pk }}">{{ analysis.title }}</option>
                                 {% endfor %}
                             </select>
                         </div>

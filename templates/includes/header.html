@@ -38,8 +38,15 @@
                     </div>
                 </div>
             </div>
-            <div id="profile__text">Добро пожаловать, <a href="{{ user.pk }}">{{ user.last_name }} {{ user.first_name|first }}.{{ user.patronymic|first }}.</a> | <a
-                    href="{% url 'logout' %}">Выход</a></div>
+
+            {% if user.is_authenticated %}
+                <div id="profile__text">Добро пожаловать, <a
+                        href="{{ user.pk }}">{{ user.last_name }} {{ user.first_name|first }}.{{ user.patronymic|first }}.</a>
+                    | <a
+                            href="{% url 'logout' %}">Выход</a></div>
+            {% else %}
+                <div id="profile__text"><a href="{% url 'login' %}">Войти</a></div>
+            {% endif %}
         </div>
     </nav>
 </header>

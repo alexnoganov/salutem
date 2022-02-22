@@ -9,28 +9,25 @@ from user.managers import SpecialistManager
 
 
 class Specialists(AbstractUser):
-    patronymic = models.CharField(max_length=100, verbose_name="Отчество", blank=True, )
+    patronymic = models.CharField(max_length=100, verbose_name="Отчество", blank=True)
     photo = models.ImageField(blank=True, upload_to='photos/specialists/', max_length=210)
-    phone = models.CharField(max_length=100, verbose_name='Номер телефона', blank=True, )
+    phone = models.CharField(max_length=100, verbose_name='Номер телефона', blank=True)
     sex = models.CharField(max_length=20, choices=(('Женский', 'Женский'), ('Мужской', 'Мужской')), verbose_name='Пол',
-                           blank=True, )
-    education = models.CharField(max_length=150, verbose_name='Образование', blank=True, )
-    passport_num = models.CharField(max_length=20, verbose_name='Серия и номер паспорта', blank=True, )
-    inn = models.CharField(max_length=50, verbose_name='ИНН', blank=True, )
+                           blank=True)
+    education = models.TextField(max_length=150, verbose_name='Образование', blank=True)
+    passport_num = models.CharField(max_length=20, verbose_name='Серия и номер паспорта', blank=True)
+    inn = models.CharField(max_length=50, verbose_name='ИНН', blank=True)
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
-    specialization = models.OneToOneField("Specializations", on_delete=models.SET_NULL, null=True, blank=True, )
+    specialization = models.OneToOneField("Specializations", on_delete=models.SET_NULL, null=True, blank=True)
 
     REQUIRED_FIELDS = ["email"]
 
     objects = SpecialistManager()
 
     class Meta:
-        # permissions = (
-        #     ('edit_tables', 'Может редактировать таблицы'),
-        #     ('add_lesson', 'Может добавлять занятие'),
-        #     ('add_workout', 'Может добавлять отработку/отмену'),
-        #     ('view_schedule', 'Может просматривать расписание')
-        # )
+        permissions = (
+            ('edit_analyzes', 'Может редактировать анализы'),
+        )
         verbose_name_plural = 'Специалисты'
         verbose_name = 'Специалист'
 
@@ -43,7 +40,7 @@ class Specialists(AbstractUser):
 
 
 class Specializations(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
 
     def __str__(self):
         return self.title
@@ -53,9 +50,3 @@ class SpecialistGroup(Group):
     class Meta:
         verbose_name = _('Группа')
         verbose_name_plural = _('Группы')
-        permissions = (
-            ('edit_tables', 'Может редактировать таблицы'),
-            ('add_lesson', 'Может добавлять занятие'),
-            ('add_workout', 'Может добавлять отработку/отмену'),
-            ('view_schedule', 'Может просматривать расписание')
-        )

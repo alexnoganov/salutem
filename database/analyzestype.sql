@@ -10,22 +10,10 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 -- ---------------------------------------------------------
 
-
--- CREATE TABLE "user_analyzestype" ----------------------------
-CREATE TEMPORARY TABLE `user_analyzestype`( 
-	`id` BigInt( 0 ) AUTO_INCREMENT NOT NULL,
-	`title` VarChar( 240 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-	PRIMARY KEY ( `id` ) )
-CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci
-ENGINE = InnoDB;
--- -------------------------------------------------------------
-
-
 -- Dump data of "user_analyzestype" ------------------------
 BEGIN;
 
-INSERT INTO `user_analyzestype`(`id`,`title`) VALUES 
+INSERT INTO `patients_analyzestype`(`id`,`title`) VALUES 
 ( '22', 'Coronavirus COVID-19 (РНК реал-тайм ПЦР)' ),
 ( '23', '25-OH витамин D, суммарный (кальциферол)' ),
 ( '24', 'Взятие мазка из урогенитального тракта' ),
@@ -277,7 +265,7 @@ INSERT INTO `user_analyzestype`(`id`,`title`) VALUES
 ( '341', 'Антитела к цитомегаловирусу (Cytomegalovirus), IgG' ),
 ( '343', 'Антитела к цитомегаловирусу (Cytomegalovirus), IgG (иммуноблот)' );
 
-INSERT INTO `user_analyzestype`(`id`,`title`) VALUES 
+INSERT INTO `patients_analyzestype`(`id`,`title`) VALUES 
 ( '344', 'Антитела к вирусу краснухи, IgM' ),
 ( '345', 'Антитела к вирусу краснухи, IgG' ),
 ( '347', 'Антитела к вирусу краснухи, IgG (иммуноблот)' ),

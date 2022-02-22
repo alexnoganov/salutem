@@ -15,7 +15,7 @@ class Patients(models.Model):
                                                           ('IV-', 'IV-')), blank=True)
     Telephone = models.CharField(max_length=100, blank=True)
     Email = models.CharField(max_length=30, blank=True)
-    photo = models.ImageField(blank=True, upload_to='photos/patient/%m/%d/', max_length=210)
+    photo = models.ImageField(blank=True, upload_to='photos/patient/%m/%d/', max_length=210, null=True)
 
     # Medical_card = models.OneToOneField(on_delete=models.CASCADE)
 
@@ -34,9 +34,11 @@ class Analyzes(models.Model):
     type = models.OneToOneField(AnalyzesType, on_delete=models.CASCADE)
     specialist = models.OneToOneField(Specialists, on_delete=models.CASCADE)
     patient = models.OneToOneField(Patients, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
+    test_date = models.DateTimeField()
+    date_of_change = models.DateTimeField(auto_now=True, blank=True, editable=False)
     status = models.CharField(max_length=20,
-                              choices=(('Новый', 'Новый'), ('Ожидание', 'Ожидание'), ('Выполнен', 'Выполнен')))
+                              choices=(('Новый', 'Новый'), ('В процессе', 'В процессе'), ('Выполнен', 'Выполнен')),
+                              default='Новый')
 
     def __str__(self):
         return self.type.title + "(" + self.patient.Surname + self.patient.Name + self.patient.Patronymic + ")"

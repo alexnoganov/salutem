@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 
-from .models import AnalyzesType
+from .models import AnalyzesType, Analyzes
 from .forms import PatientForm
 from patients.models import Patients
 
@@ -15,10 +15,15 @@ from patients.models import Patients
 def get_analysis(request):
     if request.method == 'POST':
         analysis_type = request.POST.get('analysisType')
-        analysis_date = request.POST.get('date')
+        analysis_date = request.POST.get('analysisDate')
         specialist_id = request.POST.get('specialistId')
         patient_id = request.POST.get('patientId')
-        return JsonResponse({'success': 'success'}, safe=False)
+        if analysis_type and analysis_date and specialist_id and patient_id:
+            Analyzes.objects.create(type_id=analysis_type, test_date=analysis_date, specialist_id=specialist_id,
+                                    patient_id=patient_id)
+            return JsonResponse({'success': 'success'}, safe=False)
+        else:
+            return JsonResponse({'errors': 'error'}, safe=False)
     else:
         return JsonResponse({'errors': 'error'}, safe=False)
 

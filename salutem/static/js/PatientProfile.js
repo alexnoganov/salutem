@@ -18,7 +18,7 @@ toastr.options = {
 
 
 let files
-let zxc  = document.querySelector(".info_edit_main_profile_avatar_delete");
+let zxc = document.querySelector(".info_edit_main_profile_avatar_delete");
 let cxz = document.querySelector(".info_edit_main_profile_avatar_reupload");
 cxz.addEventListener("click", () => {
     files = "update"
@@ -32,19 +32,18 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
     e.preventDefault();
     let fileName = document.querySelector("#update").files;
 
-    if(fileName.length>0 || files==='delete'){
+    if (fileName.length > 0 || files === 'delete') {
         let formData = new FormData();
 
         if (files === "update") {
             let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
             console.log(fileName)
-            let newFile  = new File(fileName, newFileName);
+            let newFile = new File(fileName, newFileName);
             console.log(newFile)
             formData.append("photo", newFile)
             image_ajax(formData, false, false)
-        }
-        else {
-            let defaultImgUrl =  location.href.split('/')[5] + "!" + "photos/unnamed.jpg";
+        } else {
+            let defaultImgUrl = location.href.split('/')[5] + "!" + "photos/unnamed.jpg";
             image_ajax(defaultImgUrl)
         }
 
@@ -77,20 +76,20 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
         }
     })
 
-    function image_ajax(formData, contentType= undefined, processData = undefined){
+    function image_ajax(formData, contentType = undefined, processData = undefined) {
         $.ajax({
             url: '/patients/save_profile/',
             type: 'POST',
             contentType: contentType,
             dataType: 'json',
             processData: processData,
-            data:  formData,
+            data: formData,
 
             success: (data) => {
-                if('errors' in data){
+                if ('errors' in data) {
                     console.log(1);
                 }
-                if('success' in data){
+                if ('success' in data) {
                     console.log(0);
                     // window.location.replace(window.location.origin + data.success)
                 }
@@ -100,26 +99,50 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
 
 })
 
+$("#submit__analysis").click((e) => {
+    e.preventDefault();
+    $.ajax({
+        url: '/patients/analysis/',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            analysisType: $("#analysisType").val(),
+            analysisDate: $("#analysisDate").val(),
+            specialistId: $("#profile__text").children('a')[0].href.split('/')[6], //TODO Переделать после изменения ссылки профиля специалиста
+            patientId: location.href.split('/')[5]
+        },
+
+        success: (data) => {
+            if ('errors' in data) {
+                toastr.error("Произошла ошибка! Повторите попытку позже.");
+            }
+            if ('success' in data) {
+                toastr.success("Пациент успешно записан на сдачу анализов.");
+                $.modal.close();
+            }
+        }
+    });
+});
 
 function readURL(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
         let img = document.querySelector('#profile_img');
         reader.onload = function (e) {
-            img.src =  URL.createObjectURL(input.files[0]);
+            img.src = URL.createObjectURL(input.files[0]);
         };
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-$(".info_edit_main_profile_avatar_reupload span").click(function(){
+$(".info_edit_main_profile_avatar_reupload span").click(function () {
     $('#update').click();
-    $("#update").change(function(){
+    $("#update").change(function () {
         readURL(this);
     });
 });
 
-$(".info_edit_main_profile_avatar_delete").click(function(){
+$(".info_edit_main_profile_avatar_delete").click(function () {
     let img = document.querySelector('#profile_img');
     img.src = "/media/photos/unnamed.jpg"
     $("#update").val('');

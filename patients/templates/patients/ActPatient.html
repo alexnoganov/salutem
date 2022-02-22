@@ -23,24 +23,23 @@
                     <div class="page_patient_left page_throw">
                         <div class="image_patient">
                             <div class="image">
-                                <img src="{% static 'img/unnamed.jpg' %}" alt="аватар">
+                                {% if profile.photo %}
+                                    <img src="{{ profile.photo.url }}" alt="аватар" id="profile_img">
+                                {% else %}
+                                    <img src="{% static 'img/unnamed.jpg' %}" alt="аватар" id="profile_img">
+                                {% endif %}
                             </div>
                             <form id="user" method="post">
                                 <div class="info_edit_item">
                                     <div class="info_edit_main_profile">
-                                        <div class="info_edit_main_profile_avatar" {% if not g.pf_image is None %}
-                                             style="background-image:
-                                                     url('{{ MEDIA_URL }}{{ g.pf_image }}')" {% endif %}>
 
-                                        </div>
                                         <div class="info_edit_main_profile_avatar_reupload">
-                                            <span>Обновить</span>
-
+                                            <span class="bot8" style="width: 100px;margin: 20px 0 0 0
+">Обновить</span>
                                             {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
-
                                         </div>
                                         <div class="info_edit_main_profile_avatar_delete">
-                                            <span>Удалить</span>
+                                            <span class="bot8" style="width: 100px;margin: 20px 0 0 0">Удалить</span>
                                         </div>
                                     </div>
                                 </div>
@@ -50,8 +49,8 @@
                     <div class="page_patient_right page_throw">
                         <div class="page_patient_button">
                             <div class="page_button">
-                                <button class="bot8" id="analysisModalBtn" onclick="$('#analysisModal').modal();">Запись
-                                    на анализы
+                                <button class="bot8" id="analysisModalBtn" onclick="$('#analysisModal').modal();
+">Запись на анализы
                                 </button>
                                 <button class="bot8">Медицинская книжка</button>
                                 <button class="bot8">История посещений</button>
@@ -251,7 +250,7 @@
 
     <div id="analysisModal" class="modal" style="max-width: 700px">
         <form method="post">
-        {% csrf_token %}
+            {% csrf_token %}
             <fieldset class="fieldset">
 
                 <div class="fieldset__row">

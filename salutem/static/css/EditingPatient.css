@@ -68,6 +68,61 @@
     justify-content: start;
 }
 
+.info_edit_main_profile {
+    display: -webkit-box;
+    justify-content: flex-start;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.info_edit_main_profile_avatar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: grey;
+    background-size: cover;
+    background-position: 50%;
+    border-radius: 50%;
+    background-image: url("../img/unnamed.jpg");
+    width: 80px;
+    height: 80px;
+    margin-right: 26px;
+}
+
+.info_edit_main_profile_avatar_reupload {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.67;
+    color: #2582e7;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.info_edit_main_profile_avatar_reupload input {
+    width: 380px;
+    display: none;
+}
+
+.info_edit_main_profile_avatar_delete {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.67;
+    color: #ed593b;
+    cursor: pointer;
+}
+
+
 /*-------------right page-------------------*/
 
 

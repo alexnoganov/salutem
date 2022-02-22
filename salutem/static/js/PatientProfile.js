@@ -18,7 +18,7 @@ toastr.options = {
 
 
 let files
-let zxc = document.querySelector(".info_edit_main_profile_avatar_delete");
+let zxc  = document.querySelector(".info_edit_main_profile_avatar_delete");
 let cxz = document.querySelector(".info_edit_main_profile_avatar_reupload");
 cxz.addEventListener("click", () => {
     files = "update"
@@ -32,17 +32,21 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
     e.preventDefault();
     let fileName = document.querySelector("#update").files;
 
-    if (fileName.length > 0 || files === 'delete') {
+    if(fileName.length>0 || files==='delete'){
         let formData = new FormData();
 
         if (files === "update") {
             let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
-            let newFile = new File(fileName, newFileName);
+            console.log(fileName)
+            let newFile  = new File(fileName, newFileName);
+            console.log(newFile)
             formData.append("photo", newFile)
-            image_ajax(formData)
+            image_ajax(formData, false, false)
         }
-        image_ajax(formData = "default")
-
+        else {
+            let defaultImgUrl =  location.href.split('/')[5] + "!" + "photos/unnamed.jpg";
+            image_ajax(defaultImgUrl)
+        }
 
     }
 
@@ -51,9 +55,6 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
         url: '/patients/save_profile/',
         type: 'POST',
         dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: false,
         data: {
             pk: location.href.split('/')[5],
             Sex: $('#powermail_field_anrede').val(),
@@ -65,7 +66,6 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
             email: $('#powermail_field_e_mail').val(),
             Place_of_residence: $('#powermail_field_residence').val(),
             Blood_type: $('#powermail_field_blood').val(),
-
         },
         success: (data) => {
             if ('errors' in data) {
@@ -77,20 +77,20 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
         }
     })
 
-    function image_ajax(formData) {
+    function image_ajax(formData, contentType= undefined, processData = undefined){
         $.ajax({
             url: '/patients/save_profile/',
             type: 'POST',
-            contentType: false,
+            contentType: contentType,
             dataType: 'json',
-            processData: false,
-            data: formData,
+            processData: processData,
+            data:  formData,
 
             success: (data) => {
-                if ('errors' in data) {
+                if('errors' in data){
                     console.log(1);
                 }
-                if ('success' in data) {
+                if('success' in data){
                     console.log(0);
                     // window.location.replace(window.location.origin + data.success)
                 }
@@ -100,53 +100,29 @@ document.querySelector(".submit__form").addEventListener("click", (e) => {
 
 })
 
-$("#submit__analysis").click((e) => {
-    e.preventDefault();
-    $.ajax({
-        url: '/patients/analysis/',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            analysisType: $("#analysisType").val(),
-            date: $("#analysisDate").val(),
-            specialistId: $("#profile__text").children('a')[0].href.split('/')[6], //TODO Переделать после изменения ссылки профиля специалиста
-            patientId: location.href.split('/')[5]
-        },
-
-        success: (data) => {
-            if ('errors' in data) {
-                console.log(1);
-            }
-            if ('success' in data) {
-                console.log(0);
-                // window.location.replace(window.location.origin + data.success)
-            }
-        }
-    });
-});
 
 function readURL(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
-
+        let img = document.querySelector('#profile_img');
         reader.onload = function (e) {
-            $('.info_edit_main_profile_avatar').css('background-image', 'url(' + e.target.result + ')');
+            img.src =  URL.createObjectURL(input.files[0]);
         };
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-$(".info_edit_main_profile_avatar_reupload span").click(function () {
+$(".info_edit_main_profile_avatar_reupload span").click(function(){
     $('#update').click();
-    $("#update").change(function () {
+    $("#update").change(function(){
         readURL(this);
     });
 });
 
-$(".info_edit_main_profile_avatar_delete").click(function () {
-    $(".info_edit_main_profile_avatar").css("background-image", "");
+$(".info_edit_main_profile_avatar_delete").click(function(){
+    let img = document.querySelector('#profile_img');
+    img.src = "/media/photos/unnamed.jpg"
     $("#update").val('');
-
 });
 
 

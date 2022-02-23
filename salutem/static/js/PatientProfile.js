@@ -28,7 +28,7 @@ zxc.addEventListener("click", () => {
 })
 
 
-document.querySelector(".submit__form").addEventListener("click", (e) => {
+document.querySelector("#profile_save").addEventListener("click", (e) => {
     e.preventDefault();
     let fileName = document.querySelector("#update").files;
 
@@ -106,10 +106,13 @@ $("#submit__analysis").click((e) => {
         type: 'POST',
         dataType: 'json',
         data: {
-            analysisType: $("#analysisType").val(),
-            analysisDate: $("#analysisDate").val(),
-            specialistId: $("#profile__text").children('a')[0].href.split('/')[6], //TODO Переделать после изменения ссылки профиля специалиста
-            patientId: location.href.split('/')[5]
+            type: 'register',
+            data: JSON.stringify({
+                type: $("#analysisType").val(),
+                date: $("#analysisDate").val(),
+                specialistId: $("#profile__text").children('a')[0].href.split('/')[6], //TODO Переделать после изменения ссылки профиля специалиста
+                patientId: location.href.split('/')[5]
+            })
         },
 
         success: (data) => {
@@ -119,6 +122,31 @@ $("#submit__analysis").click((e) => {
             if ('success' in data) {
                 toastr.success("Пациент успешно записан на сдачу анализов.");
                 $.modal.close();
+            }
+        }
+    });
+});
+$("#submit__analysis__result").click((e) => {
+    e.preventDefault();
+    $.ajax({
+        url: '/patients/analysis/',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            type: 'status',
+            data: JSON.stringify({
+                status: $("#analysis_status").val(),
+                result: $("#analysis_result").val(),
+                pk: $("#patient_analysis_pk").val(),
+            })
+        },
+
+        success: (data) => {
+            if ('errors' in data) {
+                toastr.error("Произошла ошибка! Повторите попытку позже.");
+            }
+            if ('success' in data) {
+                toastr.success("Данные успешно изменены.");
             }
         }
     });

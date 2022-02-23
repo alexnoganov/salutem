@@ -45,24 +45,43 @@
                         </div>
                     </div>
                     <div class="table">
-                        <div class="row table__header">
-                            <div class="cell" id="header1">ФИО</div>
-                            <div class="cell" id="header2">Номер телефона</div>
-                            <div class="cell" id="header3">Дата рождения</div>
-                            <div class="cell" id="header4">Адрес проживания</div>
-                            <div class="cell" id="header5">Дата Регистрации</div>
-                        </div>
-                        {% for patient in patients %}
-                            <a href="{% url 'profile' patient.pk %}" class="row">
-                                <div class="cell"
-                                     data-title="FIO">{{ patient.Name }} {{ patient.Patronymic }} {{ patient.Surname }}</div>
-                                <div class="cell" data-title="Phone">{{ patient.Telephone }}</div>
-                                <div class="cell" data-title="Date of Birth">{{ patient.Date_of_birth }}</div>
-                                <div class="cell" data-title="Address">{{ patient.Place_of_residence }}</div>
-                                <div class="cell"
-                                     data-title="Date of Registration">{{ patient.Date_of_Registration }}</div>
-                            </a>
-                        {% endfor %}
+                        {% if perms.user.edit_analyzes %}
+                            <div class="row table__header">
+                                <div class="cell" id="header1">Пациент</div>
+                                <div class="cell" id="header2">Врач</div>
+                                <div class="cell" id="header3">Дата сдачи</div>
+                                <div class="cell" id="header4">Статус</div>
+                            </div>
+                            {% for patient in patients %}
+                                <a href="{% url 'profile' patient.patient.pk %}" class="row">
+                                    <div class="cell"
+                                         data-title="Patient">{{ patient.patient.Name }} {{ patient.patient.Patronymic }} {{ patient.patient.Surname }}</div>
+                                    <div class="cell"
+                                         data-title="Specialist">{{ patient.specialist.last_name }} {{ patient.specialist.first_name }} {{ patient.specialist.patronymic }}</div>
+                                    <div class="cell" data-title="Test Date">{{ patient.test_date }}</div>
+                                    <div class="cell" data-title="Status">{{ patient.status }}</div>
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            <div class="row table__header">
+                                <div class="cell" id="header1">ФИО</div>
+                                <div class="cell" id="header2">Номер телефона</div>
+                                <div class="cell" id="header3">Дата рождения</div>
+                                <div class="cell" id="header4">Адрес проживания</div>
+                                <div class="cell" id="header5">Дата Регистрации</div>
+                            </div>
+                            {% for patient in patients %}
+                                <a href="{% url 'profile' patient.pk %}" class="row">
+                                    <div class="cell"
+                                         data-title="FIO">{{ patient.Name }} {{ patient.Patronymic }} {{ patient.Surname }}</div>
+                                    <div class="cell" data-title="Phone">{{ patient.Telephone }}</div>
+                                    <div class="cell" data-title="Date of Birth">{{ patient.Date_of_birth }}</div>
+                                    <div class="cell" data-title="Address">{{ patient.Place_of_residence }}</div>
+                                    <div class="cell"
+                                         data-title="Date of Registration">{{ patient.data_joined }}</div>
+                                </a>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                     {% if is_paginated %}
                         <div class="pagination">
@@ -95,4 +114,33 @@
 {% endblock %}
 {% block script %}
     <script src="{% static 'js/patients.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.addEventListener("click", e => {
+                {% if perms.user.edit_analyzes %}
+                    if (e.target.id === "header1") {
+                        columnSort(document.querySelector("#header1"), "Patient");
+                    } else if (e.target.id === "header2") {
+                        columnSort(document.querySelector("#header2"), "Specialist")
+                    } else if (e.target.id === "header3") {
+                        columnSort(document.querySelector("#header3"), "Test Date")
+                    } else if (e.target.id === "header4") {
+                        columnSort(document.querySelector("#header4"), "Status")
+                    }
+                {% else %}
+                    if (e.target.id === "header1") {
+                        columnSort(document.querySelector("#header1"), "FIO");
+                    } else if (e.target.id === "header2") {
+                        columnSort(document.querySelector("#header2"), "Phone")
+                    } else if (e.target.id === "header3") {
+                        columnSort(document.querySelector("#header3"), "Date of Birth")
+                    } else if (e.target.id === "header4") {
+                        columnSort(document.querySelector("#header4"), "Address")
+                    } else if (e.target.id === "header5") {
+                        columnSort(document.querySelector("#header5"), "Date of Registration")
+                    }
+                {% endif %}
+            });
+        });
+    </script>
 {% endblock %}

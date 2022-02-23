@@ -233,8 +233,70 @@
                                                 </fieldset>
                                             </div>
 
-                                            <button type="submit" class="submit__form">Сохранить</button>
+                                            <button type="submit" class="submit__form" id="profile_save">Сохранить
+                                            </button>
 
+                                        </form>
+                                    </div>
+                                    <div class="hpc-order-form-template__form">
+                                        <form method="post" id="analysis_form">
+                                        {% csrf_token %}
+                                            <input type="text" id="patient_analysis_pk" hidden value="{{ patient_analysis.pk }}">
+                                            <div class="form__section">
+                                                <fieldset class="fieldset">
+                                                    <legend class="fieldset__legend">Анализы:</legend>
+                                                    <div class="fieldset__row">
+                                                        <div class="form-block">
+                                                            <div>
+                                                                <label for="analysis_status"
+                                                                       class="input-field-wrapper__label">
+                                                                    Статус
+                                                                </label>
+                                                                <div class="select">
+                                                                    <select name="analysis_type" id="analysis_status"
+                                                                            class="select__control">
+                                                                        {% if patient_analysis.status == 'Новый' %}
+                                                                            <option value="Новый" selected>Новый
+                                                                            </option>
+                                                                            <option value="В процессе">В процессе
+                                                                            </option>
+                                                                            <option value="Завершен">Завершен</option>
+                                                                        {% elif patient_analysis.status == 'В процессе' %}
+                                                                            <option value="Новый">Новый</option>
+                                                                            <option value="В процессе" selected>В
+                                                                                процессе
+                                                                            </option>
+                                                                            <option value="Завершен">Завершен</option>
+                                                                        {% elif patient_analysis.status == 'Завершен' %}
+                                                                            <option value="Новый">Новый</option>
+                                                                            <option value="В процессе">В процессе
+                                                                            </option>
+                                                                            <option value="Завершен" selected>Завершен
+                                                                            </option>
+                                                                        {% endif %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fieldset__row">
+                                                        <div class="form-block">
+                                                            <div>
+                                                                <label for="analysis_result"
+                                                                       class="input-field-wrapper__label">Результаты</label>
+                                                                <textarea name="analysis_result" id="analysis_result"
+                                                                          class="text-input powermail_input"
+                                                                          style="resize: none;height: 200px;"></textarea>
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <button type="submit" class="submit__form" id="submit__analysis__result">Отправить</button>
                                         </form>
                                     </div>
                                 </div>
@@ -247,12 +309,10 @@
     </div>
     <div style="display: none" id="hiddenSex">{{ profile.Sex }}</div>
     <div style="display: none" id="hiddenBlood">{{ profile.Blood_type }}</div>
-{{ perms.user.edit_analyzes }}
     <div id="analysisModal" class="modal" style="max-width: 700px">
         <form method="post">
             {% csrf_token %}
             <fieldset class="fieldset">
-
                 <div class="fieldset__row">
                     <div class="form-block">
                         <div>
@@ -268,11 +328,12 @@
                         <div class="form-block">
                             <div>
                                 <label for="analysisDate" class="input-field-wrapper__label">Дата сдачи</label>
-                                <input type="datetime-local" class="text-input powermail_input" id="analysisDate" name="analysisDate">
+                                <input type="datetime-local" class="text-input powermail_input" id="analysisDate"
+                                       name="analysisDate">
                             </div>
                         </div>
                     </div>
-
+                </div>
             </fieldset>
             <div style="display:flex; justify-content: center;">
                 <button class="submit__form" id="submit__analysis" style="margin-bottom: 0">Записать</button>
@@ -285,5 +346,4 @@
 {% block script %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="{% static 'js/PatientProfile.js' %}"></script>
-    {#    <script src="{% static 'js/patients.js' %}"></script>#}
 {% endblock %}

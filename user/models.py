@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser, Group, GroupManager, Permission
+from django.contrib.auth.models import User, AbstractUser, Group, Permission
 from django.db.models import Value
 from django.db.models.functions import Concat
 from django.utils.translation import gettext_lazy as _

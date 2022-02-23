@@ -12,7 +12,9 @@
         </div>
         <div class="item">
             <div class="notification">
-                <div class="icon notify__btn"><span class="icon__counter notify__btn">2</span>
+                <div class="icon notify__btn">{% if analyzes_notify.count != 0 %}
+                    <span class="icon__counter notify__btn">{{ analyzes_notify.count }}</span>
+                {% endif %}
                     <svg class="notify__btn" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                          style="display: block; width: 30px; height: 30px;">
                         <g class="notify__btn">
@@ -23,18 +25,22 @@
                 </div>
                 <div class="notification__container notify">
                     <div class="notification__header notify"><span class="text notify">Уведомления</span><span
-                            class="counter notify">2</span></div>
+                            class="counter notify">{{ analyzes_notify.count }}</span></div>
                     <div class="notification__content notify">
-                        <a href="" class="notification__item">
-                            <div class="item__photo"><img src="{% static 'img/anonim.png' %}"></div>
-                            <div class="item__text">Пациент Максимов В.В. записался на сдачу анализов</div>
-                            <div class="item__time">10 минут назад</div>
-                        </a>
-                        <a href="" class="notification__item">
-                            <div class="item__photo"><img src="{% static 'img/anonim.png' %}"></div>
-                            <div class="item__text">Пациент Максимов В.В. записался на сдачу анализов</div>
-                            <div class="item__time">10 минут назад</div>
-                        </a>
+                        {% if analyzes_notify %}
+                            {% for analysis in analyzes_notify %}
+                                {% if analysis.status == 'Новый' %}
+                                    <a href="{% url 'profile' analysis.patient.pk %}" class="notification__item">
+                                        <div class="item__photo"><img src="{{ analysis.patient.photo.url }}"></div>
+                                        <div class="item__text">
+                                            Пациент {{ analysis.patient.Surname }} {{ analysis.patient.Name|first }}.{{ analysis.patient.Patronymic|first }}.
+                                            записался на сдачу анализов
+                                        </div>
+                                        <div class="item__time">{{ analysis.date_of_change|timesince }} назад</div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

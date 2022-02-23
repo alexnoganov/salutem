@@ -1,7 +1,9 @@
+import json
 import os
 from datetime import date, datetime
 
 from django.conf import settings
+from django.contrib.auth.models import Permission
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.http import JsonResponse
@@ -14,14 +16,22 @@ from patients.models import Patients
 
 def get_analysis(request):
     if request.method == 'POST':
-        analysis_type = request.POST.get('analysisType')
-        analysis_date = request.POST.get('analysisDate')
-        specialist_id = request.POST.get('specialistId')
-        patient_id = request.POST.get('patientId')
-        if analysis_type and analysis_date and specialist_id and patient_id:
-            Analyzes.objects.create(type_id=analysis_type, test_date=analysis_date, specialist_id=specialist_id,
-                                    patient_id=patient_id)
-            return JsonResponse({'success': 'success'}, safe=False)
+        if request.POST.get('type') == 'status':
+            data = json.loads(request.POST.get('data'))
+            if data:
+                Analyzes.objects.filter(pk=data['pk']).update(result=data['result'], status=data['status'])
+                return JsonResponse({'success': 'success'}, safe=False)
+            else:
+                return JsonResponse({'errors': 'error'}, safe=False)
+        elif request.POST.get('type') == 'register':
+            data = json.loads(request.POST.get('data'))
+            if data:
+                Analyzes.objects.create(type_id=data['type'], test_date=data['date'],
+                                        specialist_id=data['specialistId'],
+                                        patient_id=data['patientId'])
+                return JsonResponse({'success': 'success'}, safe=False)
+            else:
+                return JsonResponse({'errors': 'error'}, safe=False)
         else:
             return JsonResponse({'errors': 'error'}, safe=False)
     else:
@@ -85,6 +95,8 @@ class EditingPatient(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = PatientForm()
         context['analyzes'] = AnalyzesType.objects.all().order_by("title")
+        if self.request.user.has_perm('user.edit_analyzes'):
+            context['patient_analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk'])
         return context
 
 
@@ -99,11 +111,21 @@ class PatientsView(ListView):
         return context
 
     def get_queryset(self):
-        if self.request.GET.get('q'):
-            search = self.request.GET.get('q')
-            return Patients.objects.filter(
-                Q(Name__icontains=search) | Q(Surname__icontains=search) | Q(
-                    Patronymic__icontains=search) | Q(Telephone__icontains=search) | Q(
-                    Place_of_residence__icontains=search))
+        if self.request.user.has_perm('user.edit_analyzes'):
+            if self.request.GET.get('q'):
+                search = self.request.GET.get('q')
+                return Analyzes.objects.filter(
+                    Q(patient__Name__icontains=search) | Q(patient__Surname__icontains=search) | Q(
+                        patient__Patronymic__icontains=search) | Q(patient__Telephone__icontains=search) | Q(
+                        patient__Place_of_residence__icontains=search)).order_by('-test_date')
+            else:
+                return Analyzes.objects.all().order_by('-test_date')
         else:
-            return Patients.objects.all()
+            if self.request.GET.get('q'):
+                search = self.request.GET.get('q')
+                return Patients.objects.filter(
+                    Q(Name__icontains=search) | Q(Surname__icontains=search) | Q(
+                        Patronymic__icontains=search) | Q(Telephone__icontains=search) | Q(
+                        Place_of_residence__icontains=search)).order_by('-data_joined')
+            else:
+                return Patients.objects.all().order_by('-data_joined')

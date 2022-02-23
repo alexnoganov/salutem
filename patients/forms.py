@@ -1,5 +1,8 @@
 from django import forms
 
+from patients.models import AnalyzesType, Patients, Analyzes
+from user.models import Specialists
+
 
 class PatientForm(forms.Form):
     Sex = forms.ChoiceField(choices=(('Женщина', 'Женщина'), ('Мужчина', 'Мужчина')), label="ПОЛ", required=False)
@@ -15,4 +18,3 @@ class PatientForm(forms.Form):
     Telephone = forms.CharField(max_length=100, label="* НОМЕР ТЕЛЕФОНА", required=False)
     Email = forms.CharField(max_length=30, label="* E-MAIL", required=False)
     photo = forms.ImageField(required=False, max_length=200)
-

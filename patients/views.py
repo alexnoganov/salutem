@@ -96,7 +96,7 @@ class EditingPatient(DetailView):
         context['form'] = PatientForm()
         context['analyzes'] = AnalyzesType.objects.all().order_by("title")
         if self.request.user.has_perm('user.edit_analyzes'):
-            context['patient_analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk'])
+            context['patient_analyzes'] = list(Analyzes.objects.filter(patient_id=self.kwargs['pk']).values('id','status', 'type__title'))
         return context
 
 

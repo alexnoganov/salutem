@@ -13,8 +13,6 @@
 {% block content %}
 
 
-
-
     <div class="container">
         <div class="content__container">
             <h1 class="search__patient">Профиль пациента</h1>
@@ -238,13 +236,44 @@
 
                                         </form>
                                     </div>
+
+
+                                    {{ patient_analyzes_form }}
+
                                     <div class="hpc-order-form-template__form">
                                         <form method="post" id="analysis_form">
-                                        {% csrf_token %}
-                                            <input type="text" id="patient_analysis_pk" hidden value="{{ patient_analysis.pk }}">
+                                            {% csrf_token %}
+                                            <input type="text" id="patient_analysis_pk" hidden
+                                                   value="{{ patient_analysis.pk }}">
                                             <div class="form__section">
                                                 <fieldset class="fieldset">
                                                     <legend class="fieldset__legend">Анализы:</legend>
+                                                    <div class="fieldset__row">
+                                                        <div class="form-block">
+                                                            <div>
+                                                                <label for="analysis_name"
+                                                                       class="input-field-wrapper__label">
+                                                                    Название
+                                                                </label>
+                                                                <div class="select">
+                                                                    <select name="analysis_name" id="analysis_name"
+                                                                            class="select__control">
+
+                                                                        {% for name in patient_analyzes %}
+                                                                            <option value="{{ name.type__title }}"
+                                                                                    id="{{ name.id }}-anlz">
+                                                                                {{ name.type__title }}
+                                                                            </option>
+                                                                        {% endfor %}
+
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="fieldset__row">
                                                         <div class="form-block">
                                                             <div>
@@ -255,25 +284,11 @@
                                                                 <div class="select">
                                                                     <select name="analysis_type" id="analysis_status"
                                                                             class="select__control">
-                                                                        {% if patient_analysis.status == 'Новый' %}
-                                                                            <option value="Новый" selected>Новый
-                                                                            </option>
-                                                                            <option value="В процессе">В процессе
-                                                                            </option>
-                                                                            <option value="Завершен">Завершен</option>
-                                                                        {% elif patient_analysis.status == 'В процессе' %}
-                                                                            <option value="Новый">Новый</option>
-                                                                            <option value="В процессе" selected>В
-                                                                                процессе
-                                                                            </option>
-                                                                            <option value="Завершен">Завершен</option>
-                                                                        {% elif patient_analysis.status == 'Завершен' %}
-                                                                            <option value="Новый">Новый</option>
-                                                                            <option value="В процессе">В процессе
-                                                                            </option>
-                                                                            <option value="Завершен" selected>Завершен
-                                                                            </option>
-                                                                        {% endif %}
+
+                                                                        <option value="Новый" selected>Новый</option>
+                                                                        <option value="В процессе">В процессе</option>
+                                                                        <option value="Завершен">Завершен</option>
+
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -288,7 +303,8 @@
                                                                        class="input-field-wrapper__label">Результаты</label>
                                                                 <textarea name="analysis_result" id="analysis_result"
                                                                           class="text-input powermail_input"
-                                                                          style="resize: none;height: 200px;"></textarea>
+                                                                          style="resize: none;height: 200px;" disabled
+                                                                ></textarea>
                                                             </div>
                                                             <div class="invalid-feedback">
                                                             </div>
@@ -296,7 +312,9 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
-                                            <button type="submit" class="submit__form" id="submit__analysis__result">Отправить</button>
+                                            <button type="submit" class="submit__form" id="submit__analysis__result">
+                                                Отправить
+                                            </button>
                                         </form>
                                     </div>
                                 </div>
@@ -344,6 +362,9 @@
 {% endblock %}
 
 {% block script %}
+    <script>
+        dataAnalyze= {{ patient_analyzes | safe }}
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="{% static 'js/PatientProfile.js' %}"></script>
 {% endblock %}

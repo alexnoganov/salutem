@@ -20,6 +20,33 @@ toastr.options = {
 let files
 let zxc = document.querySelector(".info_edit_main_profile_avatar_delete");
 let cxz = document.querySelector(".info_edit_main_profile_avatar_reupload");
+
+
+
+function AnalyzeSwitchDate(){
+    let TypeNameAnalyze = document.querySelector("#analysis_name");
+    let StatusAnalyze = document.querySelector("#analysis_status");
+    let TextAreaAnalyze = document.querySelector("#analysis_result");
+    let arrayAnalyze = dataAnalyze;
+
+
+    TypeNameAnalyze.onchange = function (){
+        let idSelect =  TypeNameAnalyze.selectedOptions[0].id.split('-')[0];
+        let findObject = arrayAnalyze.find(id => id.id === parseInt(idSelect))
+        selectedOption(StatusAnalyze, findObject.status)
+    }
+
+    StatusAnalyze.onchange = function (){
+       TextAreaAnalyze.disabled = StatusAnalyze.selectedOptions[0].value !== "Завершен";
+    }
+
+}
+
+
+AnalyzeSwitchDate();
+
+
+
 cxz.addEventListener("click", () => {
     files = "update"
 })

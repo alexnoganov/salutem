@@ -58,6 +58,8 @@ def profile_user(request):
                 Patients.objects.filter(id=pk).update(Sex=Sex, Name=Username, Surname=Surname, Patronymic=Patronymic,
                                                       Date_of_birth=Date_of_birth, Telephone=Phone, Email=Email,
                                                       Place_of_residence=Place_of_residence, Blood_type=Blood_type)
+            else:
+                return JsonResponse({'errors': form.errors}, safe=False)
         else:
             try:
                 photo = request.FILES['photo']

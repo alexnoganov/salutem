@@ -37,7 +37,7 @@ function AnalyzeSwitchDate(){
     }
 
     StatusAnalyze.onchange = function (){
-       TextAreaAnalyze.disabled = StatusAnalyze.selectedOptions[0].value !== "Завершен";
+        TextAreaAnalyze.disabled = StatusAnalyze.selectedOptions[0].value !== "Завершен";
     }
 
 }
@@ -57,73 +57,75 @@ zxc.addEventListener("click", () => {
 
 document.querySelector("#profile_save").addEventListener("click", (e) => {
     e.preventDefault();
-    let fileName = document.querySelector("#update").files;
 
-    if (fileName.length > 0 || files === 'delete') {
-        let formData = new FormData();
+    if(validator()){
+        let fileName = document.querySelector("#update").files;
 
-        if (files === "update") {
-            let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
-            console.log(fileName)
-            let newFile = new File(fileName, newFileName);
-            console.log(newFile)
-            formData.append("photo", newFile)
-            image_ajax(formData, false, false)
-        } else {
-            let defaultImgUrl = location.href.split('/')[5] + "!" + "photos/unnamed.jpg";
-            image_ajax(defaultImgUrl)
+        if (fileName.length > 0 || files === 'delete') {
+            let formData = new FormData();
+
+            if (files === "update") {
+                let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
+                console.log(fileName)
+                let newFile = new File(fileName, newFileName);
+                console.log(newFile)
+                formData.append("photo", newFile)
+                image_ajax(formData, false, false)
+            } else {
+                let defaultImgUrl = location.href.split('/')[5] + "!" + "photos/unnamed.jpg";
+                image_ajax(defaultImgUrl)
+            }
+
         }
 
-    }
 
-
-    $.ajax({
-        url: '/patients/save_profile/',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            pk: location.href.split('/')[5],
-            Sex: $('#powermail_field_anrede').val(),
-            username: $('#powermail_field_vorname').val(),
-            surname: $('#powermail_field_nachname').val(),
-            Patronymic: $('#powermail_field_Patronymic').val(),
-            Date_of_birth: $('#powermail_field_geburtsdatum').val(),
-            phone: $('#powermail_field_telefonnummer').val(),
-            email: $('#powermail_field_e_mail').val(),
-            Place_of_residence: $('#powermail_field_residence').val(),
-            Blood_type: $('#powermail_field_blood').val(),
-        },
-        success: (data) => {
-            if ('errors' in data) {
-                toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
-            }
-            if ('success' in data) {
-                toastr["success"]("Данные успешно изменены!");
-            }
-        }
-    })
-
-    function image_ajax(formData, contentType = undefined, processData = undefined) {
         $.ajax({
             url: '/patients/save_profile/',
             type: 'POST',
-            contentType: contentType,
             dataType: 'json',
-            processData: processData,
-            data: formData,
-
+            data: {
+                pk: location.href.split('/')[5],
+                Sex: $('#powermail_field_anrede').val(),
+                username: $('#powermail_field_vorname').val(),
+                surname: $('#powermail_field_nachname').val(),
+                Patronymic: $('#powermail_field_Patronymic').val(),
+                Date_of_birth: $('#powermail_field_geburtsdatum').val(),
+                phone: $('#powermail_field_telefonnummer').val(),
+                email: $('#powermail_field_e_mail').val(),
+                Place_of_residence: $('#powermail_field_residence').val(),
+                Blood_type: $('#powermail_field_blood').val(),
+            },
             success: (data) => {
                 if ('errors' in data) {
-                    console.log(1);
+                    toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
                 }
                 if ('success' in data) {
-                    console.log(0);
-                    // window.location.replace(window.location.origin + data.success)
+                    toastr["success"]("Данные успешно изменены!");
                 }
             }
         })
-    }
 
+        function image_ajax(formData, contentType = undefined, processData = undefined) {
+            $.ajax({
+                url: '/patients/save_profile/',
+                type: 'POST',
+                contentType: contentType,
+                dataType: 'json',
+                processData: processData,
+                data: formData,
+
+                success: (data) => {
+                    if ('errors' in data) {
+                        console.log(1);
+                    }
+                    if ('success' in data) {
+                        console.log(0);
+                        // window.location.replace(window.location.origin + data.success)
+                    }
+                }
+            })
+        }
+    }
 })
 
 $("#submit__analysis").click((e) => {
@@ -179,6 +181,68 @@ $("#submit__analysis__result").click((e) => {
     });
 });
 
+function validator(){
+    const validateEmail = (email) => {
+        return email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
+    const validateFIO = (FIO) => {
+        return FIO.value.trim().length !== 0;
+    };
+
+    let flags = true;
+    let name = document.querySelector("#powermail_field_vorname");
+    let surname = document.querySelector("#powermail_field_nachname");
+    let patronymic = document.querySelector("#powermail_field_Patronymic");
+    let email = $('#powermail_field_e_mail').val();
+
+    if(!validateEmail(email)) {
+        document.querySelector("#invalid_email").style.display = "block";
+        flags =  false;
+    }
+    if(!validateFIO(name)) {
+        document.querySelector("#invalid_name").style.display = "block";
+        flags =  false;
+    }
+    if(!validateFIO(surname)) {
+        document.querySelector("#invalid_surname").style.display = "block";
+        flags =  false;
+    }
+    if(!validateFIO(patronymic)) {
+        document.querySelector("#invalid_patronymic").style.display = "block";
+        flags =  false;
+    }
+    return flags;
+}
+
+function OnlyNumberInputAndBRD() {
+    let phone = document.querySelector("#powermail_field_telefonnummer");
+    let brd = document.querySelector("#powermail_field_geburtsdatum");
+    let name = document.querySelector("#powermail_field_vorname");
+    let surname = document.querySelector("#powermail_field_nachname");
+    let patronymic = document.querySelector("#powermail_field_Patronymic");
+
+    phone.oninput = function () {
+        phone.value = phone.value.replace(/[A-Za-zА-Яа-яЁё^!\-?=*+|`~_&%$#@"№;()]/, '');
+    }
+    brd.oninput = function () {
+        brd.value = brd.value.replace(/[A-Za-zА-Яа-яЁё^!\?=*+|`~_&%$#@"№;()]/, '');
+    }
+
+    function oninputFIO(input){
+        input.oninput = function () {
+            input.value = input.value.replace(/[0-9^!\?=*+|`~_&%$#@"№;()]/, '');
+        }
+    }
+
+    oninputFIO(name);
+    oninputFIO(surname);
+    oninputFIO(patronymic);
+}
+
+
+
 function readURL(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
@@ -219,5 +283,6 @@ function selectedOption(select, type) {
 
 }
 
+OnlyNumberInputAndBRD();
 selectedOption(SelectSex, hiddenSex);
 selectedOption(SelectBlood, hiddenBlood);

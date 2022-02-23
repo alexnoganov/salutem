@@ -125,6 +125,15 @@
 
 /*-------------right page-------------------*/
 
+.invalid-feedback{
+    font-size: 14px;
+    margin-top: 4px;
+    color: #f84147;
+}
+
+.invalid-input{
+    border: 1px solid #f84147 !important;
+}
 
 .bot8 {
     background-color: #FFFFFF;

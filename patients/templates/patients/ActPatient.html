@@ -81,9 +81,7 @@
 
                                                                 </div>
                                                             </div>
-                                                            <div class="invalid-feedback">
-                                                                {{ form.Sex.errors }}
-                                                            </div>
+                                                            <div class="invalid-feedback"></div>
                                                         </div>
                                                     </div>
                                                     <div class="fieldset__row fieldset__row--col fieldset__row--col2">
@@ -97,8 +95,10 @@
                                                                 </label>
                                                                 {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" value=profile.Name %}
                                                             </div>
-                                                            <div class="invalid-feedback">
-                                                                {{ form.Name.errors }}
+                                                            <div class="invalid-feedback" id="invalid_name"
+                                                                 style="display: none">
+                                                                Это поле не может быть пустым или иметь не
+                                                                корректные значения.
                                                             </div>
                                                         </div>
                                                         <div class="form-block">
@@ -112,8 +112,10 @@
 
                                                                 </label>
                                                             </div>
-                                                            <div class="invalid-feedback">
-                                                                {{ form.Surname.errors }}
+                                                            <div class="invalid-feedback" id="invalid_surname"
+                                                                 style="display: none">
+                                                                Это поле не может быть пустым или иметь не
+                                                                корректные значения.
                                                             </div>
                                                         </div>
                                                     </div>
@@ -131,8 +133,10 @@
                                                                     </span>
                                                                     {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
                                                                 </label>
-                                                                <div class="invalid-feedback">
-                                                                    {{ form.Patronymic.errors }}
+                                                                <div class="invalid-feedback" id="invalid_patronymic"
+                                                                     style="display: none">
+                                                                    Это поле не может быть пустым или иметь не
+                                                                    корректные значения.
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,9 +150,7 @@
                                                                 </label>
                                                                 {% render_field form.Date_of_birth class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
                                                             </div>
-                                                            <div class="invalid-feedback">
-                                                                {{ form.Date_of_birth.errors }}
-                                                            </div>
+                                                            <div class="invalid-feedback"></div>
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -167,9 +169,7 @@
                                                                 {% render_field form.Telephone class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
 
                                                             </div>
-                                                            <div class="invalid-feedback">
-                                                                {{ form.Telephone.errors }}
-                                                            </div>
+                                                            <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="form-block">
                                                             <div class="input-field-wrapper">
@@ -182,9 +182,10 @@
                                                                 {% render_field form.Email class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
 
                                                             </div>
-                                                        </div>
-                                                        <div class="invalid-feedback">
-                                                            {{ form.Email.errors }}
+                                                            <div class="invalid-feedback" id="invalid_email"
+                                                                 style="display: none">
+                                                                Введен некорректный адрес эл.почты.
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </fieldset>

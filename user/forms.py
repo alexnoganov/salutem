@@ -1,9 +1,11 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import Specialists
+
+User = get_user_model()
 
 
 class LoginForm(forms.Form):

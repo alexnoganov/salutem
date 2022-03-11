@@ -14,7 +14,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('home')
+                    return redirect('patients')
                 else:
                     return HttpResponse('Аккаунт отключен')
             else:

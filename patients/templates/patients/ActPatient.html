@@ -239,13 +239,9 @@
                                     </div>
 
 
-                                    {{ patient_analyzes_form }}
-
                                     <div class="hpc-order-form-template__form">
                                         <form method="post" id="analysis_form">
                                             {% csrf_token %}
-                                            <input type="text" id="patient_analysis_pk" hidden
-                                                   value="{{ patient_analysis.pk }}">
                                             <div class="form__section">
                                                 <fieldset class="fieldset">
                                                     <legend class="fieldset__legend">Анализы:</legend>
@@ -261,7 +257,7 @@
                                                                             class="select__control">
 
                                                                         {% for name in patient_analyzes %}
-                                                                            <option value="{{ name.type__title }}"
+                                                                            <option value="{{ name.id }}"
                                                                                     id="{{ name.id }}-anlz">
                                                                                 {{ name.type__title }}
                                                                             </option>
@@ -364,7 +360,7 @@
 
 {% block script %}
     <script>
-        dataAnalyze= {{ patient_analyzes | safe }}
+        dataAnalyze= {{ patient_analyzes | safe }};
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="{% static 'js/PatientProfile.js' %}"></script>

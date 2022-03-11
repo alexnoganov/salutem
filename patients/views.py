@@ -1,9 +1,10 @@
+import itertools
 import json
-import os
-from datetime import date, datetime
+
+from datetime import datetime
+from itertools import groupby
 
 from django.conf import settings
-from django.contrib.auth.models import Permission
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.http import JsonResponse
@@ -19,6 +20,7 @@ def get_analysis(request):
         if request.POST.get('type') == 'status':
             data = json.loads(request.POST.get('data'))
             if data:
+                print(data)
                 Analyzes.objects.filter(pk=data['pk']).update(result=data['result'], status=data['status'])
                 return JsonResponse({'success': 'success'}, safe=False)
             else:
@@ -98,7 +100,8 @@ class EditingPatient(DetailView):
         context['form'] = PatientForm()
         context['analyzes'] = AnalyzesType.objects.all().order_by("title")
         if self.request.user.has_perm('user.edit_analyzes'):
-            context['patient_analyzes'] = list(Analyzes.objects.filter(patient_id=self.kwargs['pk']).values('id','status', 'type__title'))
+            context['patient_analyzes'] = list(
+                Analyzes.objects.filter(patient_id=self.kwargs['pk']).values('id', 'status', 'type__title'))
         return context
 
 
@@ -110,6 +113,14 @@ class PatientsView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        tmp = list(Analyzes.objects.values('id', 'patient'))
+        # v_by_k = dict()
+        # for d in tmp:
+        #     for k, v in d.items():
+        #         if v not in v_by_k:
+        #             v_by_k[v] = k
+        # new_d = {v: k for k, v in v_by_k.items()}
+        # print(new_d)
         return context
 
     def get_queryset(self):
@@ -122,6 +133,7 @@ class PatientsView(ListView):
                         patient__Place_of_residence__icontains=search)).order_by('-test_date')
             else:
                 return Analyzes.objects.all().order_by('-test_date')
+                # return Analyzes.objects.all().order_by('-test_date')
         else:
             if self.request.GET.get('q'):
                 search = self.request.GET.get('q')

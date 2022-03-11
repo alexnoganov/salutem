@@ -166,7 +166,7 @@ $("#submit__analysis__result").click((e) => {
             data: JSON.stringify({
                 status: $("#analysis_status").val(),
                 result: $("#analysis_result").val(),
-                pk: $("#patient_analysis_pk").val(),
+                pk: $("#analysis_name").val(),
             })
         },
 

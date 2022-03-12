@@ -267,6 +267,29 @@ $(".info_edit_main_profile_avatar_delete").click(function () {
     $("#update").val('');
 });
 
+$("#modal__delete__analysis").click((e) => {
+    e.preventDefault();
+    $.ajax({
+        url: '/patients/analysis/',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            type: 'delete',
+            data: JSON.stringify({
+                pk: $("#analysis_name").val(),
+            })
+        },
+
+        success: (data) => {
+            if ('errors' in data) {
+                toastr.error("Произошла ошибка! Повторите попытку позже.");
+            }
+            if ('success' in data) {
+                location.reload();
+            }
+        }
+    });
+});
 
 let SelectSex = document.querySelector("#powermail_field_anrede").options;
 let SelectBlood = document.querySelector("#powermail_field_blood").options;

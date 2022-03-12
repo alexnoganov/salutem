@@ -36,6 +36,13 @@ def get_analysis(request):
                 return JsonResponse({'success': 'success'}, safe=False)
             else:
                 return JsonResponse({'errors': 'error'}, safe=False)
+        elif request.POST.get('type') == 'delete':
+            data = json.loads(request.POST.get('data'))
+            if data:
+                Analyzes.objects.get(pk=data['pk']).delete()
+                return JsonResponse({'success': 'success'}, safe=False)
+            else:
+                return JsonResponse({'errors': 'error'}, safe=False)
         else:
             return JsonResponse({'errors': 'error'}, safe=False)
     else:

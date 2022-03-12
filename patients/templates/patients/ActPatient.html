@@ -312,6 +312,9 @@
                                             <button type="submit" class="submit__form" id="submit__analysis__result">
                                                 Отправить
                                             </button>
+                                            <button type="button" class="submit__form" id="delete__analysis"
+                                                    onclick="$('#confirmModal').modal();">Удалить
+                                            </button>
                                         </form>
                                     </div>
                                 </div>
@@ -355,7 +358,19 @@
             </div>
         </form>
     </div>
-
+    <div id="confirmModal" class="modal">
+        <div class="modal__content">
+            <div class="modal__body">
+                <h1 style="font-size: 2em; font-weight: bold;">Удалить Анализ</h1>
+                <p>Вы уверены, что хотите удалить этот анализ?</p>
+            </div>
+            <div class="modal__footer">
+                <button type="button" class="btn cancel" onclick="$.modal.close()">Отмена</button>
+                <button type="button" class="btn submit" id="modal__delete__analysis">Удалить</button>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}
 
 {% block script %}

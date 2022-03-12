@@ -46,10 +46,15 @@
                     <div class="page_patient_right page_throw">
                         <div class="page_patient_button">
                             <div class="page_button">
-                                <button class="bot8" id="analysisModalBtn" onclick="$('#analysisModal').modal();
-">Запись на анализы
+                                <button class="bot8" id="analysisModalBtn" onclick="$('#analysisModal').modal();">
+                                    Запись на анализы
                                 </button>
-                                <button class="bot8">Медицинская книжка</button>
+                                <button class="bot8">
+                                    <a href="{% url 'medicalcard' profile.pk %}" style="color: #555555;">
+                                        Медицинская
+                                        книжка
+                                    </a>
+                                </button>
                                 <button class="bot8">История посещений</button>
                             </div>
                         </div>

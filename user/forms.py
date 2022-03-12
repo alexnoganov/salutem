@@ -49,4 +49,4 @@ class SpecialistForm(forms.Form):
     education = forms.CharField(widget=forms.Textarea, label='* ОБРАЗОВАНИЕ', required=False)
     passport_num = forms.CharField(max_length=20, label='* СЕРИЯ И НОМЕР ПАСПОРТА', required=False)
     inn = forms.CharField(max_length=50, label='* ИНН', required=False)
-    specializations = forms.ModelChoiceField(queryset=Specializations.objects.all(), required=False)
+    specializations = forms.ModelChoiceField(queryset=Specializations.objects.all(), required=False, empty_label=None)

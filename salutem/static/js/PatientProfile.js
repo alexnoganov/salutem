@@ -14,7 +14,7 @@ toastr.options = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
-}
+} // Настройки toatsr
 
 
 let files;
@@ -28,22 +28,23 @@ function AnalyzeSwitchDate() {
     let TextAreaAnalyze = document.querySelector("#analysis_result");
     let arrayAnalyze = dataAnalyze;
 
-
-    TypeNameAnalyze.onchange = function () {
-        let idSelect = TypeNameAnalyze.selectedOptions[0].id.split('-')[0];
+    document.addEventListener("DOMContentLoaded", () => {
+        let idSelect = TypeNameAnalyze.value;
         let findObject = arrayAnalyze.find(id => id.id === parseInt(idSelect))
         selectedOption(StatusAnalyze, findObject.status)
+    });
+
+    TypeNameAnalyze.onchange = function () {
+        let idSelect = TypeNameAnalyze.value;
+        let findObject = arrayAnalyze.find(id => id.id === parseInt(idSelect))
+        selectedOption(StatusAnalyze, findObject.status)
+        TextAreaAnalyze.disabled = StatusAnalyze.value !== "Завершен";
     }
 
     StatusAnalyze.onchange = function () {
-        TextAreaAnalyze.disabled = StatusAnalyze.selectedOptions[0].value !== "Завершен";
+        TextAreaAnalyze.disabled = StatusAnalyze.value !== "Завершен";
     }
-
-}
-
-
-AnalyzeSwitchDate();
-
+} // Обработка формы анализов
 
 cxz.addEventListener("click", () => {
     files = "update"
@@ -101,7 +102,7 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
                     toastr["success"]("Данные успешно изменены!");
                 }
             }
-        })
+        }) // AJAX текста
 
         function image_ajax(formData, contentType = undefined, processData = undefined) {
             $.ajax({
@@ -114,17 +115,14 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
 
                 success: (data) => {
                     if ('errors' in data) {
-                        console.log(1);
                     }
                     if ('success' in data) {
-                        console.log(0);
-                        // window.location.replace(window.location.origin + data.success)
                     }
                 }
             })
-        }
+        } // AJAX картинки
     }
-})
+}) // Сохранение профиля
 
 $("#submit__analysis").click((e) => {
     e.preventDefault();
@@ -137,7 +135,7 @@ $("#submit__analysis").click((e) => {
             data: JSON.stringify({
                 type: $("#analysisType").val(),
                 date: $("#analysisDate").val(),
-                specialistId: $("#profile__text").children('a')[0].href.split('/')[6], //TODO Переделать после изменения ссылки профиля специалиста
+                specialistId: $("#profile__text").children('a')[0].href.split('/')[4],
                 patientId: location.href.split('/')[5]
             })
         },
@@ -152,7 +150,8 @@ $("#submit__analysis").click((e) => {
             }
         }
     });
-});
+}); // Запись на анализ
+
 $("#submit__analysis__result").click((e) => {
     e.preventDefault();
     $.ajax({
@@ -177,7 +176,7 @@ $("#submit__analysis__result").click((e) => {
             }
         }
     });
-});
+}); // Отправка результатов анализа
 
 function validator() {
     const validateEmail = (email) => {
@@ -222,7 +221,7 @@ function validator() {
         flags = false;
     }
     return flags;
-}
+} // Валидатор
 
 function OnlyNumberInputAndBRD() {
     let phone = document.querySelector("#powermail_field_telefonnummer");
@@ -247,7 +246,7 @@ function OnlyNumberInputAndBRD() {
     oninputFIO(name);
     oninputFIO(surname);
     oninputFIO(patronymic);
-}
+} // Валидация
 
 
 function readURL(input) {
@@ -266,13 +265,13 @@ $(".info_edit_main_profile_avatar_reupload span").click(function () {
     $("#update").change(function () {
         readURL(this);
     });
-});
+}); // Добавление фото профиля
 
 $(".info_edit_main_profile_avatar_delete").click(function () {
     let img = document.querySelector('#profile_img');
     img.src = "/media/photos/unnamed.jpg"
     $("#update").val('');
-});
+}); // Удаление фото профиля
 
 $("#modal__delete__analysis").click((e) => {
     e.preventDefault();
@@ -296,7 +295,7 @@ $("#modal__delete__analysis").click((e) => {
             }
         }
     });
-});
+}); // Обработка удаления анализа
 
 function selectedOption(select, type) {
     for (let i = 0; i < select.length; i++) {
@@ -308,3 +307,4 @@ function selectedOption(select, type) {
 }
 
 OnlyNumberInputAndBRD();
+AnalyzeSwitchDate();

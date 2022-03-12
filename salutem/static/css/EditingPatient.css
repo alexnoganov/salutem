@@ -220,12 +220,16 @@
     border: 4px solid #eceff1;
     margin: 0;
     outline: none;
-    appearance: none;
     cursor: pointer;
 }
 
 .fieldset__row + .fieldset__row {
     margin-top: 15px;
+}
+
+#powermail_field_education {
+    resize: none;
+    height: 150px;
 }
 
 .form-block {

@@ -56,7 +56,7 @@
 
             {% if user.is_authenticated %}
                 <div id="profile__text">Добро пожаловать, <a
-                        href="{{ user.pk }}">{{ user.last_name }} {{ user.first_name|first }}.{{ user.patronymic|first }}.</a>
+                        href="{% url 'specialist_profile' user.pk %}">{{ user.last_name }} {{ user.first_name|first }}.{{ user.patronymic|first }}.</a>
                     | <a
                             href="{% url 'logout' %}">Выход</a></div>
             {% else %}

@@ -10,10 +10,11 @@ from user.managers import SpecialistManager
 
 class Specialists(AbstractUser):
     patronymic = models.CharField(max_length=100, verbose_name="Отчество", blank=True)
-    photo = models.ImageField(blank=True, upload_to='photos/specialists/', max_length=210)
+    photo = models.ImageField(blank=True, upload_to='photos/specialists/', max_length=210, default='photos/unnamed.jpg')
     phone = models.CharField(max_length=100, verbose_name='Номер телефона', blank=True)
-    sex = models.CharField(max_length=20, choices=(('Женский', 'Женский'), ('Мужской', 'Мужской')), verbose_name='Пол',
+    sex = models.CharField(max_length=20, choices=(('Женщина', 'Женщина'), ('Мужчина', 'Мужчина')), verbose_name='Пол',
                            blank=True)
+    place_of_residence = models.CharField(max_length=100, blank=True, verbose_name="Место проживания")
     education = models.TextField(max_length=150, verbose_name='Образование', blank=True)
     passport_num = models.CharField(max_length=20, verbose_name='Серия и номер паспорта', blank=True)
     inn = models.CharField(max_length=50, verbose_name='ИНН', blank=True)

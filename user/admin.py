@@ -34,7 +34,8 @@ class CustomUserAdmin(UserAdmin):
         ('Данные для авторизации', {'fields': ('username', 'password')}),
         ('Личные данные',
          {'fields': (
-             'last_name', 'first_name', 'patronymic', 'sex', 'date_of_birth', 'inn', 'passport_num', 'education',
+             'last_name', 'first_name', 'patronymic', 'sex', 'date_of_birth', 'place_of_residence', 'inn',
+             'passport_num', 'education',
              'specialization', 'phone', 'email', 'photo')}),
         ('Права доступа', {'fields': ('groups', 'is_staff', 'is_active', 'last_login', 'date_joined')}),
     )

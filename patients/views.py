@@ -23,7 +23,6 @@ def get_analysis(request):
                 analysis.status = data['status']
                 analysis.result = data['result']
                 analysis.save()
-                # Analyzes.objects.filter(pk=data['pk']).update(result=data['result'], status=data['status'])
                 return JsonResponse({'success': 'success'}, safe=False)
             else:
                 return JsonResponse({'errors': 'error'}, safe=False)
@@ -69,6 +68,7 @@ def profile_user(request):
                 Patients.objects.filter(id=pk).update(Sex=sex, Name=username, Surname=surname, Patronymic=patronymic,
                                                       Date_of_birth=date_of_birth, Telephone=phone, Email=email,
                                                       Place_of_residence=place_of_residence, Blood_type=blood_type)
+                JsonResponse({'success': 'success'}, safe=False)
             else:
                 return JsonResponse({'errors': form.errors}, safe=False)
         else:
@@ -106,7 +106,8 @@ class EditingPatient(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = PatientForm()
+        context['form'] = PatientForm(initial={'Sex': self.get_object().Sex,
+                                               'Blood_type': self.get_object().Blood_type})
         context['analyzes'] = AnalyzesType.objects.all().order_by("title")
         if self.request.user.has_perm('user.edit_analyzes'):
             context['patient_analyzes'] = list(

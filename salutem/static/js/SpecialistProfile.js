@@ -22,29 +22,6 @@ let zxc = document.querySelector(".info_edit_main_profile_avatar_delete");
 let cxz = document.querySelector(".info_edit_main_profile_avatar_reupload");
 
 
-function AnalyzeSwitchDate() {
-    let TypeNameAnalyze = document.querySelector("#analysis_name");
-    let StatusAnalyze = document.querySelector("#analysis_status");
-    let TextAreaAnalyze = document.querySelector("#analysis_result");
-    let arrayAnalyze = dataAnalyze;
-
-
-    TypeNameAnalyze.onchange = function () {
-        let idSelect = TypeNameAnalyze.selectedOptions[0].id.split('-')[0];
-        let findObject = arrayAnalyze.find(id => id.id === parseInt(idSelect))
-        selectedOption(StatusAnalyze, findObject.status)
-    }
-
-    StatusAnalyze.onchange = function () {
-        TextAreaAnalyze.disabled = StatusAnalyze.selectedOptions[0].value !== "Завершен";
-    }
-
-}
-
-
-AnalyzeSwitchDate();
-
-
 cxz.addEventListener("click", () => {
     files = "update"
 })
@@ -63,35 +40,39 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
             let formData = new FormData();
 
             if (files === "update") {
-                let newFileName = location.href.split('/')[5] + "!" + fileName[0].name
+                let newFileName = location.href.split('/')[4] + "!" + fileName[0].name
                 console.log(fileName)
                 let newFile = new File(fileName, newFileName);
                 console.log(newFile)
                 formData.append("photo", newFile)
                 image_ajax(formData, false, false)
             } else {
-                let defaultImgUrl = location.href.split('/')[5] + "!" + "photos/unnamed.jpg";
+                let defaultImgUrl = location.href.split('/')[4] + "!" + "photos/unnamed.jpg";
                 image_ajax(defaultImgUrl)
             }
 
         }
 
-
         $.ajax({
-            url: '/patients/save_profile/',
+            url: '/user/save_profile/',
             type: 'POST',
             dataType: 'json',
             data: {
-                pk: location.href.split('/')[5],
-                Sex: $('#powermail_field_anrede').val(),
-                username: $('#powermail_field_vorname').val(),
-                surname: $('#powermail_field_nachname').val(),
-                Patronymic: $('#powermail_field_Patronymic').val(),
-                Date_of_birth: $('#powermail_field_geburtsdatum').val(),
-                phone: $('#powermail_field_telefonnummer').val(),
-                email: $('#powermail_field_e_mail').val(),
-                Place_of_residence: $('#powermail_field_residence').val(),
-                Blood_type: $('#powermail_field_blood').val(),
+                data: JSON.stringify({
+                    pk: location.href.split('/')[4],
+                    sex: $('#powermail_field_anrede').val(),
+                    first_name: $('#powermail_field_vorname').val(),
+                    last_name: $('#powermail_field_nachname').val(),
+                    patronymic: $('#powermail_field_Patronymic').val(),
+                    date_of_birth: $('#powermail_field_geburtsdatum').val(),
+                    phone: $('#powermail_field_telefonnummer').val(),
+                    email: $('#powermail_field_e_mail').val(),
+                    place_of_residence: $('#powermail_field_residence').val(),
+                    passport_num: $('#powermail_field_pass_num').val(),
+                    inn: $('#powermail_field_inn').val(),
+                    spec: $('#powermail_field_spec').val(),
+                    education: $('#powermail_field_education').val(),
+                })
             },
             success: (data) => {
                 if ('errors' in data) {
@@ -105,7 +86,7 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
 
         function image_ajax(formData, contentType = undefined, processData = undefined) {
             $.ajax({
-                url: '/patients/save_profile/',
+                url: '/user/save_profile/',
                 type: 'POST',
                 contentType: contentType,
                 dataType: 'json',
@@ -118,66 +99,12 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
                     }
                     if ('success' in data) {
                         console.log(0);
-                        // window.location.replace(window.location.origin + data.success)
                     }
                 }
             })
         }
     }
 })
-
-$("#submit__analysis").click((e) => {
-    e.preventDefault();
-    $.ajax({
-        url: '/patients/analysis/',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            type: 'register',
-            data: JSON.stringify({
-                type: $("#analysisType").val(),
-                date: $("#analysisDate").val(),
-                specialistId: $("#profile__text").children('a')[0].href.split('/')[6], //TODO Переделать после изменения ссылки профиля специалиста
-                patientId: location.href.split('/')[5]
-            })
-        },
-
-        success: (data) => {
-            if ('errors' in data) {
-                toastr.error("Произошла ошибка! Повторите попытку позже.");
-            }
-            if ('success' in data) {
-                toastr.success("Пациент успешно записан на сдачу анализов.");
-                $.modal.close();
-            }
-        }
-    });
-});
-$("#submit__analysis__result").click((e) => {
-    e.preventDefault();
-    $.ajax({
-        url: '/patients/analysis/',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            type: 'status',
-            data: JSON.stringify({
-                status: $("#analysis_status").val(),
-                result: $("#analysis_result").val(),
-                pk: $("#analysis_name").val(),
-            })
-        },
-
-        success: (data) => {
-            if ('errors' in data) {
-                toastr.error("Произошла ошибка! Повторите попытку позже.");
-            }
-            if ('success' in data) {
-                toastr.success("Данные успешно изменены.");
-            }
-        }
-    });
-});
 
 function validator() {
     const validateEmail = (email) => {
@@ -194,12 +121,15 @@ function validator() {
     let surname = document.querySelector("#powermail_field_nachname");
     let patronymic = document.querySelector("#powermail_field_Patronymic");
     let phone = document.querySelector("#powermail_field_telefonnummer");
-    let email = $('#powermail_field_e_mail').val();
+    let pass = document.querySelector("#powermail_field_pass_num");
+    let spec = document.querySelector("#powermail_field_spec");
     let invalids = document.querySelectorAll(".invalid-feedback");
 
     invalids.forEach(item => {
         item.style.display = "none";
     });
+
+    let email = $('#powermail_field_e_mail').val();
 
     if (!validateEmail(email)) {
         document.querySelector("#invalid_email").style.display = "block";
@@ -219,6 +149,14 @@ function validator() {
     }
     if (!validateFIO(phone)) {
         document.querySelector("#invalid_phone").style.display = "block";
+        flags = false;
+    }
+    if (!validateFIO(pass)) {
+        document.querySelector("#invalid_pass").style.display = "block";
+        flags = false;
+    }
+    if (!validateFIO(spec)) {
+        document.querySelector("#invalid_spec").style.display = "block";
         flags = false;
     }
     return flags;
@@ -249,7 +187,6 @@ function OnlyNumberInputAndBRD() {
     oninputFIO(patronymic);
 }
 
-
 function readURL(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
@@ -274,37 +211,5 @@ $(".info_edit_main_profile_avatar_delete").click(function () {
     $("#update").val('');
 });
 
-$("#modal__delete__analysis").click((e) => {
-    e.preventDefault();
-    $.ajax({
-        url: '/patients/analysis/',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            type: 'delete',
-            data: JSON.stringify({
-                pk: $("#analysis_name").val(),
-            })
-        },
-
-        success: (data) => {
-            if ('errors' in data) {
-                toastr.error("Произошла ошибка! Повторите попытку позже.");
-            }
-            if ('success' in data) {
-                location.reload();
-            }
-        }
-    });
-});
-
-function selectedOption(select, type) {
-    for (let i = 0; i < select.length; i++) {
-        if (select[i].value === type) {
-            select[i].selected = true;
-        }
-    }
-
-}
 
 OnlyNumberInputAndBRD();

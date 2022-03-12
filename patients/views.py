@@ -1,13 +1,12 @@
-import itertools
 import json
 
 from datetime import datetime
-from itertools import groupby
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.http import JsonResponse
+from django.utils import timezone
 from django.views.generic import ListView, DetailView
 
 from .models import AnalyzesType, Analyzes
@@ -20,8 +19,11 @@ def get_analysis(request):
         if request.POST.get('type') == 'status':
             data = json.loads(request.POST.get('data'))
             if data:
-                print(data)
-                Analyzes.objects.filter(pk=data['pk']).update(result=data['result'], status=data['status'])
+                analysis = Analyzes.objects.get(pk=data['pk'])
+                analysis.status = data['status']
+                analysis.result = data['result']
+                analysis.save()
+                # Analyzes.objects.filter(pk=data['pk']).update(result=data['result'], status=data['status'])
                 return JsonResponse({'success': 'success'}, safe=False)
             else:
                 return JsonResponse({'errors': 'error'}, safe=False)
@@ -43,23 +45,23 @@ def get_analysis(request):
 def profile_user(request):
     if request.method == 'POST':
         if request.POST.get("Sex"):
-            Sex = request.POST.get('Sex')
+            sex = request.POST.get('Sex')
             pk = request.POST.get('pk')
-            Username = request.POST.get('username')
-            Surname = request.POST.get('surname')
-            Patronymic = request.POST.get('Patronymic')
-            Date_of_birth = request.POST.get('Date_of_birth')
-            Phone = request.POST.get('phone')
-            Email = request.POST.get('email')
-            Place_of_residence = request.POST.get('Place_of_residence')
-            Blood_type = request.POST.get('Blood_type')
+            username = request.POST.get('username')
+            surname = request.POST.get('surname')
+            patronymic = request.POST.get('Patronymic')
+            date_of_birth = request.POST.get('Date_of_birth')
+            phone = request.POST.get('phone')
+            email = request.POST.get('email')
+            place_of_residence = request.POST.get('Place_of_residence')
+            blood_type = request.POST.get('Blood_type')
 
             form = PatientForm(request.POST)
 
             if form.is_valid():
-                Patients.objects.filter(id=pk).update(Sex=Sex, Name=Username, Surname=Surname, Patronymic=Patronymic,
-                                                      Date_of_birth=Date_of_birth, Telephone=Phone, Email=Email,
-                                                      Place_of_residence=Place_of_residence, Blood_type=Blood_type)
+                Patients.objects.filter(id=pk).update(Sex=sex, Name=username, Surname=surname, Patronymic=patronymic,
+                                                      Date_of_birth=date_of_birth, Telephone=phone, Email=email,
+                                                      Place_of_residence=place_of_residence, Blood_type=blood_type)
             else:
                 return JsonResponse({'errors': form.errors}, safe=False)
         else:
@@ -67,15 +69,15 @@ def profile_user(request):
                 photo = request.FILES['photo']
                 pk = photo.name.split("!", 1)[0]
                 photo.name = photo.name.split("!", 1)[1]
-                FileStorage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
+                file_storage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
                 ).strftime("%m/%d"))
-                FileStorage.save(photo.name, photo)
+                file_storage.save(photo.name, photo)
 
-                PhotoProfile = Patients.objects.get(id=pk)
+                photo_profile = Patients.objects.get(id=pk)
 
-                PhotoProfile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name
-                PhotoProfile.save()
-            except:
+                photo_profile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name
+                photo_profile.save()
+            except KeyError:
                 photo = request.POST
                 photo = list(photo.keys())
                 photo = ''.join(photo)
@@ -101,7 +103,10 @@ class EditingPatient(DetailView):
         context['analyzes'] = AnalyzesType.objects.all().order_by("title")
         if self.request.user.has_perm('user.edit_analyzes'):
             context['patient_analyzes'] = list(
-                Analyzes.objects.filter(patient_id=self.kwargs['pk']).values('id', 'status', 'type__title'))
+                Analyzes.objects.filter(patient_id=self.kwargs['pk'],
+                                        status__in=('Новый', 'В процессе')).values('id',
+                                                                                   'status',
+                                                                                   'type__title'))
         return context
 
 
@@ -113,27 +118,44 @@ class PatientsView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        tmp = list(Analyzes.objects.values('id', 'patient'))
-        # v_by_k = dict()
-        # for d in tmp:
-        #     for k, v in d.items():
-        #         if v not in v_by_k:
-        #             v_by_k[v] = k
-        # new_d = {v: k for k, v in v_by_k.items()}
-        # print(new_d)
         return context
 
     def get_queryset(self):
         if self.request.user.has_perm('user.edit_analyzes'):
             if self.request.GET.get('q'):
                 search = self.request.GET.get('q')
-                return Analyzes.objects.filter(
+                tmp = Analyzes.objects.filter(
                     Q(patient__Name__icontains=search) | Q(patient__Surname__icontains=search) | Q(
                         patient__Patronymic__icontains=search) | Q(patient__Telephone__icontains=search) | Q(
-                        patient__Place_of_residence__icontains=search)).order_by('-test_date')
+                        patient__Place_of_residence__icontains=search)).values('id', 'patient').order_by('-test_date')
+                patient_range = set()
+                pk_range = set()
+                for k in tmp:
+                    patient_range.add(k['patient'])
+                patient_range = list(patient_range)
+                for k in tmp:
+                    for v in patient_range:
+                        if k['patient'] == v:
+                            pk_range.add(k['id'])
+                            patient_range.remove(v)
+                return Analyzes.objects.filter(Q(pk__in=pk_range) &
+                                               Q(patient__Name__icontains=search) | Q(
+                    patient__Surname__icontains=search) | Q(
+                    patient__Patronymic__icontains=search) | Q(patient__Telephone__icontains=search) | Q(
+                    patient__Place_of_residence__icontains=search)).order_by('-test_date')
             else:
-                return Analyzes.objects.all().order_by('-test_date')
-                # return Analyzes.objects.all().order_by('-test_date')
+                tmp = Analyzes.objects.values('id', 'patient')
+                patient_range = set()
+                pk_range = set()
+                for k in tmp:
+                    patient_range.add(k['patient'])
+                patient_range = list(patient_range)
+                for k in tmp:
+                    for v in patient_range:
+                        if k['patient'] == v:
+                            pk_range.add(k['id'])
+                            patient_range.remove(v)
+                return Analyzes.objects.filter(pk__in=pk_range).order_by('-test_date')
         else:
             if self.request.GET.get('q'):
                 search = self.request.GET.get('q')

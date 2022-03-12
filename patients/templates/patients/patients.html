@@ -14,7 +14,7 @@
                 <ul class="object__tools">
                     <li>
                         <a href="" class="AddLink">
-                            <span class="Add">Добавить пользователя</span>
+                            <span class="Add">Добавить пациента</span>
                             <span class="Plus">
                             <svg width="13" height="13" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                             <path fill="#ffffff"
@@ -47,7 +47,6 @@
                                 <div class="cell" id="header1">Пациент</div>
                                 <div class="cell" id="header2">Врач</div>
                                 <div class="cell" id="header3">Дата сдачи</div>
-                                <div class="cell" id="header4">Статус</div>
                             </div>
                             {% for patient in patients %}
                                 <a href="{% url 'profile' patient.patient.pk %}" class="row">
@@ -56,7 +55,6 @@
                                     <div class="cell"
                                          data-title="Specialist">{{ patient.specialist.last_name }} {{ patient.specialist.first_name }} {{ patient.specialist.patronymic }}</div>
                                     <div class="cell" data-title="Test Date">{{ patient.test_date }}</div>
-                                    <div class="cell" data-title="Status">{{ patient.status }}</div>
                                 </a>
                             {% endfor %}
                         {% else %}
@@ -121,8 +119,6 @@
                         columnSort(document.querySelector("#header2"), "Specialist")
                     } else if (e.target.id === "header3") {
                         columnSort(document.querySelector("#header3"), "Test Date")
-                    } else if (e.target.id === "header4") {
-                        columnSort(document.querySelector("#header4"), "Status")
                     }
                 {% else %}
                     if (e.target.id === "header1") {

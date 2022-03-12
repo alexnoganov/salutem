@@ -282,7 +282,7 @@
                                                                     <select name="analysis_type" id="analysis_status"
                                                                             class="select__control">
 
-                                                                        <option value="Новый" selected>Новый</option>
+                                                                        <option value="Новый">Новый</option>
                                                                         <option value="В процессе">В процессе</option>
                                                                         <option value="Завершен">Завершен</option>
 
@@ -360,7 +360,7 @@
 
 {% block script %}
     <script>
-        dataAnalyze= {{ patient_analyzes | safe }};
+        dataAnalyze = {{ patient_analyzes | safe }};
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="{% static 'js/PatientProfile.js' %}"></script>

@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+
 from user.models import Specialists
 
 
@@ -16,7 +18,8 @@ class Patients(models.Model):
     Telephone = models.CharField(max_length=100, blank=True)
     Email = models.CharField(max_length=30, blank=True)
     data_joined = models.DateField(auto_created=True, blank=True, editable=False)
-    photo = models.ImageField(blank=True, upload_to='photos/patient/%m/%d/', max_length=210, null=True)
+    photo = models.ImageField(blank=True, upload_to='photos/patient/%m/%d/', max_length=210, null=True,
+                              default='photos/unnamed.jpg')
 
     # Medical_card = models.OneToOneField(on_delete=models.CASCADE)
 
@@ -35,8 +38,8 @@ class Analyzes(models.Model):
     type = models.ForeignKey(AnalyzesType, on_delete=models.CASCADE)
     specialist = models.ForeignKey(Specialists, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
-    test_date = models.DateTimeField(auto_now=False, auto_created=False, auto_now_add=False, blank=True)
-    date_of_change = models.DateTimeField(auto_now=True, blank=True, editable=False)
+    test_date = models.DateTimeField(blank=True)
+    date_of_change = models.DateTimeField(auto_now=True, editable=True)
     result = models.TextField(null=True)
     status = models.CharField(max_length=20,
                               choices=(('Новый', 'Новый'), ('В процессе', 'В процессе'), ('Выполнен', 'Выполнен')),

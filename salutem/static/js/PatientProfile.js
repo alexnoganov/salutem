@@ -17,7 +17,7 @@ toastr.options = {
 }
 
 
-let files
+let files;
 let zxc = document.querySelector(".info_edit_main_profile_avatar_delete");
 let cxz = document.querySelector(".info_edit_main_profile_avatar_reupload");
 

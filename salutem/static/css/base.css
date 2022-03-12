@@ -253,6 +253,7 @@ form {
 .notification__content {
     height: 100%;
     overflow-x: auto;
+    padding-bottom: 10px;
 }
 
 .notification__container.active {
@@ -279,15 +280,16 @@ form {
 
 .item__photo {
     width: 10%;
+    margin-right: 2%;
 }
 
 .item__text {
-    width: 90%;
+    width: 88%;
     color: #030303;
 }
 
 .item__time {
-    margin-left: 10%;
+    margin-left: 12%;
     color: #606060;
 }
 
@@ -318,8 +320,9 @@ form {
 }
 
 .item__photo img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
 }
 
 /*--------------TOAST-------------------*/

@@ -1,0 +1,129 @@
+.container {
+    margin: 0 auto;
+    max-width: 1400px;
+}
+
+.content__main{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding-bottom: 100px;
+    justify-content: center;
+}
+
+.item__medicalcard{
+    height: max-content;
+   padding: 25px 15px 15px 15px;
+}
+
+.content__medicalcard{
+    height: 100%;
+    width: 100%;
+}
+
+.union{
+    width: 600px;
+    height: max-content;
+    border: 1px solid #555555;
+    border-radius: 10px;
+}
+
+
+
+.medicalcard__title__data{
+    display: flex;
+    width: max-content;
+    font-size: 16px;
+    padding: 0 !important;
+    font-weight: 700;
+}
+
+.medicalcard__point{
+    padding-left: 10px;
+}
+
+.medicalcard{
+    padding: 20px 20px 0 20px;
+}
+
+.medicalcard__symptoms .text-input{
+    width: 95%;
+}
+
+.text-input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: 1.125em;
+    border-radius: 0;
+    border: 4px solid #eceff1;
+}
+
+[placeholder] {
+    text-overflow: ellipsis;
+}
+
+.medicalcard__title__span{
+    display: block;
+    font-size: 0.9em;
+    margin-top: 10px;
+    line-height: 0.3;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+
+.analyze__medicalcard{
+    border-top: 1px solid #555555;
+}
+
+.submit__form {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 15px;
+    margin: 15px 0 15px 20px;
+    outline: none;
+    height: 46px;
+    line-height: 46px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgb(76 184 47);
+    box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    transition: box-shadow 0.2s;
+}
+
+
+.plus {
+  --t:2px;   /* Thickness */
+  --l:40px;  /* size of the symbol */
+  --s:10px;  /* space around the symbol */
+  --c1:#fff; /* Plus color*/
+  --c2:#000; /* background color*/
+
+  display:inline-block;
+  width:var(--l);
+  height:var(--l);
+  padding:var(--s);
+  box-sizing:border-box; /*Remove this if you don't want space to be included in the size*/
+
+  background:
+    linear-gradient(var(--c1) 0 0) content-box,
+    linear-gradient(var(--c1) 0 0) content-box,
+    var(--c2);
+  background-position:center;
+  background-size: 100% var(--t),var(--t) 100%;
+  background-repeat:no-repeat;
+}
+
+.radius {
+  border-radius:50%;
+}

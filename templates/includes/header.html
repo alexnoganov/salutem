@@ -1,4 +1,5 @@
 {% load static %}
+{% load notify_tags %}
 <header class="header__container">
     <nav class="header__wrapper">
         <div class="item">
@@ -38,15 +39,17 @@
                                         </div>
                                         <div class="item__time">{{ analysis.date_of_change|timesince }} назад</div>
                                     </a>
-                                    {% elif analysis.status == 'Завершен' %}
-                                    <a href="{% url 'profile' analysis.patient.pk %}" class="notification__item">
-                                        <div class="item__photo"><img src="{{ analysis.patient.photo.url }}"></div>
-                                        <div class="item__text">
-                                            {{ analysis.patient.Surname }} {{ analysis.patient.Name|first }}.{{ analysis.patient.Patronymic|first }}.
-                                            пришли результы анализов ({{ analysis.type|truncatechars:10 }})
-                                        </div>
-                                        <div class="item__time">{{ analysis.date_of_change|timesince }} назад</div>
-                                    </a>
+                                {% elif analysis.status == 'Завершен' %}
+                                    {% if analysis.date_of_change|sub %}
+                                        <a href="{% url 'profile' analysis.patient.pk %}" class="notification__item">
+                                            <div class="item__photo"><img src="{{ analysis.patient.photo.url }}"></div>
+                                            <div class="item__text">
+                                                {{ analysis.patient.Surname }} {{ analysis.patient.Name|first }}.{{ analysis.patient.Patronymic|first }}.
+                                                пришли результы анализов ({{ analysis.type|truncatechars:10 }})
+                                            </div>
+                                            <div class="item__time">{{ analysis.date_of_change|timesince }} назад</div>
+                                        </a>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         {% endif %}

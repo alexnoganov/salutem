@@ -18,10 +18,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from user.views import redirect_to_profile
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('patients/', include('patients.urls')),
+    path('', redirect_to_profile)
 ]
 
 if settings.DEBUG:

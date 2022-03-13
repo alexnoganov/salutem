@@ -260,6 +260,10 @@ form {
     display: block;
 }
 
+.notification__item__container{
+    position: relative;
+}
+
 .notification__item {
     font-weight: 400 !important;
     padding: 10px 20px;
@@ -276,6 +280,28 @@ form {
 
 .notification__item:last-child {
     border: 0;
+}
+
+.notification__item:after:hover{
+    opacity: 0.8;
+    transition: 0.15s linear;
+}
+
+.item__close {
+    background-image: url("../img/x.svg");
+    background-size: 13px 13px;
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.item__close:hover{
+    background-image: url("../img/x_red.svg");
+    transition: 0.15s linear;
 }
 
 .item__photo {

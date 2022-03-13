@@ -47,8 +47,27 @@
         document.addEventListener("click", e => {
             if (e.target.classList.contains("notify__btn")) {
                 notifyContainer.classList.toggle("active");
-            } else if (!e.target.classList.contains("notify__btn") && notifyContainer.classList.contains("active") && !e.target.classList.contains("notify")) {
+            } else if (!e.target.classList.contains("notify__btn") && notifyContainer.classList.contains("active") && !e.target.classList.contains("notify") && !e.target.classList.contains("item__close")) {
                 notifyContainer.classList.remove("active");
+            } else if (e.target.classList.contains("item__close")) {
+                $.ajax({
+                    url: '/user/hide_notification/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        pk: e.target.parentElement.dataset.id
+                    },
+                    success: (data) => {
+                        if ('success' in data) {
+                            e.target.parentElement.remove();
+                            document.querySelector('.counter.notify').textContent = document.querySelector('.counter.notify').textContent - 1;
+                            document.querySelector('.icon__counter.notify__btn').textContent = document.querySelector('.icon__counter.notify__btn').textContent - 1;
+                            if (document.querySelector('.icon__counter.notify__btn').textContent === '0') {
+                                document.querySelector('.icon__counter.notify__btn').style.display = 'none';
+                            }
+                        }
+                    }
+                })
             }
         });
     });

@@ -4,10 +4,12 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import DetailView
 
+from patients.models import Analyzes
 from .forms import LoginForm, SpecialistForm
 from .models import Specialists
 
@@ -97,3 +99,15 @@ class SpecialistProfile(DetailView):
         context['form'] = SpecialistForm(initial={'specializations': self.get_object().specialization_id,
                                                   'sex': self.get_object().sex})
         return context
+
+
+def redirect_to_profile(request):
+    return HttpResponseRedirect(reverse_lazy('patients'))
+
+
+def hide_notification(request):
+    if request.POST.get('pk'):
+        # Analyzes.objects.filter(pk=request.POST.get('pk')).update(show=False)
+        return JsonResponse({'success': 'success'}, safe=False)
+    else:
+        return JsonResponse({'error': 'error'}, safe=False)

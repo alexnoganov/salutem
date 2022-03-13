@@ -30,25 +30,34 @@
                     <div class="notification__content notify">
                         {% if analyzes_notify %}
                             {% for analysis in analyzes_notify %}
-                                {% if analysis.status == 'Новый' %}
-                                    <a href="{% url 'profile' analysis.patient.pk %}" class="notification__item">
-                                        <div class="item__photo"><img src="{{ analysis.patient.photo.url }}"></div>
-                                        <div class="item__text">
-                                            {{ analysis.patient.Surname }} {{ analysis.patient.Name|first }}.{{ analysis.patient.Patronymic|first }}.
-                                            записался на сдачу анализов ({{ analysis.type|truncatechars:10 }})
-                                        </div>
-                                        <div class="item__time">{{ analysis.date_of_change|timesince }} назад</div>
-                                    </a>
-                                {% elif analysis.status == 'Завершен' %}
-                                    {% if analysis.date_of_change|sub %}
+                                {% if analysis.status == 'Новый' and analysis.show %}
+                                    <div class="notification__item__container" data-id="{{ analysis.pk }}">
                                         <a href="{% url 'profile' analysis.patient.pk %}" class="notification__item">
                                             <div class="item__photo"><img src="{{ analysis.patient.photo.url }}"></div>
                                             <div class="item__text">
                                                 {{ analysis.patient.Surname }} {{ analysis.patient.Name|first }}.{{ analysis.patient.Patronymic|first }}.
-                                                пришли результы анализов ({{ analysis.type|truncatechars:10 }})
+                                                записался на сдачу анализов ({{ analysis.type|truncatechars:10 }})
                                             </div>
                                             <div class="item__time">{{ analysis.date_of_change|timesince }} назад</div>
                                         </a>
+                                        <div class="item__close"></div>
+                                    </div>
+                                {% elif analysis.status == 'Завершен' and analysis.show %}
+                                    {% if analysis.date_of_change|sub %}
+                                        <div class="notification__item__container" data-id="{{ analysis.pk }}">
+                                            <a href="{% url 'profile' analysis.patient.pk %}"
+                                               class="notification__item">
+                                                <div class="item__photo"><img src="{{ analysis.patient.photo.url }}">
+                                                </div>
+                                                <div class="item__text">
+                                                    {{ analysis.patient.Surname }} {{ analysis.patient.Name|first }}.{{ analysis.patient.Patronymic|first }}.
+                                                    пришли результы анализов ({{ analysis.type|truncatechars:10 }})
+                                                </div>
+                                                <div class="item__time">{{ analysis.date_of_change|timesince }} назад
+                                                </div>
+                                            </a>
+                                            <div class="item__close"></div>
+                                        </div>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}

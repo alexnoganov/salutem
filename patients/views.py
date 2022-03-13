@@ -22,6 +22,8 @@ def get_analysis(request):
                 analysis = Analyzes.objects.get(pk=data['pk'])
                 analysis.status = data['status']
                 analysis.result = data['result']
+                if data['status'] == 'Завершен':
+                    analysis.show = False
                 analysis.save()
                 return JsonResponse({'success': 'success'}, safe=False)
             else:

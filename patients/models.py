@@ -44,6 +44,7 @@ class Analyzes(models.Model):
     status = models.CharField(max_length=20,
                               choices=(('Новый', 'Новый'), ('В процессе', 'В процессе'), ('Выполнен', 'Выполнен')),
                               default='Новый')
+    show = models.BooleanField(default=True)
 
     def __str__(self):
         return self.type.title + "(" + self.patient.Surname + self.patient.Name + self.patient.Patronymic + ")"

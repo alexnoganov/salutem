@@ -34,28 +34,30 @@
                             </div>
                             <div class="medicalcard__symptoms medicalcard">
 
-                                <label class="medicalcard__title__span" for="medicalcard__symptoms">Симптомы:</label>
-                                <div class="enjoyer" style="display: flex; align-items: center">
-                                    <input type="text" name="Name" maxlength="100" value="удушье" placeholder="--"
-                                           id="medicalcard__symptoms" class="text-input powermail_input">
+                                <label class="medicalcard__title__span" for="medicalcard__symptoms__0">Симптомы:</label>
+                                <div class="enjoyer">
 
-                                    <div class="medicalcard__svg" style="padding-left: 7px">
-                                        <svg width="17" height="17" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill="#63B64D" d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
-                                        </svg>
+                                    <div class="sdf" style="display: flex; align-items: center; flex-wrap: wrap;">
+                                        <input type="text" name="Name" maxlength="100" value="удушье" placeholder="--"
+                                               id="medicalcard__symptoms__0" class="text-input powermail_input">
+
+                                        <div class="medicalcard__svg" style="padding-left: 7px;">
+                                            <svg width="17" class="medicalcard__svg__plus" style="cursor: pointer;" height="17" viewBox="0 0 1792
+                                         1792" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill="#63B64D" d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
+                                            </svg>
+                                        </div>
                                     </div>
+
                                 </div>
 
-                                {#                                <svg xmlns="http://www.w3.org/2000/svg" width="15px"#}
-                                {#                                     height="15px" viewBox="0 0 459.313 459.314"  fill="red">#}
-                                {#                                    <path d="M459.313,229.648c0,22.201-17.992,40.199-40.205,40.199H40.181c-11.094,#}
-                                {#                                    0-21.14-4.498-28.416-11.774   C4.495,250.808,0,240.76,0,229.66c-0.006-22.204,17.992-40.199,40.202-40.193h378.936   C441.333,189.472,459.308,207.456,459.313,229.648z"></path>#}
-                                {#                                </svg>#}
+
 
                             </div>
                             <div class="medicalcard__therapy medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__therapy">Лечение:</label>
-                                <textarea id="medicalcard__therapy" class="text-input powermail_input" style="resize: none;height: 150px;">В среднем, длительность курса лечения простатита составляет около двух недель (большинство больных вылечивается максимум за 15 дней), но в осложненных случаях, лечение может занимать 3 недели и более.
+                                <textarea id="medicalcard__therapy" class="text-input powermail_input"
+                                          style="resize: none;height: 150px;">В среднем, длительность курса лечения простатита составляет около двух недель (большинство больных вылечивается максимум за 15 дней), но в осложненных случаях, лечение может занимать 3 недели и более.
                             </textarea>
                             </div>
                             <button type="submit" class="submit__form" id="profile_save">Сохранить
@@ -74,19 +76,20 @@
                             </div>
                             <div class="medicalcard__reception medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__name_analyze">Название:</label>
-                                <input type="text" maxlength="100" value="Проверка маточных труб"
+                                <input type="text" disabled maxlength="100" value="Проверка маточных труб"
                                        placeholder="--"
                                        id="medicalcard__name_analyze" class="text-input powermail_input">
                             </div>
                             <div class="medicalcard__symptoms medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__specialist">Специалист:</label>
-                                <input type="text" maxlength="100" value="Кондратенко В.Р."
+                                <input type="text" disabled maxlength="100" value="Кондратенко В.Р."
                                        placeholder="--"
                                        id="medicalcard__specialist" class="text-input powermail_input">
                             </div>
                             <div class="medicalcard__therapy medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__therapy">Результат:</label>
-                                <textarea id="medicalcard__therapy" class="text-input powermail_input" disabled style="resize:
+                                <textarea id="medicalcard__therapy" disabled class="text-input powermail_input" disabled
+                                          style="resize:
                             none;height: 150px;">В среднем, длительность курса лечения простатита составляет около двух недель (большинство больных вылечивается максимум за 15 дней), но в осложненных случаях, лечение может занимать 3 недели и более.
                             </textarea>
                             </div>
@@ -95,104 +98,6 @@
                 </div>
             </div>
 
-
-
-
-            {#            <h1 class="search__patient">Выберите пациента</h1>#}
-            {#            <div class="content__main">#}
-            {#                <ul class="object__tools">#}
-            {#                    <li>#}
-            {#                        <a href="" class="AddLink">#}
-            {#                            <span class="Add">Добавить пациента</span>#}
-            {#                            <span class="Plus">#}
-            {#                            <svg width="13" height="13" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">#}
-            {#                            <path fill="#ffffff"#}
-            {#                                  d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>#}
-            {#                            </svg>#}
-            {#                        </span>#}
-            {#                        </a>#}
-            {#                    </li>#}
-            {#                </ul>#}
-            {#                <div class="module" id="changelist">#}
-            {#                    <div class="changelist__form">#}
-            {#                        <div class="toolbar">#}
-            {#                            <form method="get" id="changelist__search">#}
-            {#                                <div class="search__item">#}
-            {#                                    <label for="searchbar">#}
-            {#                                        <img src="{% static 'img/search.svg' %}" alt="Search">#}
-            {#                                    </label>#}
-            {#                                    <input type="text" size="40" name="q" value="{{ request.GET.q }}" id="searchbar"#}
-            {#                                           autofocus>#}
-            {#                                    <input type="submit" value="Найти">#}
-            {#                                    <input type="reset" value="Сбросить"#}
-            {#                                           onclick="window.location.href = {% url 'patients' %}">#}
-            {#                                </div>#}
-            {#                            </form>#}
-            {#                        </div>#}
-            {#                    </div>#}
-            {#                    <div class="table">#}
-            {#                        {% if perms.user.edit_analyzes %}#}
-            {#                            <div class="row table__header">#}
-            {#                                <div class="cell" id="header1">Пациент</div>#}
-            {#                                <div class="cell" id="header2">Врач</div>#}
-            {#                                <div class="cell" id="header3">Дата сдачи</div>#}
-            {#                            </div>#}
-            {#                            {% for patient in patients %}#}
-            {#                                <a href="{% url 'profile' patient.patient.pk %}" class="row">#}
-            {#                                    <div class="cell"#}
-            {#                                         data-title="Patient">{{ patient.patient.Name }} {{ patient.patient.Patronymic }} {{ patient.patient.Surname }}</div>#}
-            {#                                    <div class="cell"#}
-            {#                                         data-title="Specialist">{{ patient.specialist.last_name }} {{ patient.specialist.first_name }} {{ patient.specialist.patronymic }}</div>#}
-            {#                                    <div class="cell" data-title="Test Date">{{ patient.test_date }}</div>#}
-            {#                                </a>#}
-            {#                            {% endfor %}#}
-            {#                        {% else %}#}
-            {#                            <div class="row table__header">#}
-            {#                                <div class="cell" id="header1">ФИО</div>#}
-            {#                                <div class="cell" id="header2">Номер телефона</div>#}
-            {#                                <div class="cell" id="header3">Дата рождения</div>#}
-            {#                                <div class="cell" id="header4">Адрес проживания</div>#}
-            {#                                <div class="cell" id="header5">Дата Регистрации</div>#}
-            {#                            </div>#}
-            {#                            {% for patient in patients %}#}
-            {#                                <a href="{% url 'profile' patient.pk %}" class="row">#}
-            {#                                    <div class="cell"#}
-            {#                                         data-title="FIO">{{ patient.Name }} {{ patient.Patronymic }} {{ patient.Surname }}</div>#}
-            {#                                    <div class="cell" data-title="Phone">{{ patient.Telephone }}</div>#}
-            {#                                    <div class="cell" data-title="Date of Birth">{{ patient.Date_of_birth }}</div>#}
-            {#                                    <div class="cell" data-title="Address">{{ patient.Place_of_residence }}</div>#}
-            {#                                    <div class="cell"#}
-            {#                                         data-title="Date of Registration">{{ patient.data_joined }}</div>#}
-            {#                                </a>#}
-            {#                            {% endfor %}#}
-            {#                        {% endif %}#}
-            {#                    </div>#}
-            {#                    {% if is_paginated %}#}
-            {#                        <div class="pagination">#}
-            {#                            <ul>#}
-            {#                                {% if page_obj.has_previous %}#}
-            {#                                    <li>#}
-            {#                                        <a href="{% url 'patients' %}?page={{ page_obj.previous_page_number }}">Previous</a>#}
-            {#                                    </li>#}
-            {#                                {% endif %}#}
-            {#                                {% for f in page_obj.paginator.page_range %}#}
-            {#                                    {% if f == page_obj.number %}#}
-            {#                                        <li><a class="is-active" href="{% url 'patients' %}?page={{ f }}">{{ f }}</a>#}
-            {#                                        </li>#}
-            {#                                    {% else %}#}
-            {#                                        <li><a href="{% url 'patients' %}?page={{ f }}">{{ f }}</a></li>#}
-            {#                                    {% endif %}#}
-            {#                                {% endfor %}#}
-            {##}
-            {#                                {% if page_obj.has_next %}#}
-            {#                                    <li><a href="{% url 'patients' %}?page={{ page_obj.next_page_number }}">Next</a>#}
-            {#                                    </li>#}
-            {#                                {% endif %}#}
-            {#                            </ul>#}
-            {#                        </div>#}
-            {#                    {% endif %}#}
-            {#                </div>#}
-            {#            </div>#}
         </div>
     </div>
 {% endblock %}
@@ -202,6 +107,9 @@
 
 {% block script %}
     <script src="{% static 'js/patients.js' %}"></script>
+
+    <script src="{% static 'js/medicalCard.js' %}"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             document.addEventListener("click", e => {

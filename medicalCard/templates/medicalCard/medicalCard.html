@@ -11,6 +11,8 @@
 {% endblock %}
 
 {% block content %}
+
+
     <div class="container">
         <div class="content__container">
             <h1 class="search__patient">Медицинская карта</h1>
@@ -20,15 +22,13 @@
                         <div class="content__medicalcard">
                             <div class="medicalcard__title__data medicalcard">
                                 <div class="medicalcard__point">
-                                    Запись №324234
+                                    Запись № {{ medicalCard.id }}
                                 </div>
-                                <div class="medicalcard__point">
-                                    23.03.2022
-                                </div>
+                                <div class="medicalcard__point medicalcard__point__date"></div>
                             </div>
                             <div class="medicalcard__reception medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__reception">Назначение приема:</label>
-                                <input type="text" name="Name" maxlength="100" value="Проверка маточных труб"
+                                <input type="text" name="Name" maxlength="100" value="{{ medicalCard.purpose }}"
                                        placeholder="--"
                                        id="medicalcard__reception" class="text-input powermail_input">
                             </div>
@@ -38,8 +38,7 @@
                                 <div class="enjoyer">
 
                                     <div class="sdf" style="display: flex; align-items: center; flex-wrap: wrap;">
-                                        <input type="text" name="Name" maxlength="100" value="удушье" placeholder="--"
-                                               id="medicalcard__symptoms__0" class="text-input powermail_input">
+                                        <input type="text" name="Name" maxlength="100" value="{{ medicalCard.symptoms }}"  placeholder="--" id="medicalcard__symptoms__0" class="text-input powermail_input">
 
                                         <div class="medicalcard__svg" style="padding-left: 7px;">
                                             <svg width="17" class="medicalcard__svg__plus" style="cursor: pointer;" height="17" viewBox="0 0 1792
@@ -48,53 +47,53 @@
                                             </svg>
                                         </div>
                                     </div>
-
                                 </div>
-
-
 
                             </div>
                             <div class="medicalcard__therapy medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__therapy">Лечение:</label>
                                 <textarea id="medicalcard__therapy" class="text-input powermail_input"
-                                          style="resize: none;height: 150px;">В среднем, длительность курса лечения простатита составляет около двух недель (большинство больных вылечивается максимум за 15 дней), но в осложненных случаях, лечение может занимать 3 недели и более.
-                            </textarea>
+                                          style="resize: none;height: 150px;">{{ medicalCard.treatment }}
+                                </textarea>
                             </div>
-                            <button type="submit" class="submit__form" id="profile_save">Сохранить
-                            </button>
+                            <button type="submit" class="submit__form" id="profile_save">Сохранить</button>
                         </div>
                     </div>
-                    <div class="item__medicalcard analyze__medicalcard">
+
+                    {% for anlz in analyzes %}
+                        <div class="item__medicalcard analyze__medicalcard">
                         <div class="content__medicalcard">
                             <div class="medicalcard__title__data medicalcard">
                                 <div class="medicalcard__point">
-                                    Анализы №324
+                                    Анализы № {{ anlz.pk }}
                                 </div>
                                 <div class="medicalcard__point">
-                                    15.03.2022
+                                    {{ anlz.test_date |date:"SHORT_DATE_FORMAT"}}
                                 </div>
                             </div>
                             <div class="medicalcard__reception medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__name_analyze">Название:</label>
-                                <input type="text" disabled maxlength="100" value="Проверка маточных труб"
-                                       placeholder="--"
-                                       id="medicalcard__name_analyze" class="text-input powermail_input">
+                                <input type="text" disabled maxlength="100" value="{{ anlz.type }}"
+                                       placeholder="--" id="medicalcard__name_analyze" class="text-input
+                                       powermail_input">
                             </div>
                             <div class="medicalcard__symptoms medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__specialist">Специалист:</label>
-                                <input type="text" disabled maxlength="100" value="Кондратенко В.Р."
-                                       placeholder="--"
+                                <input type="text" disabled maxlength="100" value="{{ anlz.specialist.last_name }}
+ {{ anlz.specialist.first_name|first }}.{{ anlz.specialist.patronymic|first }}."  placeholder="--"
                                        id="medicalcard__specialist" class="text-input powermail_input">
                             </div>
                             <div class="medicalcard__therapy medicalcard">
                                 <label class="medicalcard__title__span" for="medicalcard__therapy">Результат:</label>
                                 <textarea id="medicalcard__therapy" disabled class="text-input powermail_input" disabled
                                           style="resize:
-                            none;height: 150px;">В среднем, длительность курса лечения простатита составляет около двух недель (большинство больных вылечивается максимум за 15 дней), но в осложненных случаях, лечение может занимать 3 недели и более.
+                            none;height: 150px;">{{ anlz.result }}
                             </textarea>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+
                 </div>
             </div>
 

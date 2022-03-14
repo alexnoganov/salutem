@@ -107,7 +107,7 @@ def redirect_to_profile(request):
 
 def hide_notification(request):
     if request.POST.get('pk'):
-        # Analyzes.objects.filter(pk=request.POST.get('pk')).update(show=False)
+        Analyzes.objects.filter(pk=request.POST.get('pk')).update(show=False)
         return JsonResponse({'success': 'success'}, safe=False)
     else:
         return JsonResponse({'error': 'error'}, safe=False)

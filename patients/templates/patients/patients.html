@@ -106,6 +106,7 @@
             </div>
         </div>
     </div>
+    {% csrf_token %}
 {% endblock %}
 {% block script %}
     <script src="{% static 'js/patients.js' %}"></script>

@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('patients/', include('patients.urls')),
+    path('timetable/', include('timetable.urls')),
     path('', redirect_to_profile)
 ]
 

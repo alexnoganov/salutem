@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load timetable_fill %}
+{% block title %}
+    <title>Расписание</title>
+{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/timetable.css' %}">
+{% endblock %}
+{% block content %}
+    {#    .accent-pink-gradient#}
+    {#    .accent-orange-gradient#}
+    {#    .accent-cyan-gradient#}
+    {#    .accent-green-gradient#}
+    {#    .accent-blue-gradient#}
+    {#    .accent-purple-gradient#}
+    <div class="timetable">
+        <div class="week-names">
+            <div>понедельник</div>
+            <div>вторник</div>
+            <div>среда</div>
+            <div>четверг</div>
+            <div>пятница</div>
+        </div>
+        <div class="content">
+            {{ timetable|fill|safe }}
+        </div>
+    </div>
+{% endblock %}

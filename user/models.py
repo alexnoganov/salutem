@@ -19,7 +19,7 @@ class Specialists(AbstractUser):
     passport_num = models.CharField(max_length=20, verbose_name='Серия и номер паспорта', blank=True)
     inn = models.CharField(max_length=50, verbose_name='ИНН', blank=True)
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
-    specialization = models.OneToOneField("Specializations", on_delete=models.SET_NULL, null=True, blank=True)
+    specialization = models.ForeignKey("Specializations", on_delete=models.SET_NULL, null=True, blank=True)
 
     REQUIRED_FIELDS = ["email"]
 
@@ -33,7 +33,7 @@ class Specialists(AbstractUser):
         verbose_name = 'Специалист'
 
     def __str__(self):
-        return self.last_name + ' ' + self.first_name + ' ' + self.patronymic
+        return self.last_name + ' ' + self.first_name + ' ' + self.patronymic + ' (' + self.specialization.title + ')'
 
     @admin.display(ordering=Concat('last_name', Value(' '), 'first_name', Value(' '), 'patronymic'), description='ФИО')
     def full_name(self):

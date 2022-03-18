@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'user',
     'patients',
     'medicalCard',
+    'timetable',
     'widget_tweaks',
 ]
 

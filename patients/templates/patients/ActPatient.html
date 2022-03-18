@@ -55,7 +55,7 @@
                                         книжка
                                     </a>
                                 </button>
-                                <button class="bot8">История посещений</button>
+                                <button class="bot8" id="appointmentModalBtn" onclick="$('#appointmentModal').modal();">Запись на прием</button>
                             </div>
                         </div>
 
@@ -338,7 +338,7 @@
                         <div class="form-block">
                             <div>
                                 <label for="analysisDate" class="input-field-wrapper__label">Дата сдачи</label>
-                                <input type="datetime-local" class="text-input powermail_input" id="analysisDate"
+                                <input type="datetime-local" class="text-input date__analysis_input" id="analysisDate"
                                        name="analysisDate">
                             </div>
                         </div>
@@ -347,6 +347,32 @@
             </fieldset>
             <div style="display:flex; justify-content: center;">
                 <button class="submit__form" id="submit__analysis" style="margin-bottom: 0">Записать</button>
+            </div>
+        </form>
+    </div>
+    <div id="appointmentModal" class="modal" style="max-width: 700px">
+        <form method="post">
+            {% csrf_token %}
+            <fieldset class="fieldset">
+                <div class="fieldset__row">
+                    <div class="form-block">
+                        <div>
+                            <label for="specialist_for_appointment" class="input-field-wrapper__label">Специалист</label>
+                            {% render_field appointment_form.specialists id='specialist_for_appointment' class='select__control' %}
+                        </div>
+                    </div>
+                    <div class="fieldset__row">
+                        <div class="form-block">
+                            <div>
+                                <label for="appointmentDate" class="input-field-wrapper__label">Дата приема</label>
+                                <input type="datetime-local" class="text-input appointment_input" id="appointmentDate"
+                                       name="appointmentDate">
+                            </div>
+                        </div>
+                    </div>
+            </fieldset>
+            <div style="display:flex; justify-content: center;">
+                <button class="submit__form" id="submit__appointment" style="margin-bottom: 0">Записать</button>
             </div>
         </form>
     </div>

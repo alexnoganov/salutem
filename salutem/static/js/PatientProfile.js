@@ -124,9 +124,43 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
     }
 }) // Сохранение профиля
 
+$("#submit__appointment").click((e) => {
+    e.preventDefault();
+    let date = $("#appointmentDate").val()
+    if (date === '') {
+        toastr.error("Заполните поле \"Дата приема\".");
+    } else {
+        $.ajax({
+            url: '/patients/appointment/',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                specialistId: $("#specialist_for_appointment").val(),
+                patientId: location.href.split('/')[5],
+                date: date
+            },
+
+            success: (data) => {
+                if ('errors' in data) {
+                    toastr.error("Произошла ошибка! Повторите попытку позже.");
+                }
+                if ('success' in data) {
+                    toastr.success("Пациент успешно записан на прием.");
+                    $.modal.close();
+                }
+            }
+        });
+    }
+
+}); // Запись на прием
+
 $("#submit__analysis").click((e) => {
     e.preventDefault();
-    $.ajax({
+    let date = $("#analysisDate").val()
+    if (date === '') {
+        toastr.error("Заполните поле \"Дата сдачи\".");
+    } else {
+        $.ajax({
         url: '/patients/analysis/',
         type: 'POST',
         dataType: 'json',
@@ -134,7 +168,7 @@ $("#submit__analysis").click((e) => {
             type: 'register',
             data: JSON.stringify({
                 type: $("#analysisType").val(),
-                date: $("#analysisDate").val(),
+                date: date,
                 specialistId: $("#profile__text").children('a')[0].href.split('/')[4],
                 patientId: location.href.split('/')[5]
             })
@@ -150,6 +184,8 @@ $("#submit__analysis").click((e) => {
             }
         }
     });
+    }
+
 }); // Запись на анализ
 
 $("#submit__analysis__result").click((e) => {

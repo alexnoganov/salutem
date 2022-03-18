@@ -9,4 +9,5 @@ urlpatterns = [
     path('profile/<int:pk>/medicalcard', include('medicalCard.urls')),
     path('save_profile/', views.profile_user, name="save_profile"),
     path('analysis/', views.get_analysis, name="analysis"),
+    path('appointment/', views.get_appointment, name="appointment"),
 ]

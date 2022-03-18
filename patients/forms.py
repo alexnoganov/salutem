@@ -19,3 +19,7 @@ class PatientForm(forms.Form):
     Email = forms.CharField(max_length=30, label="* E-MAIL", required=False)
     photo = forms.ImageField(required=False, max_length=200)
 
+
+class AppointmentForm(forms.Form):
+    specialists = forms.ModelChoiceField(queryset=Specialists.objects.all(), empty_label=None)
+    date = forms.DateTimeField()

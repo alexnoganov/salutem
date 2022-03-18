@@ -6,12 +6,24 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.http import JsonResponse
-from django.utils import timezone
 from django.views.generic import ListView, DetailView
 
+from timetable.models import TimeTable
 from .models import AnalyzesType, Analyzes
-from .forms import PatientForm
+from .forms import PatientForm, AppointmentForm
 from patients.models import Patients
+
+
+def get_appointment(request):
+    if request.method == 'POST':
+        if request.POST.get('date'):
+            TimeTable.objects.create(specialist_id=request.POST.get('specialistId'), date=request.POST.get('date'),
+                                     patient_id=request.POST.get('patientId'))
+            return JsonResponse({'success': 'success'}, safe=False)
+        else:
+            return JsonResponse({'errors': 'error'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
 
 
 def get_analysis(request):
@@ -110,6 +122,7 @@ class EditingPatient(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = PatientForm(initial={'Sex': self.get_object().Sex,
                                                'Blood_type': self.get_object().Blood_type})
+        context['appointment_form'] = AppointmentForm(initial={'specialists': self.request.user.pk})
         context['analyzes'] = AnalyzesType.objects.all().order_by("title")
         if self.request.user.has_perm('user.edit_analyzes'):
             context['patient_analyzes'] = list(

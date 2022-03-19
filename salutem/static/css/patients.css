@@ -1,58 +1,18 @@
 /*-----------------MAIN CONTENT----------------*/
 
-.content__main {
-    float: left;
-    width: 100%;
-}
+/*.content__main {*/
+/*    width: 100%;*/
+/*}*/
+/*.content__container {*/
+/*    position: relative;*/
+/*}*/
 
-.search__patient {
-    margin: 0 0 20px;
-    font-weight: 300;
-    font-size: 20px;
-    color: var(--body-quiet-color);
-}
-
-.object__tools {
-    font-size: 10px;
-    font-weight: bold;
-    padding-left: 0;
-    float: right;
-    position: relative;
-    margin-top: -40px;
-}
-
-.object__tools li {
-    float: left;
-    margin-left: 5px;
-    list-style-type: none;
-    background: #333333;
-    border-radius: 15px;
-}
-
-.object__tools .Plus {
-    position: absolute;
-    right: 12px;
-}
-
-.object__tools a:link, .object__tools a:visited {
-    padding: 7px 38px 7px 12px;
-    display: block;
-    float: left;
-    color: #fff;
-    font-weight: 400;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.object__tools a:hover {
-    color: #27ae60;
-}
-
-.object__tools a:hover path {
-    transition: 0.15s linear;
-    fill: #27ae60;
-}
+/*.search__patient {*/
+/*    margin: 0 0 20px;*/
+/*    font-weight: 300;*/
+/*    font-size: 20px;*/
+/*    color: var(--body-quiet-color);*/
+/*}*/
 
 
 .module {

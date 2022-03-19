@@ -139,10 +139,6 @@ class PatientsView(ListView):
     context_object_name = 'patients'
     paginate_by = 30
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
     def get_queryset(self):
         if self.request.user.has_perm('user.edit_analyzes'):
             if self.request.GET.get('q'):

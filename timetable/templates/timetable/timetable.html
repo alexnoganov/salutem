@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
-{% load static %}
 {% load timetable_fill %}
+{% load static %}
+{#{% load timetable_fill %}#}
 {% block title %}
-    <title>Расписание</title>
+    <title>Расписание</title
 {% endblock %}
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/timetable.css' %}">
 {% endblock %}
 {% block content %}
-    {#    .accent-pink-gradient#}
-    {#    .accent-orange-gradient#}
-    {#    .accent-cyan-gradient#}
-    {#    .accent-green-gradient#}
-    {#    .accent-blue-gradient#}
-    {#    .accent-purple-gradient#}
+    {% if request.user.is_staff %}
+
+    {% endif %}
     <div class="timetable">
         <div class="week-names">
             <div>понедельник</div>
@@ -23,7 +21,19 @@
             <div>пятница</div>
         </div>
         <div class="content">
-            {{ timetable|fill|safe }}
+            <div class="content__row"></div>
+            <div class="content__row"></div>
+            <div class="content__row"></div>
+            <div class="content__row"></div>
+            <div class="content__row"></div>
         </div>
     </div>
 {% endblock %}
+{{% block script %}
+    <script src="{% static 'js/timetable.js' %}"></script>
+    {% if timetable %}
+        <script>
+            fillTimetable({{ timetable|safe }})
+        </script>
+    {% endif %}
+{% endblock %}}

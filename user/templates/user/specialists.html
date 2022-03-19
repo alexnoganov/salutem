@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
+{% endblock %}
+{% block title %}
+    <title>Специалисты</title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="content__container">
+            <div class="object__tools">
+                <h1 class="search__patient">Выберите специалиста</h1>
+                <a href="" class="AddLink">
+                    <span class="Add">Добавить специалиста</span>
+                    <span class="Plus">
+                            <svg width="13" height="13" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ffffff"
+                                  d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
+                            </svg>
+                        </span>
+                </a>
+            </div>
+            <div class="content__main">
+                <div class="module" id="changelist">
+                    <div class="changelist__form">
+                        <div class="toolbar">
+                            <form method="get" id="changelist__search">
+                                <div class="search__item">
+                                    <label for="searchbar">
+                                        <img src="{% static 'img/search.svg' %}" alt="Search">
+                                    </label>
+                                    <input type="text" size="40" name="q" value="{{ request.GET.q }}" id="searchbar"
+                                           autofocus>
+                                    <input type="submit" value="Найти">
+                                    <input type="reset" value="Сбросить"
+                                           onclick="window.location.href = {% url 'specialists' %}">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table">
+                        <div class="row table__header">
+                            <div class="cell" id="header1">ФИО</div>
+                            <div class="cell" id="header2">Номер телефона</div>
+                            <div class="cell" id="header3">E-mail</div>
+                            <div class="cell" id="header4">Дата рождения</div>
+                            <div class="cell" id="header5">Дата входа</div>
+                        </div>
+                        {% for specialist in specialists %}
+                            <a href="{% url 'specialist_profile' specialist.pk %}" class="row">
+                                <div class="cell"
+                                     data-title="FIO">{{ specialist.last_name }} {{ specialist.patronymic }} {{ specialist.first_name }}</div>
+                                <div class="cell" data-title="Phone">{{ specialist.phone }}</div>
+                                <div class="cell" data-title="Email">{{ specialist.email }}</div>
+                                <div class="cell" data-title="Date of Birth">{{ specialist.date_of_birth }}</div>
+                                <div class="cell"
+                                     data-title="Date of Login">{{ specialist.last_login }}</div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {% if is_paginated %}
+                        <div class="pagination">
+                            <ul>
+                                {% if page_obj.has_previous %}
+                                    <li>
+                                        <a href="{% url 'specialists' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                {% for f in page_obj.paginator.page_range %}
+                                    {% if f == page_obj.number %}
+                                        <li><a class="is-active" href="{% url 'specialists' %}?page={{ f }}">{{ f }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li><a href="{% url 'specialists' %}?page={{ f }}">{{ f }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li><a href="{% url 'specialists' %}?page={{ page_obj.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% csrf_token %}
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/patients.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.addEventListener("click", e => {
+                if (e.target.id === "header1") {
+                    columnSort(document.querySelector("#header1"), "FIO");
+                } else if (e.target.id === "header2") {
+                    columnSort(document.querySelector("#header2"), "Phone")
+                } else if (e.target.id === "header3") {
+                    columnSort(document.querySelector("#header3"), "Email")
+                } else if (e.target.id === "header4") {
+                    columnSort(document.querySelector("#header4"), "Date of Birth")
+                } else if (e.target.id === "header5") {
+                    columnSort(document.querySelector("#header5"), "Date of Login")
+                }
+            });
+        });
+    </script>
+{% endblock %}

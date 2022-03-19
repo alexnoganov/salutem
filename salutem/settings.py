@@ -146,6 +146,6 @@ AUTH_USER_MODEL = 'user.Specialists'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = reverse_lazy('patients')
+LOGIN_REDIRECT_URL = reverse_lazy('specialists')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')

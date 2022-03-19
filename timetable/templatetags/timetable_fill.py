@@ -67,7 +67,7 @@ def fi1ll(query_list):
 #     return res
 
 @register.filter
-def fill(query_list):
+def fill(query_list, weekday):
     q_len = 0
     res = ''
     week_days = {}
@@ -123,35 +123,10 @@ def fill(query_list):
     #     except IndexError:
     #         pass
     # week_days_len[query_list[i].date.isocalendar().week] = 0
-    for week in week_days:
-        for day in range(0, len(week_days[week])):
-            # print(week_days[days][day]
-            day_len = len(week_days[week][day])
-            if len(week_days[week][day]) == 0:
-                res += '<div></div>'
-            elif len(week_days[week][day]) == 1:
-                res += week_days[week][day].pop(0)
-            else:
-                res += '<div></div>'
-            print(week_days[week][day])
-            #     for i in range(0, len(week_days[days][day])):
-            #         if week_days[days][day][i]:
-            #             res += week_days[days][day][i]
-            # print(week_days[days][day])
-
-    # for days in week_days:
-    #     i = 0
-    #     while week_days[days][i]:
-    #         if len(week_days[days][i]) == 0:
-    #             res += '<div></div>'
-    #             i += 1
-    #         elif len(week_days[days][i]) == 1:
-    #             res += week_days[days][i].pop(0)
-    #             i += 1
-    #         else:
-    #             for k in range(0, len(week_days[days][i])):
-    #                 if week_days[days][i][k]:
-    #                     res += week_days[days][i][k]
-    #             # i += 1
-    #     print(week_days[days][i])
+    # for week in week_days:
+    #     for day in week_days[week]:
+    #         if day == weekday:
+    #             if week_days[week][day]:
+    #                 for i in range(0, len(week_days[week][day])):
+    #                     res += week_days[week][day][i]
     return res

@@ -14,7 +14,9 @@
 
     <div class="container">
         <div class="content__container">
-            <h1 class="search__patient">Профиль пациента</h1>
+            <div class="object__tools">
+                <h1 class="search__patient">Профиль пациента</h1>
+            </div>
             <div class="page_patient">
                 <div class="page_slice">
                     <div class="page_patient_left page_throw">
@@ -26,21 +28,38 @@
                                     <img src="{% static 'img/unnamed.jpg' %}" alt="аватар" id="profile_img">
                                 {% endif %}
                             </div>
-                            <form id="user" method="post">
-                                <div class="info_edit_item">
-                                    <div class="info_edit_main_profile">
-
-                                        <div class="info_edit_main_profile_avatar_reupload">
+                            {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                <form id="user" method="post">
+                                    <div class="info_edit_item">
+                                        <div class="info_edit_main_profile">
+                                            <div class="info_edit_main_profile_avatar_reupload">
                                             <span class="bot8" style="width: 100px;margin: 20px 0 0 0
 ">Обновить</span>
-                                            {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
-                                        </div>
-                                        <div class="info_edit_main_profile_avatar_delete">
-                                            <span class="bot8" style="width: 100px;margin: 20px 0 0 0">Удалить</span>
+                                                {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
+                                            </div>
+                                            <div class="info_edit_main_profile_avatar_delete">
+                                                <span class="bot8"
+                                                      style="width: 100px;margin: 20px 0 0 0">Удалить</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            {% else %}
+                                <form id="user" method="post">
+                                    <div class="info_edit_item">
+                                        <div class="info_edit_main_profile">
+                                            <div class="info_edit_main_profile_avatar_reupload">
+                                            <span class="bot8 disabled" style="width: 100px;margin: 20px 0 0 0
+">Обновить</span>
+                                                {% render_field form.photo id="update" accept="image/jpeg,image/png" disabled='disabled' %}
+                                            </div>
+                                            <div class="info_edit_main_profile_avatar_delete">
+                                                <span class="bot8 disabled" style="width: 100px;margin: 20px 0 0 0">Удалить</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="page_patient_right page_throw">
@@ -55,7 +74,9 @@
                                         книжка
                                     </a>
                                 </button>
-                                <button class="bot8" id="appointmentModalBtn" onclick="$('#appointmentModal').modal();">Запись на прием</button>
+                                <button class="bot8" id="appointmentModalBtn" onclick="$('#appointmentModal').modal();">
+                                    Запись на прием
+                                </button>
                             </div>
                         </div>
 
@@ -80,9 +101,11 @@
                                                                  </span>
                                                                 </label>
                                                                 <div class="select">
-
-                                                                    {% render_field form.Sex class="select__control" id="powermail_field_anrede" %}
-
+                                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" %}
+                                                                    {% else %}
+                                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" disabled='disabled' %}
+                                                                    {% endif %}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -96,7 +119,12 @@
                                                                         Имя
                                                                     </span>
                                                                 </label>
-                                                                {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" value=profile.Name %}
+                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                    {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" value=profile.Name %}
+                                                                {% else %}
+                                                                    {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" disabled='disabled' value=profile.Name %}
+
+                                                                {% endif %}
                                                             </div>
                                                             <div class="invalid-feedback" id="invalid_name"
                                                                  style="display: none">
@@ -111,8 +139,11 @@
                                                                         <span>*</span>
                                                                         Фамилия
                                                                     </span>
-                                                                    {% render_field form.Surname class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
-
+                                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                        {% render_field form.Surname class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
+                                                                    {% else %}
+                                                                        {% render_field form.Surname disabled='disabled' class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
+                                                                    {% endif %}
                                                                 </label>
                                                             </div>
                                                             <div class="invalid-feedback" id="invalid_surname"
@@ -134,7 +165,11 @@
                                                                         <span>*</span>
                                                                         Отчество
                                                                     </span>
-                                                                    {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
+                                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                        {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
+                                                                    {% else %}
+                                                                        {% render_field form.Patronymic disabled='disabled' class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
+                                                                    {% endif %}
                                                                 </label>
                                                                 <div class="invalid-feedback" id="invalid_patronymic"
                                                                      style="display: none">
@@ -150,7 +185,11 @@
                                                                         Дата рождения
                                                                     </span>
                                                                 </label>
-                                                                {% render_field form.Date_of_birth type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
+                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                    {% render_field form.Date_of_birth type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
+                                                                {% else %}
+                                                                    {% render_field form.Date_of_birth disabled='disabled' type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
+                                                                {% endif %}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -167,7 +206,11 @@
                                                                         Номер телефона
                                                                     </span>
                                                                 </label>
-                                                                {% render_field form.Telephone class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
+                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                    {% render_field form.Telephone class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
+                                                                {% else %}
+                                                                    {% render_field form.Telephone disabled='disabled' class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
+                                                                {% endif %}
                                                             </div>
                                                             <div class="invalid-feedback" id="invalid_phone"
                                                                  style="display: none">
@@ -183,8 +226,11 @@
                                                                         E-Mail
                                                                     </span>
                                                                 </label>
-                                                                {% render_field form.Email class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
-
+                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                    {% render_field form.Email class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
+                                                                {% else %}
+                                                                    {% render_field form.Email disabled='disabled' class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
+                                                                {% endif %}
                                                             </div>
                                                             <div class="invalid-feedback" id="invalid_email"
                                                                  style="display: none">
@@ -204,8 +250,11 @@
                                                                         Место проживания
                                                                     </span>
                                                                 </label>
-                                                                {% render_field form.Place_of_residence class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
-
+                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                    {% render_field form.Place_of_residence class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
+                                                                {% else %}
+                                                                    {% render_field form.Place_of_residence disabled='disabled' class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
+                                                                {% endif %}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -222,19 +271,25 @@
                                                                      Группа крови
                                                                  </span>
                                                                 </label>
-
-                                                                {% render_field form.Blood_type class="select__control" id="powermail_field_blood" %}
-
+                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                                    {% render_field form.Blood_type class="select__control" id="powermail_field_blood" %}
+                                                                {% else %}
+                                                                    {% render_field form.Blood_type disabled='disabled' class="select__control" id="powermail_field_blood" %}
+                                                                {% endif %}
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                 </fieldset>
                                             </div>
-
-                                            <button type="submit" class="submit__form" id="profile_save">Сохранить
-                                            </button>
-
+                                            {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                <button type="submit" class="submit__form" id="profile_save">Сохранить
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" disabled class="submit__form disabled_submit" id="profile_save">
+                                                    Сохранить
+                                                </button>
+                                            {% endif %}
                                         </form>
                                     </div>
 
@@ -357,7 +412,8 @@
                 <div class="fieldset__row">
                     <div class="form-block">
                         <div>
-                            <label for="specialist_for_appointment" class="input-field-wrapper__label">Специалист</label>
+                            <label for="specialist_for_appointment"
+                                   class="input-field-wrapper__label">Специалист</label>
                             {% render_field appointment_form.specialists id='specialist_for_appointment' class='select__control' %}
                         </div>
                     </div>

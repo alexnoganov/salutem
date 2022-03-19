@@ -18,12 +18,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from user.views import redirect_to_profile
+from user.views import redirect_to_profile, SpecialistListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('patients/', include('patients.urls')),
+    path('specialists/', SpecialistListView.as_view(), name='specialists'),
     path('timetable/', include('timetable.urls')),
     path('', redirect_to_profile)
 ]

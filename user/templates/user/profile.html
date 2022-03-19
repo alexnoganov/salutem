@@ -12,7 +12,9 @@
 {% block content %}
     <div class="container">
         <div class="content__container">
-            <h1 class="search__patient">Профиль пациента</h1>
+            <div class="object__tools">
+                <h1 class="search__patient">Профиль специалиста</h1>
+            </div>
             <div class="page_patient">
                 <div class="page_slice">
                     <div class="page_patient_left page_throw">
@@ -27,7 +29,6 @@
                             <form id="user" method="post">
                                 <div class="info_edit_item">
                                     <div class="info_edit_main_profile">
-
                                         <div class="info_edit_main_profile_avatar_reupload">
                                             <span class="bot8" style="width: 100px;margin: 20px 0 0 0
 ">Обновить</span>
@@ -44,8 +45,13 @@
                     <div class="page_patient_right page_throw">
                         <div class="page_patient_button">
                             <div class="page_button">
-                                <button class="bot8">Медицинская книжка</button>
-                                <button class="bot8">История посещений</button>
+                                <button class="bot8">
+                                    <a href="{% url 'timetable' profile.pk %}" style="color: inherit">Расписание</a>
+                                </button>
+                                <button class="bot8">
+                                    <a href="{% url 'timetable' profile.pk %}" style="color: inherit">История
+                                        посещений</a>
+                                </button>
                             </div>
                         </div>
 
@@ -59,6 +65,8 @@
                                             <div class="form__section">
                                                 <fieldset class="fieldset">
                                                     <legend class="fieldset__legend">Данные:</legend>
+                                                    <div class="input-field-wrapper__label" style="margin: 0 0 40px 0;
+                                                    font-weight: bold;">Последний вход: {{ profile.last_login }}</div>
                                                     <div class="fieldset__row">
                                                         <div class="form-block">
                                                             <div>
@@ -212,10 +220,10 @@
                                                                 {% render_field form.passport_num class="text-input pass_num_input" id="powermail_field_pass_num" placeholder="КН993576" value=profile.passport_num %}
                                                             </div>
                                                             <div class="invalid-feedback" id="invalid_pass"
-                                                                     style="display: none">
-                                                                    Это поле не может быть пустым или иметь не
-                                                                    корректные значения.
-                                                                </div>
+                                                                 style="display: none">
+                                                                Это поле не может быть пустым или иметь не
+                                                                корректные значения.
+                                                            </div>
                                                         </div>
                                                         <div class="form-block">
                                                             <div class="input-field-wrapper">

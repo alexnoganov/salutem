@@ -4,10 +4,11 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
 from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from patients.models import Analyzes
 from .forms import LoginForm, SpecialistForm
@@ -23,7 +24,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('patients')
+                    return redirect('specialists')
                 else:
                     return HttpResponse('Аккаунт отключен')
             else:
@@ -89,10 +90,40 @@ def save_user_profile(request):
     return JsonResponse({'errors': form.errors}, safe=False)
 
 
+class SpecialistListView(ListView):
+    model = Specialists
+    context_object_name = 'specialists'
+    template_name = 'user/specialists.html'
+    paginate_by = 30
+
+    def get_queryset(self):
+        if self.request.GET.get('q'):
+            search = self.request.GET.get('q')
+            return Specialists.objects.filter(
+                Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(
+                    patronymic__icontains=search) | Q(phone__icontains=search) | Q(
+                    email__icontains=search)).order_by('-last_login')
+        else:
+            return Specialists.objects.all().order_by('-last_login')
+
+
 class SpecialistProfile(DetailView):
     model = Specialists
     template_name = 'user/profile.html'
     context_object_name = 'profile'
+
+    def get(self, request, *args, **kwargs):
+        if kwargs.get('pk') == self.request.user.pk:
+            self.object = self.get_object()
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+        else:
+            if not self.request.user.is_staff:
+                self.object = self.get_object()
+                context = self.get_context_data(object=self.object)
+                return self.render_to_response(context)
+            else:
+                return HttpResponseRedirect(reverse_lazy('specialist_profile', kwargs={'pk': self.request.user.pk}))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -102,7 +133,10 @@ class SpecialistProfile(DetailView):
 
 
 def redirect_to_profile(request):
-    return HttpResponseRedirect(reverse_lazy('patients'))
+    if request.user.is_staff:
+        return HttpResponseRedirect(reverse_lazy('specialists'))
+    else:
+        return HttpResponseRedirect(reverse_lazy('patients'))
 
 
 def hide_notification(request):

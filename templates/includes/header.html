@@ -2,6 +2,9 @@
 {% load notify_tags %}
 <header class="header__container">
     <nav class="header__wrapper">
+    {% if request.user.is_staff %}
+        <a href="{% url 'specialists' %}" class="ds">Специалисты</a>
+    {% endif %}
         <div class="item">
             <a href="{% url 'patients' %}" class="ds">Пациенты</a>
         </div>

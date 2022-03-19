@@ -66,7 +66,9 @@
         let headerLinks = document.querySelectorAll("header .ds");
         let currentHeaderLink;
         headerLinks.forEach(item => {
-            if (item.href === location.href) {
+            console.log(item.href)
+            console.log(location.href)
+            if (item.pathname.split('/')[1] === location.pathname.split('/')[1]) {
                 item.classList.add("active");
                 currentHeaderLink = item;
             }

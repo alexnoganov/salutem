@@ -161,29 +161,29 @@ $("#submit__analysis").click((e) => {
         toastr.error("Заполните поле \"Дата сдачи\".");
     } else {
         $.ajax({
-        url: '/patients/analysis/',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            type: 'register',
-            data: JSON.stringify({
-                type: $("#analysisType").val(),
-                date: date,
-                specialistId: $("#profile__text").children('a')[0].href.split('/')[4],
-                patientId: location.href.split('/')[5]
-            })
-        },
+            url: '/patients/analysis/',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                type: 'register',
+                data: JSON.stringify({
+                    type: $("#analysisType").val(),
+                    date: date,
+                    specialistId: $("#profile__text").children('a')[0].href.split('/')[4],
+                    patientId: location.href.split('/')[5]
+                })
+            },
 
-        success: (data) => {
-            if ('errors' in data) {
-                toastr.error("Произошла ошибка! Повторите попытку позже.");
+            success: (data) => {
+                if ('errors' in data) {
+                    toastr.error("Произошла ошибка! Повторите попытку позже.");
+                }
+                if ('success' in data) {
+                    toastr.success("Пациент успешно записан на сдачу анализов.");
+                    $.modal.close();
+                }
             }
-            if ('success' in data) {
-                toastr.success("Пациент успешно записан на сдачу анализов.");
-                $.modal.close();
-            }
-        }
-    });
+        });
     }
 
 }); // Запись на анализ
@@ -303,10 +303,12 @@ $(".info_edit_main_profile_avatar_reupload span").click(function () {
     });
 }); // Добавление фото профиля
 
-$(".info_edit_main_profile_avatar_delete").click(function () {
-    let img = document.querySelector('#profile_img');
-    img.src = "/media/photos/unnamed.jpg"
-    $("#update").val('');
+$(".info_edit_main_profile_avatar_delete span").click(function () {
+    if (!this.classList.contains('disabled')) {
+        let img = document.querySelector('#profile_img');
+        img.src = "/media/photos/unnamed.jpg"
+        $("#update").val('');
+    }
 }); // Удаление фото профиля
 
 $("#modal__delete__analysis").click((e) => {

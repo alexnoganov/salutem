@@ -9,21 +9,19 @@
 {% block content %}
     <div class="container">
         <div class="content__container">
-            <h1 class="search__patient">Выберите пациента</h1>
-            <div class="content__main">
-                <ul class="object__tools">
-                    <li>
-                        <a href="" class="AddLink">
-                            <span class="Add">Добавить пациента</span>
-                            <span class="Plus">
+            <div class="object__tools">
+                <h1 class="search__patient">Выберите пациента</h1>
+                <a href="" class="AddLink">
+                    <span class="Add">Добавить пациента</span>
+                    <span class="Plus">
                             <svg width="13" height="13" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                             <path fill="#ffffff"
                                   d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
                             </svg>
                         </span>
-                        </a>
-                    </li>
-                </ul>
+                </a>
+            </div>
+            <div class="content__main">
                 <div class="module" id="changelist">
                     <div class="changelist__form">
                         <div class="toolbar">
@@ -51,7 +49,7 @@
                             {% for patient in patients %}
                                 <a href="{% url 'profile' patient.patient.pk %}" class="row">
                                     <div class="cell"
-                                         data-title="Patient">{{ patient.patient.Name }} {{ patient.patient.Patronymic }} {{ patient.patient.Surname }}</div>
+                                         data-title="Patient">{{ patient.patient.Surname }} {{ patient.patient.Name }} {{ patient.patient.Patronymic }}</div>
                                     <div class="cell"
                                          data-title="Specialist">{{ patient.specialist.last_name }} {{ patient.specialist.first_name }} {{ patient.specialist.patronymic }}</div>
                                     <div class="cell" data-title="Test Date">{{ patient.test_date }}</div>
@@ -68,7 +66,7 @@
                             {% for patient in patients %}
                                 <a href="{% url 'profile' patient.pk %}" class="row">
                                     <div class="cell"
-                                         data-title="FIO">{{ patient.Name }} {{ patient.Patronymic }} {{ patient.Surname }}</div>
+                                         data-title="FIO">{{ patient.Surname }} {{ patient.Name }} {{ patient.Patronymic }}</div>
                                     <div class="cell" data-title="Phone">{{ patient.Telephone }}</div>
                                     <div class="cell" data-title="Date of Birth">{{ patient.Date_of_birth }}</div>
                                     <div class="cell" data-title="Address">{{ patient.Place_of_residence }}</div>

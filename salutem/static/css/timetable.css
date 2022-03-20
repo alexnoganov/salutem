@@ -81,7 +81,7 @@
 }
 
 .timetable .weekend {
-    background: #fbfbfc;
+    background: #e2e2e2 !important;
     color: #87a1ad;
 }
 
@@ -118,15 +118,86 @@
 
 .timetable .content__row > div {
     box-shadow: inset 1px 0 0 #c7c9cb, inset 0 1px 0 0 #c7c9cb;
+    height: 171px;
+}
+
+.timetable .content__row > div > a {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     height: 171px;
+    width: 100%;
     text-align: center;
 }
 
 .timetable .content .time {
     margin-bottom: 20px;
     font-weight: bold;
+}
+
+#confirmModal {
+    max-width: 600px;
+    font-size: 16px;
+    padding: 30px 50px;
+}
+
+#confirmModal .modal__footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#confirmModal .modal__body {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+#confirmModal .modal__body h1 {
+    margin-bottom: 20px;
+}
+
+#confirmModal .modal__body p {
+    margin-bottom: 16px;
+}
+
+#confirmModal .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+    width: 200px;
+    font-weight: bold;
+}
+
+#confirmModal .btn:hover {
+    opacity: 1;
+    transition: 0.15s linear;
+}
+
+#confirmModal .btn.cancel {
+    background-color: #ccc;
+    color: black;
+}
+
+#confirmModal .btn.submit {
+    background-color: #f44336;
+}
+
+.row__item__close {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.row__item__close:hover svg {
+    fill: rgb(255, 255, 255);
+    transition: 0.2s ease;
 }

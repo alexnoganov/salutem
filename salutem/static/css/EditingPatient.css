@@ -345,6 +345,7 @@
 .disabled {
     color: rgb(170, 170, 170) !important;
     opacity: 0.7 !important;
+    cursor: default;
 }
 .disabled:hover {
     box-shadow: none !important;
@@ -353,6 +354,7 @@
 
 .disabled_submit {
     opacity: 0.7;
+    cursor: default;
 }
 
 .disabled_submit:hover {

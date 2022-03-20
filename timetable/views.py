@@ -30,6 +30,7 @@ class TimeTableView(TemplateView):
             timetable = TimeTable.objects.filter(specialist_id=kwargs['pk']).order_by('date')
         else:
             timetable = TimeTable.objects.filter(specialist_id=self.request.user.pk).order_by('date')
+            print(timetable)
         context['timetable'] = {}
         for i in range(0, len(timetable)):
             print(timetable[i].date.weekday())
@@ -52,5 +53,7 @@ class TimeTableView(TemplateView):
                                                      o=timetable[i].patient.Patronymic),
                                 timetable[i].date.strftime("%d.%m.%Y %H:%M")
                             ])
+        print(context['timetable'])
         context['timetable'] = json.dumps(context['timetable'])
+
         return context

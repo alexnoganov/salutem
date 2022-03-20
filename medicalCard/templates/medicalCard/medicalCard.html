@@ -12,91 +12,164 @@
 
 {% block content %}
 
+    {{ medicalCard.patient }}
+    {{ medicalCard.date }}
 
     <div class="container">
         <div class="content__container">
-            <h1 class="search__patient">Медицинская карта</h1>
-            <div class="content__main">
-                <div class="union">
-                    <div class="item__medicalcard">
-                        <div class="content__medicalcard">
-                            <div class="medicalcard__title__data medicalcard">
-                                <div class="medicalcard__point">
-                                    Запись № {{ medicalCard.id }}
-                                </div>
-                                <div class="medicalcard__point medicalcard__point__date"></div>
-                            </div>
-                            <div class="medicalcard__reception medicalcard">
-                                <label class="medicalcard__title__span" for="medicalcard__reception">Назначение приема:</label>
-                                <input type="text" name="Name" maxlength="100" value="{{ medicalCard.purpose }}"
-                                       placeholder="--"
-                                       id="medicalcard__reception" class="text-input powermail_input">
-                            </div>
-                            <div class="medicalcard__symptoms medicalcard">
-
-                                <label class="medicalcard__title__span" for="medicalcard__symptoms__0">Симптомы:</label>
-                                <div class="enjoyer">
-
-                                    <div class="sdf" style="display: flex; align-items: center; flex-wrap: wrap;">
-                                        <input type="text" name="Name" maxlength="100" value="{{ medicalCard.symptoms }}"  placeholder="--" id="medicalcard__symptoms__0" class="text-input powermail_input">
-
-                                        <div class="medicalcard__svg" style="padding-left: 7px;">
-                                            <svg width="17" class="medicalcard__svg__plus" style="cursor: pointer;" height="17" viewBox="0 0 1792
-                                         1792" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill="#63B64D" d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="medicalcard__therapy medicalcard">
-                                <label class="medicalcard__title__span" for="medicalcard__therapy">Лечение:</label>
-                                <textarea id="medicalcard__therapy" class="text-input powermail_input"
-                                          style="resize: none;height: 150px;">{{ medicalCard.treatment }}
-                                </textarea>
-                            </div>
-                            <button type="submit" class="submit__form" id="profile_save">Сохранить</button>
-                        </div>
-                    </div>
-
-                    {% for anlz in analyzes %}
-                        <div class="item__medicalcard analyze__medicalcard">
-                        <div class="content__medicalcard">
-                            <div class="medicalcard__title__data medicalcard">
-                                <div class="medicalcard__point">
-                                    Анализы № {{ anlz.pk }}
-                                </div>
-                                <div class="medicalcard__point">
-                                    {{ anlz.test_date |date:"SHORT_DATE_FORMAT"}}
-                                </div>
-                            </div>
-                            <div class="medicalcard__reception medicalcard">
-                                <label class="medicalcard__title__span" for="medicalcard__name_analyze">Название:</label>
-                                <input type="text" disabled maxlength="100" value="{{ anlz.type }}"
-                                       placeholder="--" id="medicalcard__name_analyze" class="text-input
-                                       powermail_input">
-                            </div>
-                            <div class="medicalcard__symptoms medicalcard">
-                                <label class="medicalcard__title__span" for="medicalcard__specialist">Специалист:</label>
-                                <input type="text" disabled maxlength="100" value="{{ anlz.specialist.last_name }}
- {{ anlz.specialist.first_name|first }}.{{ anlz.specialist.patronymic|first }}."  placeholder="--"
-                                       id="medicalcard__specialist" class="text-input powermail_input">
-                            </div>
-                            <div class="medicalcard__therapy medicalcard">
-                                <label class="medicalcard__title__span" for="medicalcard__therapy">Результат:</label>
-                                <textarea id="medicalcard__therapy" disabled class="text-input powermail_input" disabled
-                                          style="resize:
-                            none;height: 150px;">{{ anlz.result }}
-                            </textarea>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-                </div>
+            <div class="object__tools">
+                <h1 class="search__patient">Медицинская карта</h1>
             </div>
 
+            <div class="tabs">
+                <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+                <label for="tab-btn-1">Медицинская карта</label>
+                <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+                <label for="tab-btn-2">Анализы</label>
+
+                <div id="content-1">
+                    <div class="content__main">
+                        <div class="union">
+                            <form method="get" id="MD__search">
+
+                                <div class="union__search">
+                                    <label for="medicalcard__search">Найти запись:</label>
+                                    <input type="date" name="medicalsearch" id="medicalcard__search" value="{{ request.GET.medicalsearch }}">
+                                </div>
+                            </form>
+
+                            <div class="union__accordion">
+
+                                {% for foo in medicalCard %}
+                                    <div class="item__accordion">
+                                        <button class="accordion">
+                                            <div class="medicalcard__title__data medicalcard">
+                                                <div class="medicalcard__point">
+                                                    Запись № {{ foo.id }}
+                                                </div>
+                                                <div class="medicalcard__point medicalcard__point__date">
+                                                    {{ foo.date |date:"SHORT_DATE_FORMAT"}}</div>
+                                            </div>
+                                        </button>
+                                        <div class="panel">
+                                            <div class="item__medicalcard">
+                                                <div class="content__medicalcard">
+                                                    <div class="medicalcard__reception medicalcard">
+                                                        <label class="medicalcard__title__span" for="medicalcard__reception">Назначение приема:</label>
+                                                        <input type="text" name="Name" maxlength="100" value="{{ foo.purpose }}"
+                                                               placeholder="--"
+                                                               id="medicalcard__reception" class="text-input powermail_input">
+                                                    </div>
+                                                    <div class="medicalcard__symptoms medicalcard">
+
+                                                        <label class="medicalcard__title__span" for="medicalcard__symptoms__0">Симптомы:</label>
+                                                        <div class="enjoyer">
+                                                            <div class="sdf" style="display: flex; align-items: center; flex-wrap: wrap;">
+                                                                <input type="text" name="Name" maxlength="100" value="{{ foo.symptoms }}"  placeholder="--" id="medicalcard__symptoms__0" class="text-input powermail_input">
+
+                                                                <div class="medicalcard__svg" style="padding-left: 7px;">
+                                                                    <svg width="17" class="medicalcard__svg__plus"
+                                                                         style="cursor: pointer;" height="17" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill="#63B64D" d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z">
+                                                                        </path>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="medicalcard__therapy medicalcard">
+                                                        <label class="medicalcard__title__span" for="medicalcard__therapy">Лечение:</label>
+                                                        <textarea id="medicalcard__therapy" class="text-input
+                                                        powermail_input" style="resize: none;height: 150px;">{{ foo.treatment }}</textarea>
+                                                    </div>
+                                                    <div class="medicalcard__analyzes__list medicalcard">
+                                                        <label class="medicalcard__title__span">Записался на анализы:</label>
+                                                        <ul class="comma-list">
+                                                            {% for anl in analyzes %}
+                                                                <li>{{ anl.type }}</li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                    <button type="submit" class="submit__form" id="profile_save">Сохранить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-2">
+                    <div class="content__main">
+                        <div class="union">
+                            <form method="get" id="MD__search__anlz">
+
+                                <div class="union__search">
+                                    <label for="medicalcard__search_anlz">Найти анализы:</label>
+                                    <input type="date" style="width: 70%;" name="medicalsearchANLZ"
+                                           id="medicalcard__search_anlz" value="{{ request.GET.medicalsearchANLZ }}">
+                                </div>
+                            </form>
+
+                            <div class="union__accordion">
+
+                                {% for anlz in analyzes %}
+                                    <div class="item__accordion">
+                                        <button class="accordion">
+                                            <div class="medicalcard__title__data medicalcard">
+                                                <div class="medicalcard__point">
+                                                    Запись № {{ anlz.pk }}
+                                                </div>
+                                                <div class="medicalcard__point medicalcard__point__date">
+                                                    {{ anlz.test_date |date:"SHORT_DATE_FORMAT"}}</div>
+                                            </div>
+                                        </button>
+                                        <div class="panel">
+                                            <div class="item__medicalcard">
+                                                <div class="content__medicalcard">
+                                                    <div class="medicalcard__reception medicalcard">
+                                                        <label class="medicalcard__title__span"
+                                                               for="medicalcard__reception">Назначение:</label>
+                                                        <input type="text" name="Name" maxlength="100" value="
+{{ anlz.type }}" placeholder="--" id="medicalcard__reception" class="text-input powermail_input">
+                                                    </div>
+                                                    <div class="medicalcard__symptoms medicalcard">
+                                                        <label class="medicalcard__title__span"
+                                                               for="medicalcard__symptoms__0">Специалист:</label>
+                                                        <div class="enjoyer">
+                                                            <div class="sdf" style="display: flex; align-items: center; flex-wrap: wrap;">
+                                                                <input style="width: 100%" type="text" name="Name"
+                                                                       maxlength="100"
+                                                                       value="{{ anlz.specialist.last_name }}
+ {{ anlz.specialist.first_name|first }}.{{ anlz.specialist.patronymic|first }}."  placeholder="--"
+                                                                       id="medicalcard__symptoms__0" class="text-input powermail_input">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="medicalcard__therapy medicalcard">
+                                                        <label class="medicalcard__title__span"
+                                                               for="medicalcard__therapy">Результат:</label>
+                                                        <textarea id="medicalcard__therapy" class="text-input
+                                                        powermail_input" style="resize: none;height: 150px;">{{ anlz.result }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -108,6 +181,23 @@
     <script src="{% static 'js/patients.js' %}"></script>
 
     <script src="{% static 'js/medicalCard.js' %}"></script>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active_accordion");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {

@@ -26,24 +26,37 @@ function AddRemoveInput(){
 }
 
 
-function addDate() {
- let selector = document.querySelector(".medicalcard__point__date");
- let date = new Date();
- selector.innerHTML = formatDate(date);
+// function addDate() {
+//     let selector = document.querySelectorAll(".medicalcard__point__date");
+//     console.log(selector);
+//     if(selector !== undefined){
+//         let date = new Date(selector.innerHTML);
+//         console.log(date);
+//         selector.innerHTML = formatDate(date);
+//     }
+// }
+// function formatDate(date) {
+//
+//     let dd = date.getDate();
+//     if (dd < 10) dd = '0' + dd;
+//
+//     let mm = date.getMonth() + 1;
+//     if (mm < 10) mm = '0' + mm;
+//
+//     let yy = date.getFullYear() % 100;
+//     if (yy < 10) yy = '0' + yy;
+//
+//     return dd + '.' + mm + '.' + yy;
+// }
+
+document.querySelector("#medicalcard__search").onchange = function () {
+    document.querySelector("#MD__search").submit();
 }
-function formatDate(date) {
 
-  let dd = date.getDate();
-  if (dd < 10) dd = '0' + dd;
-
-  let mm = date.getMonth() + 1;
-  if (mm < 10) mm = '0' + mm;
-
-  let yy = date.getFullYear() % 100;
-  if (yy < 10) yy = '0' + yy;
-
-  return dd + '.' + mm + '.' + yy;
+document.querySelector("#medicalcard__search_anlz").onchange = function () {
+    document.querySelector("#MD__search__anlz").submit();
+    console.log("ASd")
 }
 
-addDate();
+// addDate();
 AddRemoveInput();

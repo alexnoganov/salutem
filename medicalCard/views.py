@@ -1,23 +1,42 @@
+from django.db.models import Q
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import ListView, DetailView
 
 from medicalCard.models import MedicalCard
 from patients.models import Analyzes
 
 
-class EditingPatient(DetailView):
+class EditingPatient(ListView):
     template_name = 'medicalCard/medicalCard.html'
-
     model = MedicalCard
-    context_object_name = 'medicalCard'
+
+    context_object_name = 'AllMC'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk'])
-        # if self.request.user.has_perm('user.edit_analyzes'):
-        #     context['patient_analyzes'] = list(
-        #         Analyzes.objects.filter(patient_id=self.kwargs['pk'],
-        #                                 status__in=('Новый', 'В процессе')).values('id',
-        #                                                                            'status',
-        #                                                                            'type__title'))
+
+        if self.request.GET.get('medicalsearchANLZ'):
+            search = self.request.GET.get('medicalsearchANLZ')
+            context['analyzes'] = Analyzes.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(
+                test_date__istartswith=search)).order_by('-test_date')
+            print(search)
+            print(context['analyzes'])
+        elif self.request.GET.get('medicalsearch'):
+            search = self.request.GET.get('medicalsearch')
+            context['medicalCard'] = MedicalCard.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(
+                date=search)).order_by('-date')
+        else:
+            context['medicalCard'] = MedicalCard.objects.filter(Q(patient_id=self.kwargs['pk'])).order_by('-date')
+            context['analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk']).order_by('-test_date')
+
         return context
+
+    # def get_queryset(self):
+    #     if self.request.GET.get('medicalsearch'):
+    #         search = self.request.GET.get('medicalsearch')
+    #         print(MedicalCard.objects.filter(
+    #             Q(date=search)).order_by('-date'))
+    #         return MedicalCard.objects.filter(
+    #             Q(date=search)).order_by('-date')
+    #     else:
+    #         return MedicalCard.objects.all().order_by('-date')

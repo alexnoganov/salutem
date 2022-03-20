@@ -3,6 +3,7 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import TemplateView
 
 from timetable.models import TimeTable
@@ -12,6 +13,7 @@ class TimeTableView(TemplateView):
     template_name = 'timetable/timetable.html'
 
     def get(self, request, *args, **kwargs):
+        TimeTable.objects.filter(date__lte=timezone.now().date()).delete()
         if kwargs.get('pk'):
             if self.request.user.is_staff:
                 if self.request.user.pk == kwargs.get('pk'):

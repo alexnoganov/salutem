@@ -32,12 +32,15 @@ class TimeTableView(TemplateView):
             timetable = TimeTable.objects.filter(specialist_id=self.request.user.pk).order_by('date')
         context['timetable'] = {}
         for i in range(0, len(timetable)):
+            print(timetable[i].date.weekday())
             context['timetable'][timetable[i].date.isocalendar().week] = {
                 0: [],
                 1: [],
                 2: [],
                 3: [],
                 4: [],
+                5: [],
+                6: [],
             }
         for i in range(0, len(timetable)):
             for key in context['timetable']:

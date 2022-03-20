@@ -12,7 +12,7 @@ function fillTimetable(timetable) {
         'accent-green-gradient', 'accent-blue-gradient',
         'accent-purple-gradient']
     const timetableRow = document.querySelectorAll('.content__row');
-    let timetableRowArray = [[], [], [], [], []];
+    let timetableRowArray = [[], [], [], [], [], [], []];
     let maxDayLength = {};
     for (const week in timetable) {
         maxDayLength[week] = [];
@@ -24,7 +24,7 @@ function fillTimetable(timetable) {
         maxDayLength[key] = maxDayLength[key].max();
     }
     for (const week in timetable) {
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 7; i++) {
             for (let j = 0; j < maxDayLength[week]; j++) {
                 try {
                     timetableRowArray[i].push('<div class="row__item"><div class="time">' + timetable[week][i][j][1] + '</div><div class="patient">' + timetable[week][i][j][0] + '</div></div>')
@@ -49,7 +49,12 @@ function fillTimetable(timetable) {
             }
         }
     }
-    document.querySelectorAll('.row__item').forEach(item => {
+    let rowItem = document.querySelectorAll('.row__item');
+    rowItem.forEach(item => {
         item.classList.add(color.rand())
+        console.log(rowItem)
+        if (item.parentElement.classList.contains("weekend")) {
+            item.parentElement.classList.remove("weekend")
+        }
     });
 }

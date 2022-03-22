@@ -1,4 +1,4 @@
-function fillTimetable(timetable, url_to_patient) {
+function fillTimetable(timetable, url_to_patient, analyzes = false) {
     Array.prototype.max = function () {
         return Math.max.apply(null, this);
     };
@@ -29,7 +29,7 @@ function fillTimetable(timetable, url_to_patient) {
             for (let j = 0; j < maxDayLength[week]; j++) {
                 try {
                     timetableRowArray[i].push(
-                        `<div class="row__item" data-id="${timetable[week][i][j][3]}">
+                            `<div class="row__item" data-id="${timetable[week][i][j][3]}">
                             <a href="${url_to_patient + timetable[week][i][j][2]}">
                                 <div class="time">${timetable[week][i][j][1]}</div>
                                 <div class="patient">${timetable[week][i][j][0]}</div>
@@ -45,9 +45,9 @@ function fillTimetable(timetable, url_to_patient) {
                                 </svg>
                             </div>
                         </div>
-                    `)
+                    `);
                 } catch (e) {
-                    timetableRowArray[i].push('<div></div>')
+                    timetableRowArray[i].push('<div></div>');
                 }
             }
         }

@@ -26,7 +26,7 @@ urlpatterns = [
     path('patients/', include('patients.urls')),
     path('specialists/', SpecialistListView.as_view(), name='specialists'),
     path('timetable/', include('timetable.urls')),
-    path('', redirect_to_profile)
+    path('', redirect_to_profile, name='home')
 ]
 
 if settings.DEBUG:

@@ -9,26 +9,105 @@
     <link rel="stylesheet" href="{% static 'css/timetable.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="timetable">
-        <div class="week-names">
-            <div>понедельник</div>
-            <div>вторник</div>
-            <div>среда</div>
-            <div>четверг</div>
-            <div>пятница</div>
-            <div>суббота</div>
-            <div>воскресенье</div>
+    {% if user.is_staff and not view.kwargs.pk and not timetable_analyzes %}
+        <div class="container">
+            <div class="content__container">
+                <div class="object__tools">
+                    <h1 class="search__patient">Выберите специалиста</h1>
+                </div>
+                <div class="content__main">
+                    <div class="module" id="changelist">
+                        <div class="changelist__form">
+                            <div class="toolbar">
+                                <form method="get" id="changelist__search">
+                                    <div class="search__item">
+                                        <div>
+                                            <label for="searchbar">
+                                                <img src="{% static 'img/search.svg' %}" alt="Search">
+                                            </label>
+                                            <input type="text" size="40" name="q" value="{{ request.GET.q }}"
+                                                   id="searchbar"
+                                                   autofocus>
+                                            <input type="submit" value="Найти">
+                                            <input type="reset" value="Сбросить"
+                                                   onclick="window.location.href = {% url 'specialists' %}">
+                                        </div>
+                                        <a href="{% url 'timetable_analyzes' %}" class="analyzes_btn">Анализы</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="table">
+                            <div class="row table__header">
+                                <div class="cell" id="header1">ФИО</div>
+                                <div class="cell" id="header2">Номер телефона</div>
+                                <div class="cell" id="header3">E-mail</div>
+                                <div class="cell" id="header4">Специализация</div>
+                            </div>
+                            {% for specialist in specialists %}
+                                <a href="{% url 'timetable' specialist.pk %}" class="row">
+                                    <div class="cell"
+                                         data-title="FIO">{{ specialist.last_name }} {{ specialist.patronymic }} {{ specialist.first_name }}</div>
+                                    <div class="cell" data-title="Phone">{{ specialist.phone }}</div>
+                                    <div class="cell" data-title="Email">{{ specialist.email }}</div>
+                                    <div class="cell"
+                                         data-title="Specialization">{{ specialist.specialization }}</div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                        {% if is_paginated %}
+                            <div class="pagination">
+                                <ul>
+                                    {% if page_obj.has_previous %}
+                                        <li>
+                                            <a href="{% url 'specialists' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                                        </li>
+                                    {% endif %}
+                                    {% for f in page_obj.paginator.page_range %}
+                                        {% if f == page_obj.number %}
+                                            <li><a class="is-active"
+                                                   href="{% url 'specialists' %}?page={{ f }}">{{ f }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li><a href="{% url 'specialists' %}?page={{ f }}">{{ f }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if page_obj.has_next %}
+                                        <li>
+                                            <a href="{% url 'specialists' %}?page={{ page_obj.next_page_number }}">Next</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="content">
-            <div class="content__row"></div>
-            <div class="content__row"></div>
-            <div class="content__row"></div>
-            <div class="content__row"></div>
-            <div class="content__row"></div>
-            <div class="content__row"></div>
-            <div class="content__row"></div>
+    {% else %}
+        <div class="timetable">
+            <div class="week-names">
+                <div>понедельник</div>
+                <div>вторник</div>
+                <div>среда</div>
+                <div>четверг</div>
+                <div>пятница</div>
+                <div>суббота</div>
+                <div>воскресенье</div>
+            </div>
+            <div class="content">
+                <div class="content__row"></div>
+                <div class="content__row"></div>
+                <div class="content__row"></div>
+                <div class="content__row"></div>
+                <div class="content__row"></div>
+                <div class="content__row"></div>
+                <div class="content__row"></div>
+            </div>
         </div>
-    </div>
+    {% endif %}
+
     <div id="confirmModal" class="modal">
         <div class="modal__content">
             <div class="modal__body">
@@ -48,7 +127,29 @@
     <script src="{% static 'js/timetable.js' %}"></script>
     {% if timetable %}
         <script>
-            fillTimetable({{ timetable|safe }}, '{% url 'profile' 1 %}')
+            fillTimetable({{ timetable|safe }}, '{% url 'profile' 1 %}');
+        </script>
+    {% elif timetable_analyzes %}
+        <script>
+            fillTimetable({{ timetable_analyzes|safe }}, '{% url 'profile' 1 %}');
+        </script>
+    {% else %}
+        <script src="{% static 'js/patients.js' %}"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                document.addEventListener("click", e => {
+                    console.log(e.target.id)
+                    if (e.target.id === "header1") {
+                        columnSort(document.querySelector("#header1"), "FIO");
+                    } else if (e.target.id === "header2") {
+                        columnSort(document.querySelector("#header2"), "Phone")
+                    } else if (e.target.id === "header3") {
+                        columnSort(document.querySelector("#header3"), "Email")
+                    } else if (e.target.id === "header4") {
+                        columnSort(document.querySelector("#header4"), "Specialization")
+                    }
+                });
+            });
         </script>
     {% endif %}
 {% endblock %}}

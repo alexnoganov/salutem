@@ -81,7 +81,7 @@
     margin-right: 26px;
 }
 
-.info_edit_main_profile_avatar_reupload{
+.info_edit_main_profile_avatar_reupload {
     margin-right: 30px;
 }
 
@@ -93,7 +93,7 @@
     cursor: pointer;
 }
 
-.info_edit_main_profile_avatar_reupload span:hover{
+.info_edit_main_profile_avatar_reupload span:hover {
     border-color: rgba(37, 130, 231, 0.8);
 }
 
@@ -347,6 +347,7 @@
     opacity: 0.7 !important;
     cursor: default;
 }
+
 .disabled:hover {
     box-shadow: none !important;
     border-color: #CCCCCC !important;
@@ -358,5 +359,9 @@
 }
 
 .disabled_submit:hover {
-background-color: rgb(76 184 47);
+    background-color: rgb(76 184 47);
+}
+
+.select__control:disabled {
+    cursor: default;
 }

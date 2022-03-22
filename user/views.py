@@ -5,10 +5,11 @@ from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
+from django.utils.translation import gettext as _
 
 from patients.models import Analyzes
 from .forms import LoginForm, SpecialistForm
@@ -24,7 +25,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('specialists')
+                    return redirect('home')
                 else:
                     return HttpResponse('Аккаунт отключен')
             else:
@@ -46,6 +47,8 @@ def save_user_profile(request):
             if data:
                 form = SpecialistForm(request.POST)
                 if form.is_valid():
+                    if data['date_of_birth'] == '':
+                        data['date_of_birth'] = None
                     Specialists.objects.filter(pk=data['pk']).update(
                         sex=data['sex'],
                         first_name=data['first_name'],
@@ -96,6 +99,25 @@ class SpecialistListView(ListView):
     template_name = 'user/specialists.html'
     paginate_by = 30
 
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        allow_empty = self.get_allow_empty()
+        context = self.get_context_data()
+
+        if not allow_empty:
+            if self.get_paginate_by(self.object_list) is not None and hasattr(self.object_list, 'exists'):
+                is_empty = not self.object_list.exists()
+            else:
+                is_empty = not self.object_list
+            if is_empty:
+                raise Http404(_('Empty list and “%(class_name)s.allow_empty” is False.') % {
+                    'class_name': self.__class__.__name__,
+                })
+        if self.request.user.is_staff:
+            return self.render_to_response(context)
+        else:
+            return HttpResponseRedirect(reverse_lazy('home'))
+
     def get_queryset(self):
         if self.request.GET.get('q'):
             search = self.request.GET.get('q')
@@ -113,14 +135,12 @@ class SpecialistProfile(DetailView):
     context_object_name = 'profile'
 
     def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
         if kwargs.get('pk') == self.request.user.pk:
-            self.object = self.get_object()
-            context = self.get_context_data(object=self.object)
             return self.render_to_response(context)
         else:
-            if not self.request.user.is_staff:
-                self.object = self.get_object()
-                context = self.get_context_data(object=self.object)
+            if self.request.user.is_staff:
                 return self.render_to_response(context)
             else:
                 return HttpResponseRedirect(reverse_lazy('specialist_profile', kwargs={'pk': self.request.user.pk}))
@@ -133,6 +153,7 @@ class SpecialistProfile(DetailView):
 
 
 def redirect_to_profile(request):
+    print(request.user.is_staff)
     if request.user.is_staff:
         return HttpResponseRedirect(reverse_lazy('specialists'))
     else:

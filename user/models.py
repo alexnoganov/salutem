@@ -9,7 +9,10 @@ from user.managers import SpecialistManager
 
 
 class Specialists(AbstractUser):
-    patronymic = models.CharField(max_length=100, verbose_name="Отчество", blank=True)
+    first_name = models.CharField(verbose_name="Имя", max_length=150)
+    last_name = models.CharField(verbose_name="Фамилия", max_length=150)
+    email = models.EmailField(verbose_name="Адрес электронной почты")
+    patronymic = models.CharField(max_length=100, verbose_name="Отчество")
     photo = models.ImageField(blank=True, upload_to='photos/specialists/', max_length=210, default='photos/unnamed.jpg')
     phone = models.CharField(max_length=100, verbose_name='Номер телефона', blank=True)
     sex = models.CharField(max_length=20, choices=(('Женщина', 'Женщина'), ('Мужчина', 'Мужчина')), verbose_name='Пол',
@@ -19,7 +22,8 @@ class Specialists(AbstractUser):
     passport_num = models.CharField(max_length=20, verbose_name='Серия и номер паспорта', blank=True)
     inn = models.CharField(max_length=50, verbose_name='ИНН', blank=True)
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
-    specialization = models.ForeignKey("Specializations", on_delete=models.SET_NULL, null=True, blank=True)
+    specialization = models.ForeignKey("Specializations", on_delete=models.SET_NULL, null=True,
+                                       verbose_name="Специализация")
 
     REQUIRED_FIELDS = ["email"]
 

@@ -2,9 +2,9 @@
 {% load notify_tags %}
 <header class="header__container">
     <nav class="header__wrapper">
-    {% if request.user.is_staff %}
-        <a href="{% url 'specialists' %}" class="ds">Специалисты</a>
-    {% endif %}
+        {% if request.user.is_staff %}
+            <a href="{% url 'specialists' %}" class="ds">Специалисты</a>
+        {% endif %}
         <div class="item">
             <a href="{% url 'patients' %}" class="ds">Пациенты</a>
         </div>
@@ -12,7 +12,11 @@
             <div class="logo__brand">Salutem</div>
         </div>
         <div class="item">
-            <a href="{% url 'timetable' %}" class="ds">Расписание</a>
+            {% if perms.user.edit_analyzes and not request.user.is_staff %}
+                <a href="{% url 'timetable_analyzes' %}" class="ds">Расписание</a>
+            {% else %}
+                <a href="{% url 'timetable' %}" class="ds">Расписание</a>
+            {% endif %}
         </div>
         <div class="item">
             <div class="notification">

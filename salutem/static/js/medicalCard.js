@@ -26,37 +26,43 @@ function AddRemoveInput(){
 }
 
 
-// function addDate() {
-//     let selector = document.querySelectorAll(".medicalcard__point__date");
-//     console.log(selector);
-//     if(selector !== undefined){
-//         let date = new Date(selector.innerHTML);
-//         console.log(date);
-//         selector.innerHTML = formatDate(date);
-//     }
-// }
-// function formatDate(date) {
-//
-//     let dd = date.getDate();
-//     if (dd < 10) dd = '0' + dd;
-//
-//     let mm = date.getMonth() + 1;
-//     if (mm < 10) mm = '0' + mm;
-//
-//     let yy = date.getFullYear() % 100;
-//     if (yy < 10) yy = '0' + yy;
-//
-//     return dd + '.' + mm + '.' + yy;
-// }
-
 document.querySelector("#medicalcard__search").onchange = function () {
-    document.querySelector("#MD__search").submit();
+    let  form  = document.querySelector("#MD__search");
+    searchParameters(form, document.querySelector("#medicalcard__search"));
 }
 
 document.querySelector("#medicalcard__search_anlz").onchange = function () {
-    document.querySelector("#MD__search__anlz").submit();
-    console.log("ASd")
+    let  form  = document.querySelector("#MD__search__anlz");
+    searchParameters(form, document.querySelector("#medicalcard__search_anlz"));
 }
 
-// addDate();
+
+function searchParameters(form, input) {
+    let b = document.querySelector("#medicalsearchHidden");
+    let c = document.querySelector("#medicalsearchANLZHidden");
+
+    if(location.search.includes('&')){
+        if(input.name === "medicalsearch"){
+            b.value = document.querySelector("#medicalcard__search_anlz").value;
+        }
+        if(input.name === "medicalsearchANLZ"){
+            c.value = document.querySelector("#medicalcard__search").value;
+        }
+        form.submit();
+    }
+    if(location.search.includes('medicalsearch') && form.id === 'MD__search__anlz'){
+        c.value = document.querySelector("#medicalcard__search").value;
+        form.submit();
+    }
+    if(location.search.includes('medicalsearchANLZ') && form.id === 'MD__search'){
+        b.value = document.querySelector("#medicalcard__search_anlz").value;
+        form.submit();
+    }
+    if(!location.search.includes('medicalsearchANLZ') && !location.search.includes('medicalsearch')){
+        form[1].remove();
+        form.submit();
+    }
+
+}
+
 AddRemoveInput();

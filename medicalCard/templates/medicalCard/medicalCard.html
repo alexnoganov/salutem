@@ -31,10 +31,11 @@
                     <div class="content__main">
                         <div class="union">
                             <form method="get" id="MD__search">
-
                                 <div class="union__search">
                                     <label for="medicalcard__search">Найти запись:</label>
                                     <input type="date" name="medicalsearch" id="medicalcard__search" value="{{ request.GET.medicalsearch }}">
+                                    <input type="date"  class="hiddenInput" name="medicalsearchANLZ"
+                                           id="medicalsearchHidden">
                                 </div>
                             </form>
 
@@ -111,6 +112,8 @@
                                     <label for="medicalcard__search_anlz">Найти анализы:</label>
                                     <input type="date" style="width: 70%;" name="medicalsearchANLZ"
                                            id="medicalcard__search_anlz" value="{{ request.GET.medicalsearchANLZ }}">
+                                    <input type="date"  class="hiddenInput" name="medicalsearch"
+                                           id="medicalsearchANLZHidden">
                                 </div>
                             </form>
 

@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
@@ -16,27 +17,31 @@ class EditingPatient(ListView):
         context = super().get_context_data(**kwargs)
 
         if self.request.GET.get('medicalsearchANLZ'):
-            search = self.request.GET.get('medicalsearchANLZ')
+            searchANLZ = self.request.GET.get('medicalsearchANLZ')
             context['analyzes'] = Analyzes.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(
-                test_date__istartswith=search)).order_by('-test_date')
-            print(search)
-            print(context['analyzes'])
-        elif self.request.GET.get('medicalsearch'):
-            search = self.request.GET.get('medicalsearch')
+                test_date__istartswith=searchANLZ)).order_by('-test_date')
+        else:
+            context['analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk']).order_by('-test_date')
+        if self.request.GET.get('medicalsearch'):
+            searchMD = self.request.GET.get('medicalsearch')
             context['medicalCard'] = MedicalCard.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(
-                date=search)).order_by('-date')
+                date=searchMD)).order_by('-date')
         else:
             context['medicalCard'] = MedicalCard.objects.filter(Q(patient_id=self.kwargs['pk'])).order_by('-date')
-            context['analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk']).order_by('-test_date')
+
+        # if self.request.GET.get('medicalsearchANLZ'):
+        #     search = self.request.GET.get('medicalsearchANLZ')
+        #     context['analyzes'] = Analyzes.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(
+        #         test_date__istartswith=search)).order_by('-test_date')
+        #     if self.request.GET.get('medicalsearch'):
+        #         pass
+        # elif self.request.GET.get('medicalsearch'):
+        #     search = self.request.GET.get('medicalsearch')
+        #     context['medicalCard'] = MedicalCard.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(
+        #         date=search)).order_by('-date')
+        # else:
+        #     context['medicalCard'] = MedicalCard.objects.filter(Q(patient_id=self.kwargs['pk'])).order_by('-date')
+        #     context['analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk']).order_by('-test_date')
 
         return context
 
-    # def get_queryset(self):
-    #     if self.request.GET.get('medicalsearch'):
-    #         search = self.request.GET.get('medicalsearch')
-    #         print(MedicalCard.objects.filter(
-    #             Q(date=search)).order_by('-date'))
-    #         return MedicalCard.objects.filter(
-    #             Q(date=search)).order_by('-date')
-    #     else:
-    #         return MedicalCard.objects.all().order_by('-date')

@@ -5,7 +5,7 @@ from user.models import Specialists
 
 
 class Patients(models.Model):
-    Sex = models.CharField(max_length=20, choices=(('Женщина', 'Женщина'), ('Мужчина', 'Мужчина')))
+    Sex = models.CharField(max_length=20, choices=(('Женщина', 'Женщина'), ('Мужчина', 'Мужчина')), blank=True)
     Name = models.CharField(max_length=100)
     Surname = models.CharField(max_length=100)
     Patronymic = models.CharField(max_length=100)

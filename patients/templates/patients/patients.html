@@ -12,7 +12,7 @@
             <div class="object__tools">
                 <h1 class="search__patient">Выберите пациента</h1>
                 {% if not perms.user.edit_analyzes or request.user.is_staff %}
-                    <a href="" class="AddLink">
+                    <a href="{% url 'add_patient' %}" class="AddLink">
                         <span class="Add">Добавить пациента</span>
                         <span class="Plus">
                             <svg width="13" height="13" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">

@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.utils.translation import gettext_lazy as _
 
 from .models import Specialists, Specializations
 
@@ -50,3 +52,24 @@ class SpecialistForm(forms.Form):
     passport_num = forms.CharField(max_length=20, label='* СЕРИЯ И НОМЕР ПАСПОРТА', required=False)
     inn = forms.CharField(max_length=50, label='* ИНН', required=False)
     specializations = forms.ModelChoiceField(queryset=Specializations.objects.all(), required=False, empty_label=None)
+
+
+class SpecialistAddForm(SpecialistForm):
+    sex = forms.ChoiceField(choices=(('', '--------'), ('Женщина', 'Женщина'), ('Мужчина', 'Мужчина')), label="ПОЛ",
+                            required=False)
+    specializations = forms.ModelChoiceField(queryset=Specializations.objects.all(), required=False,
+                                             empty_label='--------')
+    username = forms.CharField(required=False)
+    password = forms.CharField(widget=forms.PasswordInput, required=False)
+    confirm_password = forms.CharField(widget=forms.PasswordInput, required=False)
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError(_('Имя пользователя \"%(value)s\" уже занято'), code='invalid',
+                                        params={'value': username})
+        return self.cleaned_data
+
+    def clean_password(self):
+        validate_password(self.cleaned_data['password'])
+        return self.cleaned_data

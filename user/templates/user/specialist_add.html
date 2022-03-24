@@ -1,0 +1,455 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/EditingPatient.css' %}">
+{% endblock %}
+{% block title %}
+    <title>Добавить специалиста</title>
+{% endblock %}
+{% block content %}
+    <div class="container" style="max-width: 700px;">
+        <div class="page_form">
+            <section class="content-block-list">
+                <div class="content-block-list__container">
+                    <div class="hpc-order-form-template__form">
+                        <form name="field" method="post" id="jjdd">
+                            {% csrf_token %}
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <legend class="fieldset__legend">Личные данные:</legend>
+                                    <div class="fieldset__row">
+                                        <div class="form-block">
+                                            <div>
+                                                <label for="powermail_field_anrede" title="">
+                                                                 <span class="input-field-wrapper__label">
+                                                                     Пол
+                                                                 </span>
+                                                </label>
+                                                <div class="select">
+
+                                                    {% render_field form.sex class="select__control" id="powermail_field_anrede" %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                        <div class="form-block">
+                                            <div>
+                                                <label for="powermail_field_vorname" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Имя
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" value=profile.first_name %}
+                                            </div>
+                                            <div class="invalid-feedback" id="invalid_name"
+                                                 style="display: none">
+                                                Это поле не может быть пустым или иметь не
+                                                корректные значения.
+                                            </div>
+                                        </div>
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_nachname" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Фамилия
+                                                                    </span>
+                                                    {% render_field form.surname class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.last_name %}
+
+                                                </label>
+                                            </div>
+                                            <div class="invalid-feedback" id="invalid_surname"
+                                                 style="display: none">
+                                                Это поле не может быть пустым или иметь не
+                                                корректные значения.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                        <div class="form-block">
+                                            <div>
+                                                <label for="powermail_field_Patronymic" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Отчество
+                                                                    </span>
+                                                    {% render_field form.patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" %}
+                                                </label>
+                                                <div class="invalid-feedback" id="invalid_patronymic"
+                                                     style="display: none">
+                                                    Это поле не может быть пустым или иметь не
+                                                    корректные значения.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_geburtsdatum" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        Дата рождения
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.date_of_birth type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_telefonnummer" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Номер телефона
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.telephone class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" %}
+
+                                            </div>
+                                            <div class="invalid-feedback" id="invalid_phone"
+                                                 style="display: none">
+                                                Это поле не может быть пустым или иметь не
+                                                корректные значения.
+                                            </div>
+                                        </div>
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_e_mail" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        E-Mail
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.email class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" %}
+                                            </div>
+                                            <div class="invalid-feedback" id="invalid_email"
+                                                 style="display: none">
+                                                Введен некорректный адрес эл.почты.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row">
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_residence" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        Место проживания
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.place_of_residence class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_pass_num" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        СЕРИЯ И НОМЕР ПАСПОРТА
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.passport_num class="text-input pass_num_input" id="powermail_field_pass_num" placeholder="КН993576" %}
+                                            </div>
+                                            <div class="invalid-feedback" id="invalid_pass"
+                                                 style="display: none">
+                                                Это поле не может быть пустым или иметь не
+                                                корректные значения.
+                                            </div>
+                                        </div>
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_inn" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span></span>
+                                                                        ИНН
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.inn class="text-input inn_input" id="powermail_field_inn" placeholder="1234567891" %}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row">
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_spec" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        СПЕЦИАЛИЗАЦИЯ
+                                                                    </span>
+                                                </label>
+                                                {% render_field form.specializations class="text-input spec_input select__control" id="powermail_field_spec" %}
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback" id="invalid_spec"
+                                             style="display: none">
+                                            Это поле не может быть пустым
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row">
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_education" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span></span>
+                                                                        ОБРАЗОВАНИЕ
+                                                                    </span>
+                                                </label>
+                                                <textarea name="education_field"
+                                                          id="powermail_field_education"
+                                                          class="text-input education_input"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__section" style="margin-top: 30px;">
+                                        <fieldset class="fieldset">
+                                            <legend class="fieldset__legend">Данные для авторизации:</legend>
+                                            <div class="fieldset__row">
+                                                <div class="form-block">
+                                                    <div>
+                                                        <label for="powermail_field_username" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        ИМЯ ПОЛЬЗОВАТЕЛЯ
+                                                                    </span>
+                                                        </label>
+                                                        <div>
+                                                            {% render_field form.username class="text-input spec_input" id="powermail_field_username" %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="invalid-feedback" id="invalid_username"
+                                                         style="display: none">
+                                                        Это поле не может быть пустым.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                                <div class="form-block">
+                                                    <div>
+                                                        <label for="powermail_field_pass1" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        ПАРОЛЬ
+                                                                    </span>
+                                                        </label>
+                                                        {% render_field form.password class="text-input powermail_input" id="powermail_field_pass1" %}
+                                                    </div>
+                                                    <div class="invalid-feedback" id="invalid_pass1"
+                                                         style="display: none">
+                                                    </div>
+                                                </div>
+                                                <div class="form-block">
+                                                    <div class="input-field-wrapper">
+                                                        <label for="powermail_field_pass2" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        ПОДТВЕРЖДЕНИЕ ПАРОЛЯ
+                                                                    </span>
+                                                            {% render_field form.confirm_password class="text-input powermail_input" id="powermail_field_pass2" %}
+
+                                                        </label>
+                                                    </div>
+                                                    <div class="invalid-feedback" id="invalid_pass2"
+                                                         style="display: none">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <button type="submit" class="submit__form" id="specialist_add">Добавить</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        document.querySelector("#specialist_add").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            if (validator()) {
+                $.ajax({
+                    url: '/user/add/specialist/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        data: JSON.stringify({
+                            pk: location.href.split('/')[4],
+                            sex: $('#powermail_field_anrede').val(),
+                            first_name: $('#powermail_field_vorname').val(),
+                            last_name: $('#powermail_field_nachname').val(),
+                            patronymic: $('#powermail_field_Patronymic').val(),
+                            date_of_birth: $('#powermail_field_geburtsdatum').val(),
+                            phone: $('#powermail_field_telefonnummer').val(),
+                            email: $('#powermail_field_e_mail').val(),
+                            place_of_residence: $('#powermail_field_residence').val(),
+                            passport_num: $('#powermail_field_pass_num').val(),
+                            inn: $('#powermail_field_inn').val(),
+                            spec: $('#powermail_field_spec').val(),
+                            education: $('#powermail_field_education').val(),
+                            username: $('#powermail_field_username').val(),
+                            password: $('#powermail_field_pass1').val(),
+                        })
+                    },
+                    success: (data) => {
+                        if ('errors' in data) {
+                            if (data['errors']['username']) {
+                                document.querySelector("#invalid_username").style.display = "block";
+                                document.querySelector("#invalid_username").innerHTML = data['errors']['username'];
+                            } else if (data['errors']['password']) {
+                                document.querySelector("#invalid_pass1").style.display = "block";
+                                document.querySelector("#invalid_pass1").innerHTML = '';
+                                console.log(data['errors']['password'])
+                                for (let i = 0; i < data['errors']['password'].length; i++) {
+                                    document.querySelector("#invalid_pass1").innerHTML = data['errors']['username'][i] + "\n";
+                                }
+                            } else {
+                                toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
+                            }
+                        }
+                        if ('success' in data) {
+                            toastr["success"]("Специалист добавлен!");
+                        }
+                    }
+                })
+            }
+        })
+
+        function validator() {
+            const validateEmail = (email) => {
+                return email.match(
+                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+            };
+            const validateFIO = (FIO) => {
+                return FIO.value.trim().length !== 0;
+            };
+
+            let flags = true;
+            let name = document.querySelector("#powermail_field_vorname");
+            let surname = document.querySelector("#powermail_field_nachname");
+            let patronymic = document.querySelector("#powermail_field_Patronymic");
+            let phone = document.querySelector("#powermail_field_telefonnummer");
+            let pass = document.querySelector("#powermail_field_pass_num");
+            let spec = document.querySelector("#powermail_field_spec");
+            let username = document.querySelector("#powermail_field_username");
+            let pswrd1 = document.querySelector("#powermail_field_pass1");
+            let pswrd2 = document.querySelector("#powermail_field_pass2");
+            let invalids = document.querySelectorAll(".invalid-feedback");
+
+            invalids.forEach(item => {
+                item.style.display = "none";
+            });
+
+            let email = $('#powermail_field_e_mail').val();
+
+            if (!validateEmail(email)) {
+                document.querySelector("#invalid_email").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(name)) {
+                document.querySelector("#invalid_name").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(surname)) {
+                document.querySelector("#invalid_surname").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(patronymic)) {
+                document.querySelector("#invalid_patronymic").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(phone)) {
+                document.querySelector("#invalid_phone").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(pass)) {
+                document.querySelector("#invalid_pass").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(spec)) {
+                document.querySelector("#invalid_spec").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(username)) {
+                document.querySelector("#invalid_username").style.display = "block";
+                document.querySelector("#invalid_username").innerHTML = "Это поле не может быть пустым.";
+                flags = false;
+            }
+            if (!validateFIO(pswrd1) && !validateFIO(pswrd2)) {
+                document.querySelector("#invalid_pass1").style.display = "block";
+                document.querySelector("#invalid_pass1").innerHTML = 'Это поле не может быть пустым.';
+                document.querySelector("#invalid_pass2").style.display = "block";
+                document.querySelector("#invalid_pass2").innerHTML = 'Это поле не может быть пустым.';
+                flags = false;
+            } else if (pswrd1.value !== pswrd2.value) {
+                document.querySelector("#invalid_pass1").style.display = "block";
+                document.querySelector("#invalid_pass1").innerHTML = 'Пароли не совпадают.';
+                document.querySelector("#invalid_pass2").style.display = "block";
+                document.querySelector("#invalid_pass2").innerHTML = 'Пароли не совпадают.';
+                flags = false;
+            }
+            return flags;
+        }
+
+        let phone = document.querySelector("#powermail_field_telefonnummer");
+        let brd = document.querySelector("#powermail_field_geburtsdatum");
+        let name = document.querySelector("#powermail_field_vorname");
+        let surname = document.querySelector("#powermail_field_nachname");
+        let patronymic = document.querySelector("#powermail_field_Patronymic");
+        let username = document.querySelector("#powermail_field_username");
+
+        username.oninput = function () {
+            username.value = username.value.replace(/[^a-z0-9]/gi, '');
+        }
+
+        phone.oninput = function () {
+            phone.value = phone.value.replace(/[A-Za-zА-Яа-яЁё^!\-?=*+|`~_&%$#@"№;()]/, '');
+        }
+        brd.oninput = function () {
+            brd.value = brd.value.replace(/[A-Za-zА-Яа-яЁё^!\?=*+|`~_&%$#@"№;()]/, '');
+        }
+
+        function oninputFIO(input) {
+            input.oninput = function () {
+                input.value = input.value.replace(/[0-9^!\?=*+|`~_&%$#@"№;()]/, '');
+            }
+        }
+
+        oninputFIO(name);
+        oninputFIO(surname);
+        oninputFIO(patronymic);
+    </script>
+{% endblock %}

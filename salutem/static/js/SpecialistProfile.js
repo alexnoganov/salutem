@@ -169,6 +169,7 @@ function OnlyNumberInputAndBRD() {
     let surname = document.querySelector("#powermail_field_nachname");
     let patronymic = document.querySelector("#powermail_field_Patronymic");
 
+
     phone.oninput = function () {
         phone.value = phone.value.replace(/[A-Za-zА-Яа-яЁё^!\-?=*+|`~_&%$#@"№;()]/, '');
     }

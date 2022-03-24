@@ -20,6 +20,14 @@ class PatientForm(forms.Form):
     photo = forms.ImageField(required=False, max_length=200)
 
 
+class PatientAddForm(PatientForm):
+    Sex = forms.ChoiceField(choices=(('', '--------'), ('Женщина', 'Женщина'), ('Мужчина', 'Мужчина')), label="ПОЛ",
+                            required=False)
+    Blood_type = forms.ChoiceField(choices=(('', '--------'), ('I+', 'I+'), ('II+', 'II+'), ('III+', 'III+'),
+                                            ('IV+', 'IV+'), ('I-', 'I-'), ('II-', 'II-'), ('III-',
+                                                                                           'III-'),
+                                            ('IV-', 'IV-')), label="ГРУППА КРОВИ", required=False)
+
 class AppointmentForm(forms.Form):
     specialists = forms.ModelChoiceField(queryset=Specialists.objects.all(), empty_label=None)
     date = forms.DateTimeField()

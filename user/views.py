@@ -8,11 +8,11 @@ from django.db.models import Q
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.utils.translation import gettext as _
 
 from patients.models import Analyzes
-from .forms import LoginForm, SpecialistForm
+from .forms import LoginForm, SpecialistForm, SpecialistAddForm
 from .models import Specialists
 
 
@@ -150,6 +150,44 @@ class SpecialistProfile(DetailView):
         context['form'] = SpecialistForm(initial={'specializations': self.get_object().specialization_id,
                                                   'sex': self.get_object().sex})
         return context
+
+
+class SpecialistAdd(TemplateView):
+    template_name = 'user/specialist_add.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SpecialistAdd, self).get_context_data()
+        context['form'] = SpecialistAddForm
+        return context
+
+
+def specialist_add(request):
+    if request.method == 'POST':
+        if request.POST.get('data'):
+            form = SpecialistAddForm(json.loads(request.POST.get('data')))
+            if form.is_valid():
+                data = json.loads(request.POST.get('data'))
+                if data['date_of_birth'] == '':
+                    data['date_of_birth'] = None
+                # Specialists.objects.create_user(sex=data['sex'], first_name=data['first_name'],
+                #                                 last_name=data['last_name'],
+                #                                 patronymic=data['patronymic'], date_of_birth=data['date_of_birth'],
+                #                                 phone=data['phone'], email=data['email'],
+                #                                 place_of_residence=data['place_of_residence'],
+                #                                 passport_num=data['passport_num'], inn=data['inn'],
+                #                                 specialization_id=data['spec'],
+                #                                 education=data['education'],
+                #                                 username=data['username'],
+                #                                 password=data['password'],
+                #                                 )
+                return JsonResponse({'success': 'success'}, safe=False)
+            else:
+                return JsonResponse({'errors': form.errors}, safe=False)
+
+        else:
+            return JsonResponse({'errors': 'error'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
 
 
 def redirect_to_profile(request):

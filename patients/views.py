@@ -6,11 +6,12 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.http import JsonResponse
-from django.views.generic import ListView, DetailView
+from django.utils import timezone
+from django.views.generic import ListView, DetailView, FormView, TemplateView
 
 from timetable.models import TimeTable
 from .models import AnalyzesType, Analyzes
-from .forms import PatientForm, AppointmentForm
+from .forms import PatientForm, AppointmentForm, PatientAddForm
 from patients.models import Patients
 
 
@@ -184,3 +185,30 @@ class PatientsView(ListView):
                         Place_of_residence__icontains=search)).order_by('-data_joined')
             else:
                 return Patients.objects.all().order_by('-data_joined')
+
+
+class PatientAddView(TemplateView):
+    template_name = 'patients/add_patient.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientAddView, self).get_context_data()
+        context['form'] = PatientAddForm()
+        return context
+
+
+def add_patient(request):
+    if request.method == 'POST':
+        if request.POST.get('data'):
+            data = json.loads(request.POST.get('data'))
+            if data['date_of_birth'] == '':
+                data['date_of_birth'] = None
+            Patients.objects.create(Sex=data['sex'], Name=data['name'], Surname=data['surname'],
+                                    Patronymic=data['patronymic'], Date_of_birth=data['date_of_birth'],
+                                    Telephone=data['phone'], Email=data['email'],
+                                    Place_of_residence=data['place_of_residence'], Blood_type=data['blood_type'],
+                                    data_joined=timezone.now().date())
+            return JsonResponse({'success': 'success'}, safe=False)
+        else:
+            return JsonResponse({'errors': 'errors'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'errors'}, safe=False)

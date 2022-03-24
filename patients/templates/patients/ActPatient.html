@@ -10,8 +10,6 @@
 {% endblock %}
 
 {% block content %}
-
-
     <div class="container">
         <div class="content__container">
             <div class="object__tools">
@@ -79,16 +77,13 @@
                                 </button>
                             </div>
                         </div>
-
                         <div class="page_form">
                             <section class="content-block-list">
                                 <div class="content-block-list__container">
                                     <div class="hpc-order-form-template__form">
                                         {{ form.non_field_errors }}
                                         <form name="field" method="post" id="jjdd">
-
                                             {% csrf_token %}
-
                                             <div class="form__section">
                                                 <fieldset class="fieldset">
                                                     <legend class="fieldset__legend">Данные:</legend>
@@ -293,8 +288,6 @@
                                             {% endif %}
                                         </form>
                                     </div>
-
-
                                     <div class="hpc-order-form-template__form">
                                         <form method="post" id="analysis_form">
                                             {% csrf_token %}
@@ -318,8 +311,6 @@
                                                                                 {{ name.type__title }}
                                                                             </option>
                                                                         {% endfor %}
-
-
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -335,11 +326,9 @@
                                                                 <div class="select">
                                                                     <select name="analysis_type" id="analysis_status"
                                                                             class="select__control">
-
                                                                         <option value="Новый">Новый</option>
                                                                         <option value="В процессе">В процессе</option>
                                                                         <option value="Завершен">Завершен</option>
-
                                                                     </select>
                                                                 </div>
                                                             </div>

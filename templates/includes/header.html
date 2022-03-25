@@ -32,12 +32,20 @@
                     </svg>
                 </div>
                 <div class="notification__container notify">
-                    <div class="notification__header notify"><span class="text notify">Уведомления</span><span
-                            class="counter notify">{{ analyzes_notify.count }}</span></div>
+                    <div class="notification__header notify">
+                        <span class="text notify">Уведомления</span>
+                        <span class="text notify" id="showAll" style="color: grey;
+    font-weight: 400;
+    font-size: 12px;
+    margin-left: 100px;
+    text-decoration: underline;
+cursor:pointer;">показать все</span>
+                        <span
+                                class="counter notify">{{ analyzes_notify.count }}</span></div>
                     <div class="notification__content notify">
                         {% if analyzes_notify %}
                             {% for analysis in analyzes_notify %}
-                                {% if analysis.status == 'Новый' and analysis.show %}
+                                {% if analysis.status == 'Новый' %}
                                     <div class="notification__item__container" data-id="{{ analysis.pk }}">
                                         <a href="{% url 'profile' analysis.patient.pk %}" class="notification__item">
                                             <div class="item__photo"><img src="{{ analysis.patient.photo.url }}"></div>
@@ -49,8 +57,8 @@
                                         </a>
                                         <div class="item__close"></div>
                                     </div>
-                                {% elif analysis.status == 'Завершен' and analysis.show %}
-                                    {% if analysis.date_of_change|sub %}
+                                {% elif analysis.status == 'Завершен' %}
+                                    {% if analysis|sub %}
                                         <div class="notification__item__container" data-id="{{ analysis.pk }}">
                                             <a href="{% url 'profile' analysis.patient.pk %}"
                                                class="notification__item">
@@ -58,7 +66,7 @@
                                                 </div>
                                                 <div class="item__text">
                                                     {{ analysis.patient.Surname }} {{ analysis.patient.Name|first }}.{{ analysis.patient.Patronymic|first }}.
-                                                    пришли результы анализов ({{ analysis.type|truncatechars:10 }})
+                                                    пришли результаты анализов ({{ analysis.type|truncatechars:10 }})
                                                 </div>
                                                 <div class="item__time">{{ analysis.date_of_change|timesince }} назад
                                                 </div>

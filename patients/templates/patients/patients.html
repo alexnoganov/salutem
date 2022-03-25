@@ -42,21 +42,42 @@
                         </div>
                     </div>
                     <div class="table">
-                        {% if perms.user.edit_analyzes %}
-                            <div class="row table__header">
-                                <div class="cell" id="header1">Пациент</div>
-                                <div class="cell" id="header2">Врач</div>
-                                <div class="cell" id="header3">Дата сдачи</div>
-                            </div>
-                            {% for patient in patients %}
-                                <a href="{% url 'profile' patient.patient.pk %}" class="row">
-                                    <div class="cell"
-                                         data-title="Patient">{{ patient.patient.Surname }} {{ patient.patient.Name }} {{ patient.patient.Patronymic }}</div>
-                                    <div class="cell"
-                                         data-title="Specialist">{{ patient.specialist.last_name }} {{ patient.specialist.first_name }} {{ patient.specialist.patronymic }}</div>
-                                    <div class="cell" data-title="Test Date">{{ patient.test_date }}</div>
-                                </a>
-                            {% endfor %}
+                        {% if perms.user.edit_analyzes and not request.user.is_staff %}
+                            {% if request.GET.q %}
+                                <div class="row table__header">
+                                    <div class="cell" id="header1">Пациент</div>
+                                    <div class="cell" id="header2">Врач</div>
+                                    <div class="cell" id="header3">Наименование</div>
+                                    <div class="cell" id="header4">Дата сдачи</div>
+                                </div>
+                                {% for patient in patients %}
+                                    <a href="{% url 'profile' patient.patient.pk %}" class="row">
+                                        <div class="cell"
+                                             data-title="Patient">{{ patient.patient.Surname }} {{ patient.patient.Name }} {{ patient.patient.Patronymic }}</div>
+                                        <div class="cell"
+                                             data-title="Specialist">{{ patient.specialist.last_name }} {{ patient.specialist.first_name|first }}. {{ patient.specialist.patronymic|first }}.
+                                        </div>
+                                        <div class="cell"
+                                             data-title="Test Name">{{ patient.type.title|truncatechars:35 }}</div>
+                                        <div class="cell" data-title="Test Date">{{ patient.test_date }}</div>
+                                    </a>
+                                {% endfor %}
+                            {% else %}
+                                <div class="row table__header">
+                                    <div class="cell" id="header1">Пациент</div>
+                                    <div class="cell" id="header2">Врач</div>
+                                    <div class="cell" id="header3">Дата сдачи</div>
+                                </div>
+                                {% for patient in patients %}
+                                    <a href="{% url 'profile' patient.patient.pk %}" class="row">
+                                        <div class="cell"
+                                             data-title="Patient">{{ patient.patient.Surname }} {{ patient.patient.Name }} {{ patient.patient.Patronymic }}</div>
+                                        <div class="cell"
+                                             data-title="Specialist">{{ patient.specialist.last_name }} {{ patient.specialist.first_name }} {{ patient.specialist.patronymic }}</div>
+                                        <div class="cell" data-title="Test Date">{{ patient.test_date }}</div>
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
                         {% else %}
                             <div class="row table__header">
                                 <div class="cell" id="header1">ФИО</div>
@@ -113,14 +134,26 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             document.addEventListener("click", e => {
-                {% if perms.user.edit_analyzes %}
-                    if (e.target.id === "header1") {
+                {% if perms.user.edit_analyzes and not request.user.is_staff %}
+                    {% if request.GET.q %}
+                        if (e.target.id === "header1") {
                         columnSort(document.querySelector("#header1"), "Patient");
                     } else if (e.target.id === "header2") {
                         columnSort(document.querySelector("#header2"), "Specialist")
                     } else if (e.target.id === "header3") {
-                        columnSort(document.querySelector("#header3"), "Test Date")
+                        columnSort(document.querySelector("#header3"), "Test Name")
+                    }else if (e.target.id === "header4") {
+                        columnSort(document.querySelector("#header4"), "Test Date")
                     }
+                    {% else %}
+                        if (e.target.id === "header1") {
+                            columnSort(document.querySelector("#header1"), "Patient");
+                        } else if (e.target.id === "header2") {
+                            columnSort(document.querySelector("#header2"), "Specialist")
+                        } else if (e.target.id === "header3") {
+                            columnSort(document.querySelector("#header3"), "Test Date")
+                        }
+                    {% endif %}
                 {% else %}
                     if (e.target.id === "header1") {
                         columnSort(document.querySelector("#header1"), "FIO");

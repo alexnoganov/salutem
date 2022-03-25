@@ -6,7 +6,9 @@ register = template.Library()
 
 @register.filter
 def sub(self):
-    if (self - timezone.now()).days > -3:
+    if (self.date_of_change - timezone.now()).days > -3:
         return True
     else:
+        self.show = False
+        self.save()
         return False

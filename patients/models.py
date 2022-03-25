@@ -47,4 +47,5 @@ class Analyzes(models.Model):
     show = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.type.title + "(" + self.patient.Surname + self.patient.Name + self.patient.Patronymic + ")"
+        return str(
+            self.pk) + ":" + self.type.title + "(" + self.patient.Surname + self.patient.Name + self.patient.Patronymic + ")"

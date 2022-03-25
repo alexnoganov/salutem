@@ -85,33 +85,64 @@
                 }
             });
         }
+        let notifyStorage = [];
+        if (localStorage.getItem('notify') !== null) {
+            notifyStorage = localStorage.getItem('notify').split(',');
+        }
         let notifyContainer = document.querySelector(".notification__container");
+        let notifyItem = notifyContainer.querySelectorAll(".notification__item__container");
+        let containerCounter = document.querySelector('.counter.notify');
+        let headerCounter = document.querySelector('.icon__counter.notify__btn');
+        checkStorage();
+        headerCounter.textContent = headerCounter.textContent - notifyStorage.length;
+        containerCounter.textContent = containerCounter.textContent - notifyStorage.length;
+        CheckNotify();
         document.addEventListener("click", e => {
             if (e.target.classList.contains("notify__btn")) {
                 notifyContainer.classList.toggle("active");
             } else if (!e.target.classList.contains("notify__btn") && notifyContainer.classList.contains("active") && !e.target.classList.contains("notify") && !e.target.classList.contains("item__close")) {
                 notifyContainer.classList.remove("active");
             } else if (e.target.classList.contains("item__close")) {
-                $.ajax({
-                    url: '/user/hide_notification/',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        pk: e.target.parentElement.dataset.id
-                    },
-                    success: (data) => {
-                        if ('success' in data) {
-                            e.target.parentElement.remove();
-                            document.querySelector('.counter.notify').textContent = document.querySelector('.counter.notify').textContent - 1;
-                            document.querySelector('.icon__counter.notify__btn').textContent = document.querySelector('.icon__counter.notify__btn').textContent - 1;
-                            if (document.querySelector('.icon__counter.notify__btn').textContent === '0') {
-                                document.querySelector('.icon__counter.notify__btn').style.display = 'none';
-                            }
-                        }
-                    }
-                })
+                let id = e.target.parentElement.dataset.id;
+                if (!notifyStorage.includes(id)) {
+                    notifyStorage.push(id)
+                    localStorage.setItem('notify', notifyStorage.toString())
+                }
+                headerCounter.textContent = headerCounter.textContent - 1;
+                containerCounter.textContent = containerCounter.textContent - 1;
+                CheckNotify();
+            } else if (e.target.id === "showAll") {
+                localStorage.setItem('notify', '');
+                notifyItem.forEach(item => {
+                    item.style.display = 'block';
+                });
+                headerCounter.textContent = notifyItem.length;
+                containerCounter.textContent = notifyItem.length;
+                notifyStorage = [];
             }
         });
+
+        function checkStorage() {
+            let tmp = [];
+            notifyItem.forEach(item => {
+                tmp.push(item.dataset.id);
+            });
+            notifyStorage = notifyStorage.filter(e => ~tmp.indexOf(e));
+            localStorage.setItem('notify', notifyStorage);
+        }
+
+        function CheckNotify() {
+            notifyStorage.forEach(pk => {
+                notifyItem.forEach(item => {
+                    if (item.dataset.id === pk) {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+            if (headerCounter.textContent === '0') {
+                headerCounter.style.display = 'none';
+            }
+        }
     });
 </script>
 {% block script %}

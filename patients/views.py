@@ -141,7 +141,7 @@ class PatientsView(ListView):
     paginate_by = 30
 
     def get_queryset(self):
-        if self.request.user.has_perm('user.edit_analyzes'):
+        if self.request.user.has_perm('user.edit_analyzes') and not self.request.user.is_staff:
             if self.request.GET.get('q'):
                 search = self.request.GET.get('q')
                 tmp = Analyzes.objects.filter(

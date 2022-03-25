@@ -12,8 +12,8 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.utils.translation import gettext as _
 
 from patients.models import Analyzes
-from .forms import LoginForm, SpecialistForm, SpecialistAddForm
-from .models import Specialists
+from .forms import LoginForm, SpecialistForm, SpecialistAddForm, SpecialistResetPasswordForm
+from .models import Specialists, SpecialistGroup
 
 
 def user_login(request):
@@ -149,6 +149,7 @@ class SpecialistProfile(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = SpecialistForm(initial={'specializations': self.get_object().specialization_id,
                                                   'sex': self.get_object().sex})
+        context['reset_form'] = SpecialistResetPasswordForm
         return context
 
 
@@ -169,17 +170,20 @@ def specialist_add(request):
                 data = json.loads(request.POST.get('data'))
                 if data['date_of_birth'] == '':
                     data['date_of_birth'] = None
-                # Specialists.objects.create_user(sex=data['sex'], first_name=data['first_name'],
-                #                                 last_name=data['last_name'],
-                #                                 patronymic=data['patronymic'], date_of_birth=data['date_of_birth'],
-                #                                 phone=data['phone'], email=data['email'],
-                #                                 place_of_residence=data['place_of_residence'],
-                #                                 passport_num=data['passport_num'], inn=data['inn'],
-                #                                 specialization_id=data['spec'],
-                #                                 education=data['education'],
-                #                                 username=data['username'],
-                #                                 password=data['password'],
-                #                                 )
+                specialist = Specialists.objects.create_user(sex=data['sex'],
+                                                             first_name=data['first_name'],
+                                                             last_name=data['last_name'],
+                                                             patronymic=data['patronymic'],
+                                                             date_of_birth=data['date_of_birth'],
+                                                             phone=data['phone'], email=data['email'],
+                                                             place_of_residence=data['place_of_residence'],
+                                                             passport_num=data['passport_num'], inn=data['inn'],
+                                                             specialization_id=data['spec'],
+                                                             education=data['education'],
+                                                             username=data['username'])
+                if data['group']:
+                    group = SpecialistGroup.objects.get(name='Лаборатория')
+                    specialist.groups.add(group)
                 return JsonResponse({'success': 'success'}, safe=False)
             else:
                 return JsonResponse({'errors': form.errors}, safe=False)
@@ -198,9 +202,9 @@ def redirect_to_profile(request):
         return HttpResponseRedirect(reverse_lazy('patients'))
 
 
-def hide_notification(request):
-    if request.POST.get('pk'):
-        Analyzes.objects.filter(pk=request.POST.get('pk')).update(show=False)
-        return JsonResponse({'success': 'success'}, safe=False)
-    else:
-        return JsonResponse({'error': 'error'}, safe=False)
+# def hide_notification(request):
+#     if request.POST.get('pk'):
+#         Analyzes.objects.filter(pk=request.POST.get('pk')).update(show=False)
+#         return JsonResponse({'success': 'success'}, safe=False)
+#     else:
+#         return JsonResponse({'error': 'error'}, safe=False)

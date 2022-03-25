@@ -59,6 +59,7 @@ class SpecialistAddForm(SpecialistForm):
                             required=False)
     specializations = forms.ModelChoiceField(queryset=Specializations.objects.all(), required=False,
                                              empty_label='--------')
+    laboratory = forms.BooleanField(required=False, help_text='')
     username = forms.CharField(required=False)
     password = forms.CharField(widget=forms.PasswordInput, required=False)
     confirm_password = forms.CharField(widget=forms.PasswordInput, required=False)
@@ -70,6 +71,12 @@ class SpecialistAddForm(SpecialistForm):
                                         params={'value': username})
         return self.cleaned_data
 
-    def clean_password(self):
-        validate_password(self.cleaned_data['password'])
-        return self.cleaned_data
+    # def clean_password(self):
+    #     validate_password(self.cleaned_data['password'])
+    #     return self.cleaned_data
+
+
+class SpecialistResetPasswordForm(forms.Form):
+    current_password = forms.CharField(widget=forms.PasswordInput)
+    new_password = forms.CharField(widget=forms.PasswordInput)
+    confirm_new_password = forms.CharField(widget=forms.PasswordInput)

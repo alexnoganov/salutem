@@ -59,7 +59,6 @@
                             <section class="content-block-list">
                                 <div class="content-block-list__container">
                                     <div class="hpc-order-form-template__form">
-                                        {{ form.non_field_errors }}
                                         <form name="field" method="post" id="jjdd">
                                             {% csrf_token %}
                                             <div class="form__section">
@@ -76,9 +75,7 @@
                                                                  </span>
                                                                 </label>
                                                                 <div class="select">
-
                                                                     {% render_field form.sex class="select__control" id="powermail_field_anrede" %}
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -283,6 +280,70 @@
                                             <button type="submit" class="submit__form" id="profile_save">Сохранить
                                             </button>
                                         </form>
+                                        {% if view.kwargs.pk == request.user.pk %}
+                                            <form method="post">
+                                                <div class="form__section">
+                                                    <fieldset class="fieldset">
+                                                        <legend class="fieldset__legend">Восстановление пароля:</legend>
+                                                        <div class="fieldset__row">
+                                                            <div class="form-block">
+                                                                <div>
+                                                                    <label for="powermail_field_current_password"
+                                                                           title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Ваш текущий пароль
+                                                                    </span>
+                                                                    </label>
+                                                                    {% render_field reset_form.current_password class="text-input powermail_input" id="powermail_field_current_password" %}
+                                                                </div>
+                                                                <div class="invalid-feedback" id="invalid_name"
+                                                                     style="display: none">
+                                                                    Это поле не может быть пустым или иметь не
+                                                                    корректные значения.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="form__section">
+                                                    <fieldset class="fieldset">
+                                                        <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                                            <div class="form-block">
+                                                                <div>
+                                                                    <label for="powermail_field_new_password" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Новый пароль
+                                                                    </span>
+                                                                        {% render_field reset_form.new_password class="text-input powermail_input" id="powermail_field_new_password" %}
+                                                                    </label>
+                                                                    <div class="invalid-feedback"
+                                                                         id="invalid_patronymic"
+                                                                         style="display: none">
+                                                                        Это поле не может быть пустым или иметь не
+                                                                        корректные значения.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-block">
+                                                                <div class="input-field-wrapper">
+                                                                    <label for="powermail_field_geburtsdatum" title="">
+                                                                    <span class="input-field-wrapper__label">
+                                                                        <span>*</span>
+                                                                        Подтвердите пароль
+                                                                    </span>
+                                                                    </label>
+                                                                    {% render_field reset_form.confirm_new_password class="text-input powermail_input" id="powermail_field_confrim_new_password" %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <button type="submit" class="submit__form" id="reset_password">Сменить
+                                                </button>
+                                            </form>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </section>

@@ -251,34 +251,29 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                            <div class="fieldset__row">
                                                 <div class="form-block">
                                                     <div>
                                                         <label for="powermail_field_pass1" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
-                                                                        ПАРОЛЬ
+                                                                        ПАРОЛЬ БУДЕТ ВЫСЛАН НА ПОЧТУ
                                                                     </span>
                                                         </label>
-                                                        {% render_field form.password class="text-input powermail_input" id="powermail_field_pass1" %}
-                                                    </div>
-                                                    <div class="invalid-feedback" id="invalid_pass1"
-                                                         style="display: none">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="fieldset__row">
                                                 <div class="form-block">
-                                                    <div class="input-field-wrapper">
-                                                        <label for="powermail_field_pass2" title="">
+                                                    <div style="display: flex; align-items: center">
+                                                        <label for="powermail_field_laboratory" style="margin-right: 10px;">
                                                                     <span class="input-field-wrapper__label">
-                                                                        <span>*</span>
-                                                                        ПОДТВЕРЖДЕНИЕ ПАРОЛЯ
+                                                                        Работник лаборатории
                                                                     </span>
-                                                            {% render_field form.confirm_password class="text-input powermail_input" id="powermail_field_pass2" %}
-
                                                         </label>
-                                                    </div>
-                                                    <div class="invalid-feedback" id="invalid_pass2"
-                                                         style="display: none">
+                                                        <div>
+                                                            {% render_field form.laboratory  id="powermail_field_laboratory" %}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -320,7 +315,7 @@
                             spec: $('#powermail_field_spec').val(),
                             education: $('#powermail_field_education').val(),
                             username: $('#powermail_field_username').val(),
-                            password: $('#powermail_field_pass1').val(),
+                            group: $('#powermail_field_laboratory').prop('checked')
                         })
                     },
                     success: (data) => {
@@ -328,19 +323,19 @@
                             if (data['errors']['username']) {
                                 document.querySelector("#invalid_username").style.display = "block";
                                 document.querySelector("#invalid_username").innerHTML = data['errors']['username'];
-                            } else if (data['errors']['password']) {
-                                document.querySelector("#invalid_pass1").style.display = "block";
-                                document.querySelector("#invalid_pass1").innerHTML = '';
-                                console.log(data['errors']['password'])
-                                for (let i = 0; i < data['errors']['password'].length; i++) {
-                                    document.querySelector("#invalid_pass1").innerHTML = data['errors']['username'][i] + "\n";
-                                }
                             } else {
                                 toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
                             }
                         }
                         if ('success' in data) {
                             toastr["success"]("Специалист добавлен!");
+                            document.querySelectorAll('.form__section input').forEach(item => {
+                                item.value = '';
+                            });
+                            document.querySelectorAll('.form__section select').forEach(item => {
+                                item.selectedIndex = 0;
+                            });
+                            document.querySelector('#powermail_field_education').value = '';
                         }
                     }
                 })
@@ -365,8 +360,6 @@
             let pass = document.querySelector("#powermail_field_pass_num");
             let spec = document.querySelector("#powermail_field_spec");
             let username = document.querySelector("#powermail_field_username");
-            let pswrd1 = document.querySelector("#powermail_field_pass1");
-            let pswrd2 = document.querySelector("#powermail_field_pass2");
             let invalids = document.querySelectorAll(".invalid-feedback");
 
             invalids.forEach(item => {
@@ -408,19 +401,6 @@
                 document.querySelector("#invalid_username").innerHTML = "Это поле не может быть пустым.";
                 flags = false;
             }
-            if (!validateFIO(pswrd1) && !validateFIO(pswrd2)) {
-                document.querySelector("#invalid_pass1").style.display = "block";
-                document.querySelector("#invalid_pass1").innerHTML = 'Это поле не может быть пустым.';
-                document.querySelector("#invalid_pass2").style.display = "block";
-                document.querySelector("#invalid_pass2").innerHTML = 'Это поле не может быть пустым.';
-                flags = false;
-            } else if (pswrd1.value !== pswrd2.value) {
-                document.querySelector("#invalid_pass1").style.display = "block";
-                document.querySelector("#invalid_pass1").innerHTML = 'Пароли не совпадают.';
-                document.querySelector("#invalid_pass2").style.display = "block";
-                document.querySelector("#invalid_pass2").innerHTML = 'Пароли не совпадают.';
-                flags = false;
-            }
             return flags;
         }
 
@@ -432,7 +412,7 @@
         let username = document.querySelector("#powermail_field_username");
 
         username.oninput = function () {
-            username.value = username.value.replace(/[^a-z0-9]/gi, '');
+            username.value = username.value.replace(/[^a-z0-9_]/gi, '');
         }
 
         phone.oninput = function () {

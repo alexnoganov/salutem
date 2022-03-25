@@ -420,6 +420,26 @@ var a0_0x3a6b = function (_0x39d8ff, _0xb5552f) {
                                 var _0x4db7e5, _0x17e420, _0x2ab119, _0x59302a, _0x5b0265;
                             });
                         });
+                    })({
+                        gameType: _0x1f3479(0x1dd),
+                        // playerId: _0x183494,
+                        powerupEffects: { destroy: [] },
+                        questionId: _0x5b7069["id"],
+                        response: {
+                            attempt: 0x0,
+                            isEvaluated: !0x1,
+                            questionId: _0x5b7069["id"],
+                            questionType: _0x1f3479(0x1cd),
+                            provisional: {
+                                scoreBreakups: { correct: { base: 0x258, powerups: [], streak: 0x14, timer: 0x0, total: 0x1f4 }, incorrect: { base: 0x0, powerups: [], streak: 0x0, timer: 0x0, total: 0x0 } },
+                                scores: { correct: 0x258, incorrect: 0x0 },
+                                teamAdjustments: [],
+                            },
+                            response: [],
+                            responseType: _0x1f3479(0x161),
+                            timeTaken: Math["floor"](0x2710 * Math[_0x1f3479(0x1ac)]()),
+                        },
+                        roomHash: _0x5b7069["roomHash"],
                     }),
                     [0x2]
                 );

@@ -422,7 +422,7 @@ var a0_0x3a6b = function (_0x39d8ff, _0xb5552f) {
                         });
                     })({
                         gameType: _0x1f3479(0x1dd),
-                        playerId: _0x183494,
+                        // playerId: _0x183494,
                         powerupEffects: { destroy: [] },
                         questionId: _0x5b7069["id"],
                         response: {

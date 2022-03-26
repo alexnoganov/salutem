@@ -1,10 +1,38 @@
+import datetime
+import json
+
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
 from medicalCard.models import MedicalCard
 from patients.models import Analyzes
+
+
+def deleteMR(request, pk):
+    if request.method == 'POST':
+        if request.POST.get('id'):
+            MedicalCard.objects.get(id=request.POST.get("id"))
+            # добавить .delete() на запрос
+            return JsonResponse({'success': 'success'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
+
+
+def addMR(request, pk):
+    if request.method == 'POST':
+        destination = request.POST.get("destination")
+        treatment = request.POST.get("treatment")
+        symptoms = request.POST.get("symptoms")
+        symptoms = json.loads(symptoms)
+        symptoms = '^'.join(symptoms)
+        MedicalCard.objects.create(purpose=destination, symptoms=symptoms, treatment=treatment, patient_id=pk,
+                                   date=datetime.date.today())
+
+        return JsonResponse({'success': 'success'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
 
 
 class EditingPatient(ListView):

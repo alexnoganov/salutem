@@ -281,10 +281,10 @@
                                             </button>
                                         </form>
                                         {% if view.kwargs.pk == request.user.pk %}
-                                            <form method="post">
+                                            <form method="post" id="reset_password_form">
                                                 <div class="form__section">
                                                     <fieldset class="fieldset">
-                                                        <legend class="fieldset__legend">Восстановление пароля:</legend>
+                                                        <legend class="fieldset__legend">Cмена пароля:</legend>
                                                         <div class="fieldset__row">
                                                             <div class="form-block">
                                                                 <div>
@@ -295,12 +295,12 @@
                                                                         Ваш текущий пароль
                                                                     </span>
                                                                     </label>
-                                                                    {% render_field reset_form.current_password class="text-input powermail_input" id="powermail_field_current_password" %}
+                                                                    {% render_field reset_form.current_password class="text-input" id="powermail_field_current_password" %}
                                                                 </div>
-                                                                <div class="invalid-feedback" id="invalid_name"
+                                                                <div class="invalid-feedback"
+                                                                     id="invalid_current_password"
                                                                      style="display: none">
-                                                                    Это поле не может быть пустым или иметь не
-                                                                    корректные значения.
+                                                                    Это поле не может быть пустым.
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -316,25 +316,29 @@
                                                                         <span>*</span>
                                                                         Новый пароль
                                                                     </span>
-                                                                        {% render_field reset_form.new_password class="text-input powermail_input" id="powermail_field_new_password" %}
                                                                     </label>
+                                                                    {% render_field reset_form.new_password class="text-input" id="powermail_field_new_password" %}
                                                                     <div class="invalid-feedback"
-                                                                         id="invalid_patronymic"
+                                                                         id="invalid_new_password"
                                                                          style="display: none">
-                                                                        Это поле не может быть пустым или иметь не
-                                                                        корректные значения.
+                                                                        Это поле не может быть пустым.
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-block">
                                                                 <div class="input-field-wrapper">
-                                                                    <label for="powermail_field_geburtsdatum" title="">
+                                                                    <label for="powermail_field_confirm_new_password" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
                                                                         Подтвердите пароль
                                                                     </span>
                                                                     </label>
-                                                                    {% render_field reset_form.confirm_new_password class="text-input powermail_input" id="powermail_field_confrim_new_password" %}
+                                                                    {% render_field reset_form.confirm_new_password class="text-input powermail_input" id="powermail_field_confirm_new_password" %}
+                                                                    <div class="invalid-feedback"
+                                                                         id="invalid_confirm_new_password"
+                                                                         style="display: none">
+                                                                        Это поле не может быть пустым.
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -4,6 +4,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import JsonResponse
 from django.utils import timezone
@@ -36,7 +37,14 @@ def get_analysis(request):
                 analysis.status = data['status']
                 analysis.result = data['result']
                 if data['status'] == 'Завершен':
-                    analysis.show = False
+                    send_mail("Результаты анализов",
+                              "Пациент: {surname} {name} {patronymic}\nВрач: {specialist}\nНазначение анализа: {type}\nДата сдачи: {test_date}\nРезультат: {result}".format(
+                                  surname=analysis.patient.Surname, name=analysis.patient.Name,
+                                  patronymic=analysis.patient.Patronymic, type=analysis.type,
+                                  specialist=analysis.specialist.full_name(), test_date=analysis.test_date.date(),
+                                  result=analysis.result),
+                              'admin@salutem.com',
+                              [analysis.patient.Email, analysis.specialist.email])
                 analysis.save()
                 return JsonResponse({'success': 'success'}, safe=False)
             else:

@@ -288,74 +288,81 @@
                                             {% endif %}
                                         </form>
                                     </div>
-                                    <div class="hpc-order-form-template__form">
-                                        <form method="post" id="analysis_form">
-                                            {% csrf_token %}
-                                            <div class="form__section">
-                                                <fieldset class="fieldset">
-                                                    <legend class="fieldset__legend">Анализы:</legend>
-                                                    <div class="fieldset__row">
-                                                        <div class="form-block">
-                                                            <div>
-                                                                <label for="analysis_name"
-                                                                       class="input-field-wrapper__label">
-                                                                    Название
-                                                                </label>
-                                                                <div class="select">
-                                                                    <select name="analysis_name" id="analysis_name"
-                                                                            class="select__control">
+                                    {% if patient_analyzes %}
+                                        <div class="hpc-order-form-template__form">
+                                            <form method="post" id="analysis_form">
+                                                {% csrf_token %}
+                                                <div class="form__section">
+                                                    <fieldset class="fieldset">
+                                                        <legend class="fieldset__legend">Анализы:</legend>
+                                                        <div class="fieldset__row">
+                                                            <div class="form-block">
+                                                                <div>
+                                                                    <label for="analysis_name"
+                                                                           class="input-field-wrapper__label">
+                                                                        Название
+                                                                    </label>
+                                                                    <div class="select">
+                                                                        <select name="analysis_name" id="analysis_name"
+                                                                                class="select__control">
 
-                                                                        {% for name in patient_analyzes %}
-                                                                            <option value="{{ name.id }}"
-                                                                                    id="{{ name.id }}-anlz">
-                                                                                {{ name.type__title }}
+                                                                            {% for name in patient_analyzes %}
+                                                                                <option value="{{ name.id }}"
+                                                                                        id="{{ name.id }}-anlz">
+                                                                                    {{ name.type__title }}
+                                                                                </option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fieldset__row">
+                                                            <div class="form-block">
+                                                                <div>
+                                                                    <label for="analysis_status"
+                                                                           class="input-field-wrapper__label">
+                                                                        Статус
+                                                                    </label>
+                                                                    <div class="select">
+                                                                        <select name="analysis_type"
+                                                                                id="analysis_status"
+                                                                                class="select__control">
+                                                                            <option value="Новый">Новый</option>
+                                                                            <option value="В процессе">В процессе
                                                                             </option>
-                                                                        {% endfor %}
-                                                                    </select>
+                                                                            <option value="Завершен">Завершен</option>
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="fieldset__row">
-                                                        <div class="form-block">
-                                                            <div>
-                                                                <label for="analysis_status"
-                                                                       class="input-field-wrapper__label">
-                                                                    Статус
-                                                                </label>
-                                                                <div class="select">
-                                                                    <select name="analysis_type" id="analysis_status"
-                                                                            class="select__control">
-                                                                        <option value="Новый">Новый</option>
-                                                                        <option value="В процессе">В процессе</option>
-                                                                        <option value="Завершен">Завершен</option>
-                                                                    </select>
+                                                        <div class="fieldset__row">
+                                                            <div class="form-block">
+                                                                <div>
+                                                                    <label for="analysis_result"
+                                                                           class="input-field-wrapper__label">Результаты</label>
+                                                                    <textarea name="analysis_result"
+                                                                              id="analysis_result"
+                                                                              class="text-input powermail_input"
+                                                                              style="resize: none;height: 200px;"
+                                                                              disabled
+                                                                    ></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="fieldset__row">
-                                                        <div class="form-block">
-                                                            <div>
-                                                                <label for="analysis_result"
-                                                                       class="input-field-wrapper__label">Результаты</label>
-                                                                <textarea name="analysis_result" id="analysis_result"
-                                                                          class="text-input powermail_input"
-                                                                          style="resize: none;height: 200px;" disabled
-                                                                ></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <button type="submit" class="submit__form" id="submit__analysis__result">
-                                                Отправить
-                                            </button>
-                                            <button type="button" class="submit__form" id="delete__analysis"
-                                                    onclick="$('#confirmModal').modal();">Удалить
-                                            </button>
-                                        </form>
-                                    </div>
+                                                    </fieldset>
+                                                </div>
+                                                <button type="submit" class="submit__form"
+                                                        id="submit__analysis__result">
+                                                    Отправить
+                                                </button>
+                                                <button type="button" class="submit__form" id="delete__analysis"
+                                                        onclick="$('#confirmModal').modal();">Удалить
+                                                </button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </section>
                         </div>
@@ -434,7 +441,6 @@
                 <button type="button" class="btn submit" id="modal__delete__analysis">Удалить</button>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 

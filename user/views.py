@@ -1,13 +1,23 @@
 import json
 from datetime import datetime
 
+from django import template
+from django.contrib import messages
+from django.contrib.auth.hashers import check_password
 from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.views.generic import DetailView, ListView, TemplateView
 from django.utils.translation import gettext as _
 
@@ -202,9 +212,73 @@ def redirect_to_profile(request):
         return HttpResponseRedirect(reverse_lazy('patients'))
 
 
-# def hide_notification(request):
-#     if request.POST.get('pk'):
-#         Analyzes.objects.filter(pk=request.POST.get('pk')).update(show=False)
-#         return JsonResponse({'success': 'success'}, safe=False)
-#     else:
-#         return JsonResponse({'error': 'error'}, safe=False)
+def change_password(request):
+    if request.method == 'POST':
+        if request.POST.get('current_password'):
+            form = SpecialistResetPasswordForm(request.POST)
+            if form.is_valid():
+                current_password = request.POST.get('current_password')
+                new_password = request.POST.get('new_password')
+                confirm_new_password = request.POST.get('confirm_new_password')
+                if check_password(current_password, request.user.password):
+                    if current_password == new_password:
+                        return JsonResponse({'errors': 'passwords_match'}, safe=False)
+                    else:
+                        try:
+                            validate_password(new_password)
+                            user = Specialists.objects.get(username=request.user.username)
+                            user.set_password(new_password)
+                            user.save()
+                            login(request, user)
+                            return JsonResponse({'success': 'success'}, safe=False)
+                        except ValidationError as e:
+                            return JsonResponse({'errors': {'validation': e.messages}}, safe=False)
+                else:
+                    return JsonResponse({'errors': 'does_not_match'}, safe=False)
+            else:
+                return JsonResponse({'errors': form.errors}, safe=False)
+        else:
+            return JsonResponse({'errors': 'error'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        if request.POST.get('username'):
+            try:
+                user = Specialists.objects.get(username=request.POST.get('username'))
+                subject = "Восстановление пароля на Salutem"
+                html_template = template.loader.get_template('user/password/password_reset_email.html')
+                text_template = template.loader.get_template('user/password/password_reset_email.txt')
+                c = {
+                    "email": user.email,
+                    'domain': '127.0.0.1:8000',
+                    'site_name': 'Salutem',
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "user": user,
+                    'token': default_token_generator.make_token(user),
+                    'protocol': 'http',
+                }
+                text_content = text_template.render(c)
+                html_content = html_template.render(c)
+                try:
+                    msg = EmailMultiAlternatives(subject, text_content, 'Salutem <admin@salutem.com>', [user.email],
+                                                 headers={'Reply-To': 'admin@salutem.com'})
+                    msg.attach_alternative(html_content, "text/html")
+                    msg.send()
+                except BadHeaderError:
+                    return JsonResponse({'errors': 'error'}, safe=False)
+                return JsonResponse({'success': {'email': email_mask(user.email)}}, safe=False)
+            except ObjectDoesNotExist:
+                return JsonResponse({'errors': 'not_exist'}, safe=False)
+        else:
+            return JsonResponse({'errors': 'error'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
+
+
+def email_mask(email):
+    lo = email.find('@')
+    if lo > 0:
+        return email[0:2] + "####" + email[lo - 2:]

@@ -212,5 +212,82 @@ $(".info_edit_main_profile_avatar_delete").click(function () {
     $("#update").val('');
 });
 
+$('#reset_password').click(e => {
+    e.preventDefault();
+
+    if (validator()) {
+        $.ajax({
+            url: '/user/change_password/',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                current_password: $('#powermail_field_current_password').val(),
+                new_password: $('#powermail_field_new_password').val(),
+                confirm_new_password: $('#powermail_field_confirm_new_password').val(),
+            },
+            success: (data) => {
+                if ('errors' in data) {
+                    if (data['errors'] === 'does_not_match') {
+                        document.querySelector("#invalid_current_password").style.display = "block";
+                        document.querySelector("#invalid_current_password").textContent = 'Введенный пароль не совпадает с текущим.';
+                    } else if (data['errors'] === 'passwords_match') {
+                        document.querySelector("#invalid_new_password").style.display = "block";
+                        document.querySelector("#invalid_new_password").textContent = 'Новый пароль совпадает  текущим.';
+                    } else if (data['errors']['validation']) {
+                        document.querySelector("#invalid_new_password").style.display = "block";
+                        document.querySelector("#invalid_new_password").innerHTML = '';
+                        for (let i = 0; i < data['errors']['validation'].length; i++) {
+                            document.querySelector("#invalid_new_password").innerHTML += data['errors']['validation'][i] + "<br>";
+                        }
+                    } else {
+                        toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
+                    }
+                }
+                if ('success' in data) {
+                    toastr["success"]("Пароль успешно изменен!");
+                    document.querySelectorAll('#reset_password_form input').forEach(item => {
+                        item.value = '';
+                    });
+                }
+            }
+        });
+    }
+
+    function validator() {
+        const validate = (value) => {
+            return value.value.trim().length !== 0;
+        };
+
+        let flags = true;
+        let current_password = document.querySelector("#powermail_field_current_password");
+        let new_password = document.querySelector("#powermail_field_new_password");
+        let confirm_new_password = document.querySelector("#powermail_field_confirm_new_password");
+        let invalids = document.querySelectorAll("#reset_password_form .invalid-feedback");
+
+        invalids.forEach(item => {
+            item.style.display = "none";
+        });
+
+        if (!validate(current_password)) {
+            document.querySelector("#invalid_current_password").style.display = "block";
+            document.querySelector("#invalid_current_password").textContent = 'Это поле не может быть пустым.';
+            flags = false;
+        }
+        if (!validate(new_password) && !validate(confirm_new_password)) {
+            document.querySelector("#invalid_new_password").style.display = "block";
+            document.querySelector("#invalid_new_password").textContent = 'Это поле не может быть пустым.';
+            document.querySelector("#invalid_confirm_new_password").style.display = "block";
+            document.querySelector("#invalid_confirm_new_password").textContent = 'Это поле не может быть пустым.';
+            flags = false;
+        } else if (new_password.value !== confirm_new_password.value) {
+            document.querySelector("#invalid_new_password").style.display = "block";
+            document.querySelector("#invalid_new_password").textContent = 'Пароли не совпадают.';
+            document.querySelector("#invalid_confirm_new_password").style.display = "block";
+            document.querySelector("#invalid_confirm_new_password").textContent = 'Пароли не совпадают.';
+            flags = false;
+        }
+        return flags;
+    }
+});
 
 OnlyNumberInputAndBRD();

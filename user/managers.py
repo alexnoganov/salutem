@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager
+from django.core.mail import send_mail
 from django.utils.translation import gettext_lazy as _
 
 
@@ -17,11 +18,15 @@ class SpecialistManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         password = self.make_random_password(15)
+        send_mail("Регистрация нового специалиста",
+                  "Логин: {username}\nПароль: {password}".format(username=user.username, password=password),
+                  'admin@salutem.com',
+                  [email])
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, email, **extra_fields):
         """
         Create and save a SuperUser with the given email and password.
         """
@@ -33,4 +38,4 @@ class SpecialistManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(email, **extra_fields)

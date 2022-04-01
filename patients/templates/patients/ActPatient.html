@@ -28,23 +28,20 @@
                             </div>
                             {% if request.user.is_staff or not perms.user.edit_analyzes %}
                                 <form id="user" method="post">
-                                    <div class="info_edit_item">
-                                        <div class="info_edit_main_profile">
-                                            <div class="info_edit_main_profile_avatar_reupload">
+                                    <div class="info_edit_main_profile">
+                                        <div class="info_edit_main_profile_avatar_reupload">
                                             <span class="bot8" style="width: 100px;margin: 20px 0 0 0
 ">Обновить</span>
-                                                {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
-                                            </div>
-                                            <div class="info_edit_main_profile_avatar_delete">
+                                            {% render_field form.photo id="update" accept="image/jpeg,image/png" %}
+                                        </div>
+                                        <div class="info_edit_main_profile_avatar_delete">
                                                 <span class="bot8"
                                                       style="width: 100px;margin: 20px 0 0 0">Удалить</span>
-                                            </div>
                                         </div>
                                     </div>
                                 </form>
                             {% else %}
                                 <form id="user" method="post">
-                                    <div class="info_edit_item">
                                         <div class="info_edit_main_profile">
                                             <div class="info_edit_main_profile_avatar_reupload">
                                             <span class="bot8 disabled" style="width: 100px;margin: 20px 0 0 0
@@ -55,7 +52,6 @@
                                                 <span class="bot8 disabled" style="width: 100px;margin: 20px 0 0 0">Удалить</span>
                                             </div>
                                         </div>
-                                    </div>
                                 </form>
                             {% endif %}
                         </div>
@@ -77,295 +73,286 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="page_form">
-                            <section class="content-block-list">
-                                <div class="content-block-list__container">
-                                    <div class="hpc-order-form-template__form">
-                                        {{ form.non_field_errors }}
-                                        <form name="field" method="post" id="jjdd">
-                                            {% csrf_token %}
-                                            <div class="form__section">
-                                                <fieldset class="fieldset">
-                                                    <legend class="fieldset__legend">Данные:</legend>
-                                                    <div class="fieldset__row">
-                                                        <div class="form-block">
-                                                            <div>
-                                                                <label for="powermail_field_anrede" title="">
+                        <form name="field" method="post" id="jjdd">
+                            {% csrf_token %}
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <legend class="fieldset__legend">Данные:</legend>
+                                    <div class="fieldset__row">
+                                        <div class="form-block">
+                                            <div>
+                                                <label for="powermail_field_anrede" title="">
                                                                  <span class="input-field-wrapper__label">
                                                                      Пол
                                                                  </span>
-                                                                </label>
-                                                                <div class="select">
-                                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" %}
-                                                                    {% else %}
-                                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" disabled='disabled' %}
-                                                                    {% endif %}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
-                                                        <div class="form-block">
-                                                            <div>
-                                                                <label for="powermail_field_vorname" title="">
+                                                </label>
+                                                <div class="select">
+                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" %}
+                                                    {% else %}
+                                                        {% render_field form.Sex class="select__control" id="powermail_field_anrede" disabled='disabled' %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                        <div class="form-block">
+                                            <div>
+                                                <label for="powermail_field_vorname" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
                                                                         Имя
                                                                     </span>
-                                                                </label>
-                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                    {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" value=profile.Name %}
-                                                                {% else %}
-                                                                    {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" disabled='disabled' value=profile.Name %}
+                                                </label>
+                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                    {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" value=profile.Name %}
+                                                {% else %}
+                                                    {% render_field form.Name class="text-input powermail_input" id="powermail_field_vorname" placeholder="Александр" disabled='disabled' value=profile.Name %}
 
-                                                                {% endif %}
-                                                            </div>
-                                                            <div class="invalid-feedback" id="invalid_name"
-                                                                 style="display: none">
-                                                                Это поле не может быть пустым или иметь не
-                                                                корректные значения.
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-block">
-                                                            <div class="input-field-wrapper">
-                                                                <label for="powermail_field_nachname" title="">
+                                                {% endif %}
+                                            </div>
+                                            <div class="invalid-feedback" id="invalid_name"
+                                                 style="display: none">
+                                                Это поле не может быть пустым или иметь не
+                                                корректные значения.
+                                            </div>
+                                        </div>
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_nachname" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
                                                                         Фамилия
                                                                     </span>
-                                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                        {% render_field form.Surname class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
-                                                                    {% else %}
-                                                                        {% render_field form.Surname disabled='disabled' class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
-                                                                    {% endif %}
-                                                                </label>
-                                                            </div>
-                                                            <div class="invalid-feedback" id="invalid_surname"
-                                                                 style="display: none">
-                                                                Это поле не может быть пустым или иметь не
-                                                                корректные значения.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
+                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                        {% render_field form.Surname class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
+                                                    {% else %}
+                                                        {% render_field form.Surname disabled='disabled' class="text-input powermail_input" id="powermail_field_nachname" placeholder="Белоусов" value=profile.Surname %}
+                                                    {% endif %}
+                                                </label>
                                             </div>
-                                            <div class="form__section">
-                                                <fieldset class="fieldset">
-                                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
-                                                        <div class="form-block">
-                                                            <div>
-                                                                <label for="powermail_field_vorname" title="">
+                                            <div class="invalid-feedback" id="invalid_surname"
+                                                 style="display: none">
+                                                Это поле не может быть пустым или иметь не
+                                                корректные значения.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                        <div class="form-block">
+                                            <div>
+                                                <label for="powermail_field_vorname" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
                                                                         Отчество
                                                                     </span>
-                                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                        {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
-                                                                    {% else %}
-                                                                        {% render_field form.Patronymic disabled='disabled' class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
-                                                                    {% endif %}
-                                                                </label>
-                                                                <div class="invalid-feedback" id="invalid_patronymic"
-                                                                     style="display: none">
-                                                                    Это поле не может быть пустым или иметь не
-                                                                    корректные значения.
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-block">
-                                                            <div class="input-field-wrapper">
-                                                                <label for="powermail_field_geburtsdatum" title="">
+                                                    {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                        {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
+                                                    {% else %}
+                                                        {% render_field form.Patronymic disabled='disabled' class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
+                                                    {% endif %}
+                                                </label>
+                                                <div class="invalid-feedback" id="invalid_patronymic"
+                                                     style="display: none">
+                                                    Это поле не может быть пустым или иметь не
+                                                    корректные значения.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_geburtsdatum" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         Дата рождения
                                                                     </span>
-                                                                </label>
-                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                    {% render_field form.Date_of_birth type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
-                                                                {% else %}
-                                                                    {% render_field form.Date_of_birth disabled='disabled' type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
-                                                                {% endif %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
+                                                </label>
+                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                    {% render_field form.Date_of_birth type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
+                                                {% else %}
+                                                    {% render_field form.Date_of_birth disabled='disabled' type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
+                                                {% endif %}
                                             </div>
-                                            <div class="form__section">
-                                                <fieldset class="fieldset">
-                                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
-                                                        <div class="form-block">
-                                                            <div class="input-field-wrapper">
-                                                                <label for="powermail_field_telefonnummer" title="">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row fieldset__row--col fieldset__row--col2">
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_telefonnummer" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
                                                                         Номер телефона
                                                                     </span>
-                                                                </label>
-                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                    {% render_field form.Telephone class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
-                                                                {% else %}
-                                                                    {% render_field form.Telephone disabled='disabled' class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
-                                                                {% endif %}
-                                                            </div>
-                                                            <div class="invalid-feedback" id="invalid_phone"
-                                                                 style="display: none">
-                                                                Это поле не может быть пустым или иметь не
-                                                                корректные значения.
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-block">
-                                                            <div class="input-field-wrapper">
-                                                                <label for="powermail_field_e_mail" title="">
+                                                </label>
+                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                    {% render_field form.Telephone class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
+                                                {% else %}
+                                                    {% render_field form.Telephone disabled='disabled' class="text-input powermail_input" id="powermail_field_telefonnummer" placeholder="012345678910" value=profile.Telephone %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="invalid-feedback" id="invalid_phone"
+                                                 style="display: none">
+                                                Это поле не может быть пустым или иметь не
+                                                корректные значения.
+                                            </div>
+                                        </div>
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_e_mail" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
                                                                         E-Mail
                                                                     </span>
-                                                                </label>
-                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                    {% render_field form.Email class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
-                                                                {% else %}
-                                                                    {% render_field form.Email disabled='disabled' class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
-                                                                {% endif %}
-                                                            </div>
-                                                            <div class="invalid-feedback" id="invalid_email"
-                                                                 style="display: none">
-                                                                Введен некорректный адрес эл.почты.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
+                                                </label>
+                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                    {% render_field form.Email class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
+                                                {% else %}
+                                                    {% render_field form.Email disabled='disabled' class="text-input powermail_input" id="powermail_field_e_mail" placeholder="mustermann@gmail.com" value=profile.Email %}
+                                                {% endif %}
                                             </div>
-                                            <div class="form__section">
-                                                <fieldset class="fieldset">
-                                                    <div class="fieldset__row">
-                                                        <div class="form-block">
-                                                            <div class="input-field-wrapper">
-                                                                <label for="powermail_field_residence" title="">
+                                            <div class="invalid-feedback" id="invalid_email"
+                                                 style="display: none">
+                                                Введен некорректный адрес эл.почты.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
+                                    <div class="fieldset__row">
+                                        <div class="form-block">
+                                            <div class="input-field-wrapper">
+                                                <label for="powermail_field_residence" title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         Место проживания
                                                                     </span>
-                                                                </label>
-                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                    {% render_field form.Place_of_residence class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
-                                                                {% else %}
-                                                                    {% render_field form.Place_of_residence disabled='disabled' class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
-                                                                {% endif %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
+                                                </label>
+                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                    {% render_field form.Place_of_residence class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
+                                                {% else %}
+                                                    {% render_field form.Place_of_residence disabled='disabled' class="text-input powermail_input" id="powermail_field_residence" placeholder="м. Донецьк, пров. Шота Руставелі, 91" value=profile.Place_of_residence %}
+                                                {% endif %}
                                             </div>
-                                            <div class="form__section">
-                                                <fieldset class="fieldset">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form__section">
+                                <fieldset class="fieldset">
 
-                                                    <div class="fieldset__row">
-                                                        <div class="form-block">
-                                                            <div>
-                                                                <label for="powermail_field_blood" title="">
+                                    <div class="fieldset__row">
+                                        <div class="form-block">
+                                            <div>
+                                                <label for="powermail_field_blood" title="">
                                                                  <span class="input-field-wrapper__label">
                                                                      Группа крови
                                                                  </span>
-                                                                </label>
-                                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                                    {% render_field form.Blood_type class="select__control" id="powermail_field_blood" %}
-                                                                {% else %}
-                                                                    {% render_field form.Blood_type disabled='disabled' class="select__control" id="powermail_field_blood" %}
-                                                                {% endif %}
-                                                            </div>
+                                                </label>
+                                                {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                                    {% render_field form.Blood_type class="select__control" id="powermail_field_blood" %}
+                                                {% else %}
+                                                    {% render_field form.Blood_type disabled='disabled' class="select__control" id="powermail_field_blood" %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                            {% if request.user.is_staff or not perms.user.edit_analyzes %}
+                                <button type="submit" class="submit__form" id="profile_save">Сохранить
+                                </button>
+                            {% else %}
+                                <button type="submit" disabled class="submit__form disabled_submit"
+                                        id="profile_save">
+                                    Сохранить
+                                </button>
+                            {% endif %}
+                        </form>
+                        {% if patient_analyzes %}
+                            <div class="hpc-order-form-template__form">
+                                <form method="post" id="analysis_form">
+                                    {% csrf_token %}
+                                    <div class="form__section">
+                                        <fieldset class="fieldset">
+                                            <legend class="fieldset__legend">Анализы:</legend>
+                                            <div class="fieldset__row">
+                                                <div class="form-block">
+                                                    <div>
+                                                        <label for="analysis_name"
+                                                               class="input-field-wrapper__label">
+                                                            Название
+                                                        </label>
+                                                        <div class="select">
+                                                            <select name="analysis_name" id="analysis_name"
+                                                                    class="select__control">
+
+                                                                {% for name in patient_analyzes %}
+                                                                    <option value="{{ name.id }}"
+                                                                            id="{{ name.id }}-anlz">
+                                                                        {{ name.type__title }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
                                                         </div>
                                                     </div>
-
-                                                </fieldset>
-                                            </div>
-                                            {% if request.user.is_staff or not perms.user.edit_analyzes %}
-                                                <button type="submit" class="submit__form" id="profile_save">Сохранить
-                                                </button>
-                                            {% else %}
-                                                <button type="submit" disabled class="submit__form disabled_submit"
-                                                        id="profile_save">
-                                                    Сохранить
-                                                </button>
-                                            {% endif %}
-                                        </form>
-                                    </div>
-                                    {% if patient_analyzes %}
-                                        <div class="hpc-order-form-template__form">
-                                            <form method="post" id="analysis_form">
-                                                {% csrf_token %}
-                                                <div class="form__section">
-                                                    <fieldset class="fieldset">
-                                                        <legend class="fieldset__legend">Анализы:</legend>
-                                                        <div class="fieldset__row">
-                                                            <div class="form-block">
-                                                                <div>
-                                                                    <label for="analysis_name"
-                                                                           class="input-field-wrapper__label">
-                                                                        Название
-                                                                    </label>
-                                                                    <div class="select">
-                                                                        <select name="analysis_name" id="analysis_name"
-                                                                                class="select__control">
-
-                                                                            {% for name in patient_analyzes %}
-                                                                                <option value="{{ name.id }}"
-                                                                                        id="{{ name.id }}-anlz">
-                                                                                    {{ name.type__title }}
-                                                                                </option>
-                                                                            {% endfor %}
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="fieldset__row">
-                                                            <div class="form-block">
-                                                                <div>
-                                                                    <label for="analysis_status"
-                                                                           class="input-field-wrapper__label">
-                                                                        Статус
-                                                                    </label>
-                                                                    <div class="select">
-                                                                        <select name="analysis_type"
-                                                                                id="analysis_status"
-                                                                                class="select__control">
-                                                                            <option value="Новый">Новый</option>
-                                                                            <option value="В процессе">В процессе
-                                                                            </option>
-                                                                            <option value="Завершен">Завершен</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="fieldset__row">
-                                                            <div class="form-block">
-                                                                <div>
-                                                                    <label for="analysis_result"
-                                                                           class="input-field-wrapper__label">Результаты</label>
-                                                                    <textarea name="analysis_result"
-                                                                              id="analysis_result"
-                                                                              class="text-input powermail_input"
-                                                                              style="resize: none;height: 200px;"
-                                                                              disabled
-                                                                    ></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
                                                 </div>
-                                                <button type="submit" class="submit__form"
-                                                        id="submit__analysis__result">
-                                                    Отправить
-                                                </button>
-                                                <button type="button" class="submit__form" id="delete__analysis"
-                                                        onclick="$('#confirmModal').modal();">Удалить
-                                                </button>
-                                            </form>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </section>
-                        </div>
+                                            </div>
+                                            <div class="fieldset__row">
+                                                <div class="form-block">
+                                                    <div>
+                                                        <label for="analysis_status"
+                                                               class="input-field-wrapper__label">
+                                                            Статус
+                                                        </label>
+                                                        <div class="select">
+                                                            <select name="analysis_type"
+                                                                    id="analysis_status"
+                                                                    class="select__control">
+                                                                <option value="Новый">Новый</option>
+                                                                <option value="В процессе">В процессе
+                                                                </option>
+                                                                <option value="Завершен">Завершен</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="fieldset__row">
+                                                <div class="form-block">
+                                                    <div>
+                                                        <label for="analysis_result"
+                                                               class="input-field-wrapper__label">Результаты</label>
+                                                        <textarea name="analysis_result"
+                                                                  id="analysis_result"
+                                                                  class="text-input powermail_input"
+                                                                  style="resize: none;height: 200px;"
+                                                                  disabled
+                                                        ></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <button type="submit" class="submit__form"
+                                            id="submit__analysis__result">
+                                        Отправить
+                                    </button>
+                                    <button type="button" class="submit__form" id="delete__analysis"
+                                            onclick="$('#confirmModal').modal();">Удалить
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

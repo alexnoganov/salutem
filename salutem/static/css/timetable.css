@@ -13,6 +13,7 @@
 .timetable .accent-pink-gradient:hover {
     box-shadow: 0 20px 30px 0 rgba(238, 142, 188, 0.3);
     transform: scale(1.05);
+    z-index: 1;
 }
 
 .timetable .accent-orange-gradient {
@@ -26,6 +27,7 @@
 .timetable .accent-orange-gradient:hover {
     box-shadow: 0 20px 30px 0 rgba(238, 192, 142, 0.3);
     transform: scale(1.05);
+    z-index: 1;
 }
 
 .timetable .accent-green-gradient {
@@ -39,6 +41,7 @@
 .timetable .accent-green-gradient:hover {
     box-shadow: 0 20px 30px 0 rgba(188, 238, 142, 0.3);
     transform: scale(1.05);
+    z-index: 1;
 }
 
 .timetable .accent-cyan-gradient {
@@ -52,6 +55,7 @@
 .timetable .accent-cyan-gradient:hover {
     box-shadow: 0 20px 30px 0 rgba(142, 238, 192, 0.3);
     transform: scale(1.05);
+    z-index: 1;
 }
 
 .timetable .accent-blue-gradient {
@@ -65,6 +69,7 @@
 .timetable .accent-blue-gradient:hover {
     box-shadow: 0 20px 30px 0 rgba(142, 188, 238, 0.3);
     transform: scale(1.05);
+    z-index: 1;
 }
 
 .timetable .accent-purple-gradient {
@@ -78,6 +83,7 @@
 .timetable .accent-purple-gradient:hover {
     box-shadow: 0 20px 30px 0 rgba(192, 142, 238, 0.3);
     transform: scale(1.05);
+    z-index: 1;
 }
 
 .timetable .weekend {
@@ -119,6 +125,11 @@
 .timetable .content__row > div {
     box-shadow: inset 1px 0 0 #c7c9cb, inset 0 1px 0 0 #c7c9cb;
     height: 171px;
+    position: relative;
+}
+
+.timetable .content__row > div:hover .row__item__close{
+    opacity: 1;
 }
 
 .timetable .content__row > div > a {
@@ -195,6 +206,7 @@
     right: 15px;
     top: 10px;
     cursor: pointer;
+    opacity: 0;
 }
 
 .row__item__close:hover svg {
@@ -305,6 +317,44 @@
 @media screen and (max-width: 580px) {
     .table {
         display: block;
+    }
+}
+
+@media all and (max-width: 1600px) {
+    .table {
+        font-size: 14px;
+    }
+
+    .table__header .cell {
+        font-size: 13px;
+    }
+}
+
+
+@media all and (max-width: 1200px) {
+    .search__patient {
+        font-size: 16px;
+    }
+
+    .timetable {
+        margin: 0;
+        width: 1400px;
+    }
+
+    .container {
+        margin-top: -20px;
+    }
+
+    .overflow {
+        overflow: scroll;
+        margin-top: -59px;
+    }
+
+}
+
+@media all and (max-width: 1405px) {
+    .container {
+        max-width: 90%;
     }
 }
 

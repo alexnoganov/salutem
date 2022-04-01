@@ -136,12 +136,12 @@ body {
 .header__wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
     position: relative;
+    margin-left: 40px;
 }
 
 .ds {
-    margin: 0 30px;
+    margin: 0 10px;
     display: inline-block;
     font-weight: 600;
     font-size: 17px;
@@ -209,6 +209,7 @@ form {
     white-space: nowrap;
     font-family: "GilroyExtraBold", serif;
     cursor: default;
+    margin-right: 40px;
 }
 
 .notification {
@@ -797,4 +798,33 @@ button.toast-close-button {
     height: 0.375em;
     background-color: #63b64d;
     content: "";
+}
+
+.icon svg {
+    display: block;
+    width: 25px;
+    height: 25px;
+}
+
+@media all and (max-width: 1200px) {
+    .header__container {
+        font-size: 14px;
+    }
+
+    .ds {
+        font-size: 14px;
+    }
+
+    .logo__brand {
+        font-size: 30px;
+    }
+
+    .item__text {
+        width: 86%;
+    }
+}
+@media all and (max-width: 1000px) {
+    .logo__brand {
+        margin-right: 20px;
+    }
 }

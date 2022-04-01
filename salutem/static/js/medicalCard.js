@@ -53,7 +53,7 @@ function addNewMR() {
         });
 
         $.ajax({
-            url: location.pathname  + '/addMR',
+            url: location.pathname  + 'addMR/',
             type: 'POST',
             dataType: 'json',
             data: {

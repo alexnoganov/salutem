@@ -63,7 +63,7 @@
     font-weight: 600;
 }
 
-.toolbar form input[type="submit"] , .toolbar form input[type="reset"]{
+.toolbar form input[type="submit"], .toolbar form input[type="reset"] {
     border: 1px solid #353535;
     font-size: 13px;
     padding: 4px 8px;
@@ -268,5 +268,40 @@
 .pagination li:hover a {
     color: #fff;
     transition: .15s linear;
+}
+
+
+@media all and (max-width: 1600px) {
+    .table {
+        font-size: 14px;
+    }
+
+    .table__header .cell {
+        font-size: 13px;
+    }
+}
+
+@media all and (max-width: 1405px) {
+    .container {
+        max-width: 90%;
+    }
+}
+
+@media all and (max-width: 1200px) {
+    .object__tools {
+        margin: 0 0 10px 0;
+    }
+
+    .search__patient {
+        font-size: 16px;
+    }
+
+    .search__patient:after {
+        bottom: 0;
+    }
+
+    .header__container {
+        margin-bottom: 40px;
+    }
 }
 

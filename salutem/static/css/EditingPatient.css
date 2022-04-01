@@ -10,20 +10,17 @@
 
 .page_slice {
     display: flex;
-    margin: 30px;
-    height: 100%;
+    margin: 30px 150px 30px 60px;
 }
 
 .page_patient_left {
-    /*background-color: red;*/
     height: 100%;
-    width: 30%;
+    margin-right: 150px;
 }
 
 .page_patient_right {
-    /*background-color: grey;*/
     height: 100%;
-    width: 70%;
+    width: 800px;
 }
 
 .page_throw {
@@ -31,7 +28,11 @@
 }
 
 .image_patient {
-    margin: 0 20px 10px 30px;
+    /*margin: 0 20px 10px 30px;*/
+}
+
+.image {
+    display: inline-block;
 }
 
 .image_patient img {
@@ -46,17 +47,13 @@
 
 .page_button {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
 }
 
 .info_edit_main_profile {
     display: -webkit-box;
-    justify-content: flex-start;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
 }
 
 .info_edit_main_profile_avatar {
@@ -82,7 +79,7 @@
 }
 
 .info_edit_main_profile_avatar_reupload {
-    margin-right: 30px;
+    margin-right: 50px;
 }
 
 .info_edit_main_profile_avatar_reupload span {
@@ -131,7 +128,6 @@
     background-color: #FFFFFF;
     border: 1px solid #CCCCCC;
     box-shadow: 0 1px 1px rgb(0 0 0 / 8%) inset;
-    margin-right: 140px;
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
     border-radius: 4px;
     color: #555555;
@@ -149,10 +145,6 @@
     border-color: rgb(91 236 82 / 80%);
     box-shadow: 0 1px 1px rgb(0 0 0 / 8%) inset, 0 0 8px rgb(82 168 236 / 60%);
     outline: 0 none;
-}
-
-.hpc-order-form-template__form {
-    max-width: 800px;
 }
 
 .fieldset {
@@ -179,10 +171,6 @@
     height: 0.375em;
     background-color: #63b64d;
     content: "";
-}
-
-.form-block {
-    max-width: 800px;
 }
 
 .input-field-wrapper__label {
@@ -222,10 +210,6 @@
 #powermail_field_education {
     resize: none;
     height: 150px;
-}
-
-.form-block {
-    max-width: 800px;
 }
 
 .fieldset__row--col2 .form-block {
@@ -364,4 +348,29 @@
 
 .select__control:disabled {
     cursor: default;
+}
+
+@media all and (max-width: 1300px) {
+    .page_slice {
+        margin: 30px 60px 30px 60px;
+    }
+}
+
+@media all and (max-width: 1200px) {
+    .page_patient_left {
+        margin-right: 90px;
+    }
+
+    .image_patient img {
+        height: 225px;
+        width: 225px;
+    }
+
+    .info_edit_main_profile_avatar_reupload {
+        margin-right: 25px;
+    }
+
+    .search__patient {
+        font-size: 19px;
+    }
 }

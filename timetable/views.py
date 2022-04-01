@@ -35,13 +35,18 @@ class TimeTableView(ListView):
                 raise Http404(_('Empty list and “%(class_name)s.allow_empty” is False.') % {
                     'class_name': self.__class__.__name__,
                 })
-        if kwargs.get('pk'):
-            if self.request.user.is_staff:
-                return self.render_to_response(context)
-            else:
-                return HttpResponseRedirect(reverse_lazy('timetable'))
-        else:
+
+        if self.request.user.is_staff:
             return self.render_to_response(context)
+        else:
+            return HttpResponseRedirect(reverse_lazy('timetable_analyzes'))
+        # if kwargs.get('pk'):
+        #     if self.request.user.is_staff:
+        #         return self.render_to_response(context)
+        #     else:
+        #         return HttpResponseRedirect(reverse_lazy('timetable_analyzes'))
+        # else:
+        #     return self.render_to_response(context)
 
     def get_queryset(self):
         if self.request.user.is_staff and not self.kwargs.get('pk'):
@@ -61,13 +66,13 @@ class TimeTableView(ListView):
         if self.request.user.is_staff:
             if self.kwargs.get('pk'):
                 timetable = TimeTable.objects.filter(specialist_id=self.kwargs['pk']).order_by('date')
-                context['timetable'] = get_data_for_timetable(timetable)
+                context['timetable'] = get_data_for_timetable(timetable, False)
                 return context
             else:
                 return context
         else:
             timetable = TimeTable.objects.filter(specialist_id=self.request.user.pk).order_by('date')
-            context['timetable'] = get_data_for_timetable(timetable)
+            context['timetable'] = get_data_for_timetable(timetable, False)
             return context
 
 
@@ -77,7 +82,7 @@ class TimeTableAnalyzesView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TimeTableAnalyzesView, self).get_context_data()
         timetable = Analyzes.objects.filter(status='Новый')
-        context['timetable_analyzes'] = get_data_for_timetable_from_analyzes(timetable)
+        context['timetable_analyzes'] = get_data_for_timetable(timetable, True)
         return context
 
 
@@ -92,8 +97,52 @@ def delete_appointment(request):
         return JsonResponse({'error': 'error'}, safe=False)
 
 
-def get_data_for_timetable(timetable):
+# def get_data_for_timetable(timetable):
+#     data = {}
+#     for i in range(0, len(timetable)):
+#         data[timetable[i].date.isocalendar().week] = {
+#             0: [],
+#             1: [],
+#             2: [],
+#             3: [],
+#             4: [],
+#             5: [],
+#             6: [],
+#         }
+#     for i in range(0, len(timetable)):
+#         for key in data:
+#             if timetable[i].date.isocalendar().week == key:
+#                 for k in data[key]:
+#                     if timetable[i].date.weekday() == k:
+#                         data[key][k].append([
+#                             '{f} {i} {o}'.format(f=timetable[i].patient.Surname, i=timetable[i].patient.Name,
+#                                                  o=timetable[i].patient.Patronymic),
+#                             timetable[i].date.strftime("%d.%m.%Y %H:%M"),
+#                             timetable[i].patient.pk,
+#                             timetable[i].pk,
+#                         ])
+#     data = json.dumps(data)
+#     return data
+
+
+def get_data_for_timetable(timetable, types):
     data = {}
+
+    def get_data():
+        if types:
+            return ['{f} {i} {o}'.format(f=timetable[i].patient.Surname, i=timetable[i].patient.Name,
+                                         o=timetable[i].patient.Patronymic),
+                    timetable[i].date.strftime("%d.%m.%Y %H:%M"),
+                    timetable[i].patient.pk,
+                    timetable[i].pk,
+                    timetable[i].type.title]
+        else:
+            return ['{f} {i} {o}'.format(f=timetable[i].patient.Surname, i=timetable[i].patient.Name,
+                                         o=timetable[i].patient.Patronymic),
+                    timetable[i].date.strftime("%d.%m.%Y %H:%M"),
+                    timetable[i].patient.pk,
+                    timetable[i].pk]
+
     for i in range(0, len(timetable)):
         data[timetable[i].date.isocalendar().week] = {
             0: [],
@@ -109,41 +158,7 @@ def get_data_for_timetable(timetable):
             if timetable[i].date.isocalendar().week == key:
                 for k in data[key]:
                     if timetable[i].date.weekday() == k:
-                        data[key][k].append([
-                            '{f} {i} {o}'.format(f=timetable[i].patient.Surname, i=timetable[i].patient.Name,
-                                                 o=timetable[i].patient.Patronymic),
-                            timetable[i].date.strftime("%d.%m.%Y %H:%M"),
-                            timetable[i].patient.pk,
-                            timetable[i].pk
-                        ])
+                        data[key][k].append(get_data())
     data = json.dumps(data)
-    return data
 
-
-def get_data_for_timetable_from_analyzes(timetable):
-    data = {}
-    for i in range(0, len(timetable)):
-        data[timetable[i].test_date.isocalendar().week] = {
-            0: [],
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-        }
-    for i in range(0, len(timetable)):
-        for key in data:
-            if timetable[i].test_date.isocalendar().week == key:
-                for k in data[key]:
-                    if timetable[i].test_date.weekday() == k:
-                        data[key][k].append([
-                            '{f} {i} {o}'.format(f=timetable[i].patient.Surname, i=timetable[i].patient.Name,
-                                                 o=timetable[i].patient.Patronymic),
-                            timetable[i].test_date.strftime("%d.%m.%Y %H:%M"),
-                            timetable[i].patient.pk,
-                            timetable[i].pk,
-                            timetable[i].status,
-                        ])
-    data = json.dumps(data)
     return data

@@ -30,10 +30,11 @@ function fillTimetable(timetable, url_to_patient, analyzes = false) {
             for (let j = 0; j < maxDayLength[week]; j++) {
                 try {
                     timetableRowArray[i].push(
-                            `<div class="row__item" data-id="${timetable[week][i][j][3]}">
+                        `<div class="row__item" data-id="${timetable[week][i][j][3]}">
                             <a href="${url_to_patient + timetable[week][i][j][2]}">
                                 <div class="time">${timetable[week][i][j][1]}</div>
                                 <div class="patient">${timetable[week][i][j][0]}</div>
+                                ${timetable[week][i][j][4] === undefined ? '' : `<div class="type" style="margin-top: 10px;">${timetable[week][i][j][4]}</div>`}
                             </a>
                             <div class="row__item__close" onclick="$('#confirmModal').modal();">
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 460.775 460.775" xml:space="preserve" fill="rgb(255,255,255, 0.7)">

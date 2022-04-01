@@ -38,7 +38,7 @@ class Analyzes(models.Model):
     type = models.ForeignKey(AnalyzesType, on_delete=models.CASCADE)
     specialist = models.ForeignKey(Specialists, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
-    test_date = models.DateTimeField(blank=True)
+    date = models.DateTimeField(blank=True)
     date_of_change = models.DateTimeField(auto_now=True, editable=True)
     result = models.TextField(null=True)
     status = models.CharField(max_length=20,

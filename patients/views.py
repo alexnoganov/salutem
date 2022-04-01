@@ -1,5 +1,4 @@
 import json
-
 from datetime import datetime
 
 from django.conf import settings
@@ -8,12 +7,12 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import JsonResponse
 from django.utils import timezone
-from django.views.generic import ListView, DetailView, FormView, TemplateView
+from django.views.generic import ListView, DetailView, TemplateView
 
-from timetable.models import TimeTable
-from .models import AnalyzesType, Analyzes
-from .forms import PatientForm, AppointmentForm, PatientAddForm
 from patients.models import Patients
+from timetable.models import TimeTable
+from .forms import PatientForm, AppointmentForm, PatientAddForm
+from .models import AnalyzesType, Analyzes
 
 
 def get_appointment(request):
@@ -41,7 +40,7 @@ def get_analysis(request):
                               "Пациент: {surname} {name} {patronymic}\nВрач: {specialist}\nНазначение анализа: {type}\nДата сдачи: {test_date}\nРезультат: {result}".format(
                                   surname=analysis.patient.Surname, name=analysis.patient.Name,
                                   patronymic=analysis.patient.Patronymic, type=analysis.type,
-                                  specialist=analysis.specialist.full_name(), test_date=analysis.test_date.date(),
+                                  specialist=analysis.specialist.full_name(), date=analysis.date.date(),
                                   result=analysis.result),
                               'admin@salutem.com',
                               [analysis.patient.Email, analysis.specialist.email])
@@ -52,7 +51,7 @@ def get_analysis(request):
         elif request.POST.get('type') == 'register':
             data = json.loads(request.POST.get('data'))
             if data:
-                Analyzes.objects.create(type_id=data['type'], test_date=data['date'],
+                Analyzes.objects.create(type_id=data['type'], date=data['date'],
                                         specialist_id=data['specialistId'],
                                         patient_id=data['patientId'])
                 return JsonResponse({'success': 'success'}, safe=False)
@@ -181,7 +180,7 @@ class PatientsView(ListView):
                 tmp = Analyzes.objects.filter(
                     Q(patient__Name__icontains=search) | Q(patient__Surname__icontains=search) | Q(
                         patient__Patronymic__icontains=search) | Q(patient__Telephone__icontains=search) | Q(
-                        patient__Place_of_residence__icontains=search)).values('id', 'patient').order_by('-test_date')
+                        patient__Place_of_residence__icontains=search)).values('id', 'patient').order_by('-date')
                 patient_range = set()
                 pk_range = set()
                 for k in tmp:
@@ -196,7 +195,7 @@ class PatientsView(ListView):
                                                Q(patient__Name__icontains=search) | Q(
                     patient__Surname__icontains=search) | Q(
                     patient__Patronymic__icontains=search) | Q(patient__Telephone__icontains=search) | Q(
-                    patient__Place_of_residence__icontains=search)).order_by('-test_date')
+                    patient__Place_of_residence__icontains=search)).order_by('-date')
             else:
                 tmp = Analyzes.objects.values('id', 'patient')
                 patient_range = set()
@@ -209,7 +208,7 @@ class PatientsView(ListView):
                         if k['patient'] == v:
                             pk_range.add(k['id'])
                             patient_range.remove(v)
-                return Analyzes.objects.filter(pk__in=pk_range).order_by('-test_date')
+                return Analyzes.objects.filter(pk__in=pk_range).order_by('-date')
         else:
             if self.request.GET.get('q'):
                 search = self.request.GET.get('q')

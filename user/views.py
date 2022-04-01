@@ -78,17 +78,13 @@ def save_user_profile(request):
         else:
             try:
                 photo = request.FILES['photo']
-                print(photo.name)
                 pk = photo.name.split("!", 1)[0]
                 photo.name = photo.name.split("!", 1)[1]
                 file_storage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/specialists/" + datetime.now(
                 ).strftime("%m/%d"))
                 file_storage.save(photo.name, photo)
+                Specialists.objects.filter(id=pk).update(photo="photos/specialists/" + datetime.now().strftime("%m/%d") + "/" + photo.name)
 
-                photo_profile = Specialists.objects.get(id=pk)
-
-                photo_profile.photo = "photos/specialists/" + datetime.now().strftime("%m/%d") + "/" + photo.name
-                photo_profile.save()
             except KeyError:
                 photo = request.POST
                 photo = list(photo.keys())

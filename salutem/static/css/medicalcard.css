@@ -13,10 +13,9 @@
 
 .item__medicalcard{
     height: max-content;
-    padding: 25px 15px 15px 15px;
     margin-bottom: 50px;
     border: 1px solid #555555;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0 0 10px 10px;
 }
 
 .content__medicalcard{
@@ -29,7 +28,13 @@
     height: max-content;
 }
 
-
+.h3not{
+    margin: 50px 0 0 0;
+    font-weight: 500;
+    position: relative;
+    font-size: 20px;
+    color: var(--body-quiet-color);
+}
 
 .medicalcard__title__data{
     display: flex;
@@ -310,4 +315,20 @@ button.accordion:after {
 #clearMR{
     background-color: rgb(184 47 47);
     transition: 0.15s;
+}
+
+.inactive_accordion{
+    background-color: #FFFFFF;
+    border: 1px solid #555555;
+    border-bottom-width: 0;
+    border-radius: 10px 10px 0 0;
+    color: #444;
+    display: flex;
+    justify-content: space-between;
+    padding: 18px;
+    width: 100%;
+    position: relative;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
 }

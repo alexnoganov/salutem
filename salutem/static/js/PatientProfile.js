@@ -58,7 +58,7 @@ zxc.addEventListener("click", () => {
 
 document.querySelector("#profile_save").addEventListener("click", (e) => {
     e.preventDefault();
-
+        console.log("asdasd");
     if (validator()) {
         let fileName = document.querySelector("#update").files;
 
@@ -71,16 +71,16 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
                 let newFile = new File(fileName, newFileName);
                 console.log(newFile)
                 formData.append("photo", newFile)
-                image_ajax(formData, false, false)
+                image_ajax(formData, false, false);
             } else {
                 let defaultImgUrl = location.href.split('/')[5] + "!" + "photos/unnamed.jpg";
-                image_ajax(defaultImgUrl)
+                image_ajax(defaultImgUrl);
             }
 
         }
 
 
-        $.ajax({
+            $.ajax({
             url: '/patients/save_profile/',
             type: 'POST',
             dataType: 'json',
@@ -104,11 +104,12 @@ document.querySelector("#profile_save").addEventListener("click", (e) => {
                     toastr["success"]("Данные успешно изменены!");
                 }
             }
-        }) // AJAX текста
+        })
+
 
         function image_ajax(formData, contentType = undefined, processData = undefined) {
             $.ajax({
-                url: '/patients/save_profile/',
+                url: '/patients/save_profile_photo/',
                 type: 'POST',
                 contentType: contentType,
                 dataType: 'json',

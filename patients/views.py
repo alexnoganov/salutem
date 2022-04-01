@@ -94,27 +94,53 @@ def profile_user(request):
                 JsonResponse({'success': 'success'}, safe=False)
             else:
                 return JsonResponse({'errors': form.errors}, safe=False)
-        else:
-            try:
-                photo = request.FILES['photo']
-                pk = photo.name.split("!", 1)[0]
-                photo.name = photo.name.split("!", 1)[1]
-                file_storage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
-                ).strftime("%m/%d"))
-                file_storage.save(photo.name, photo)
+        # else:
+        #     try:
+        #         photo = request.FILES['photo']
+        #         pk = photo.name.split("!", 1)[0]
+        #         photo.name = photo.name.split("!", 1)[1]
+        #         file_storage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
+        #         ).strftime("%m/%d"))
+        #         file_storage.save(photo.name, photo)
+        #
+        #         photo_profile = Patients.objects.get(id=pk)
+        #
+        #         photo_profile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name
+        #         photo_profile.save()
+        #     except KeyError:
+        #         photo = request.POST
+        #         photo = list(photo.keys())
+        #         photo = ''.join(photo)
+        #         pk = photo.split("!", 1)[0]
+        #         photo = photo.split("!", 1)[1]
+        #         Patients.objects.filter(id=pk).update(photo=photo)
 
-                photo_profile = Patients.objects.get(id=pk)
+        return JsonResponse({'success': 'success'}, safe=False)
 
-                photo_profile.photo = "photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name
-                photo_profile.save()
-            except KeyError:
-                photo = request.POST
-                photo = list(photo.keys())
-                photo = ''.join(photo)
-                pk = photo.split("!", 1)[0]
-                photo = photo.split("!", 1)[1]
-                Patients.objects.filter(id=pk).update(photo=photo)
+    else:
+        form = PatientForm()
+    return JsonResponse({'errors': form.errors}, safe=False)
 
+
+def profile_user_photo(request):
+    if request.method == 'POST':
+        try:
+            photo = request.FILES['photo']
+            pk = photo.name.split("!", 1)[0]
+            photo.name = photo.name.split("!", 1)[1]
+            file_storage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/patient/" + datetime.now(
+            ).strftime("%m/%d"))
+            file_storage.save(photo.name, photo)
+
+            Patients.objects.filter(id=pk).update(photo="photos/patient/" + datetime.now().strftime("%m/%d") + "/" + photo.name)
+
+        except KeyError:
+            photo = request.POST
+            photo = list(photo.keys())
+            photo = ''.join(photo)
+            pk = photo.split("!", 1)[0]
+            photo = photo.split("!", 1)[1]
+            Patients.objects.filter(id=pk).update(photo=photo)
         return JsonResponse({'success': 'success'}, safe=False)
 
     else:

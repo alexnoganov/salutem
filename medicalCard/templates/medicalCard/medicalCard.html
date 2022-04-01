@@ -46,7 +46,8 @@
 
                             <div class="union__accordion">
 
-                                {% for foo in medicalCard %}
+                               {% if medicalCard  %}
+                                    {% for foo in medicalCard %}
                                     <div class="item__accordion">
                                         <button class="accordion">
                                             <div class="medicalcard__title__data medicalcard">
@@ -150,8 +151,9 @@
                                         </div>
                                     </div>
                                 {% endfor %}
-
-
+                                   {% else %}
+                                  <h3 class="h3not">Записей в медицинской карте не найдено.</h3>
+                               {% endif %}
                             </div>
                         </div>
                     </div>
@@ -172,7 +174,8 @@
 
                             <div class="union__accordion">
 
-                                {% for anlz in analyzes %}
+                                {% if analyzes %}
+                                      {% for anlz in analyzes %}
                                     <div class="item__accordion">
                                         <button class="accordion">
                                             <div class="medicalcard__title__data medicalcard">
@@ -190,7 +193,7 @@
                                                         <label class="medicalcard__title__span"
                                                                for="medicalcard__reception">Назначение:</label>
                                                         <input type="text" name="Name" maxlength="100" value="
-{{ anlz.type }}" placeholder="--" id="medicalcard__reception" class="text-input powermail_input">
+{{ anlz.type }}" id="medicalcard__reception" class="text-input powermail_input" disabled>
                                                     </div>
                                                     <div class="medicalcard__symptoms medicalcard">
                                                         <label class="medicalcard__title__span"
@@ -201,8 +204,9 @@
                                                                 <input style="width: 100%" type="text" name="Name"
                                                                        maxlength="100"
                                                                        value="{{ anlz.specialist.last_name }}
- {{ anlz.specialist.first_name|first }}.{{ anlz.specialist.patronymic|first }}."  placeholder="--"
-                                                                       id="medicalcard__symptoms__0" class="text-input powermail_input">
+ {{ anlz.specialist.first_name|first }}.{{ anlz.specialist.patronymic|first }}."
+                                                                       id="medicalcard__symptoms__0"
+                                                                       class="text-input powermail_input" disabled>
 
                                                             </div>
                                                         </div>
@@ -211,14 +215,18 @@
                                                         <label class="medicalcard__title__span"
                                                                for="medicalcard__therapy">Результат:</label>
                                                         <textarea id="medicalcard__therapy" class="text-input
-                                                        powermail_input" style="resize: none;height: 150px;">{{ anlz.result }}</textarea>
+                                                        powermail_input" style="resize: none;height: 150px;" disabled
+                                                        >{% if anlz.result is None %}The result is missing{% else %}{{ anlz.result }}
+                                                        {% endif %} </textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 {% endfor %}
-
+                                    {% else %}
+                                    <h3 class="h3not">Записей в анализах не найдено.</h3>
+                                {% endif %}
 
                             </div>
 
@@ -232,7 +240,7 @@
                             <div class="union__accordion">
 
                                 <div class="item__accordion item__accordion__newMR">
-                                    <button class="accordion">
+                                    <div class="inactive_accordion">
                                         <div class="medicalcard__title__data medicalcard">
                                             <div class="medicalcard__point">
                                                 Новая запись
@@ -242,8 +250,8 @@
                                             </div>
 
                                         </div>
-                                    </button>
-                                    <div class="panel">
+                                    </div>
+
                                         <div class="item__medicalcard">
                                             <div class="content__medicalcard">
                                                 <div class="medicalcard__reception medicalcard">
@@ -284,7 +292,6 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
 
 

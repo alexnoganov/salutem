@@ -1,10 +1,11 @@
+import datetime
 import json
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.urls import reverse_lazy
-from django.utils import timezone
+from django.utils.timezone import utc
 from django.views.generic import TemplateView, ListView
 from django.utils.translation import gettext as _
 
@@ -22,7 +23,8 @@ class TimeTableView(ListView):
         self.object_list = self.get_queryset()
         allow_empty = self.get_allow_empty()
         context = self.get_context_data()
-        TimeTable.objects.filter(date__lte=timezone.now().date()).delete()
+        now = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=utc)
+        TimeTable.objects.filter(date__lte=now).delete()
 
         if not allow_empty:
             if self.get_paginate_by(self.object_list) is not None and hasattr(self.object_list, 'exists'):

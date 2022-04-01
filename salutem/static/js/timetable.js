@@ -12,6 +12,7 @@ function fillTimetable(timetable, url_to_patient, analyzes = false) {
         'accent-cyan-gradient',
         'accent-green-gradient', 'accent-blue-gradient',
         'accent-purple-gradient'];
+    const number_of_rows = Math.ceil((document.documentElement.clientHeight - 120) / 171);
     const timetableRow = document.querySelectorAll('.content__row');
     const headerItems = document.querySelectorAll('.week-names div');
     let timetableRowArray = [[], [], [], [], [], [], []], maxDayLength = {}, appointment;
@@ -53,8 +54,8 @@ function fillTimetable(timetable, url_to_patient, analyzes = false) {
         }
     }
     for (let i = 0; i < timetableRow.length; i++) {
-        if (timetableRowArray[i].length < 6) {
-            for (let j = 0; j < 5; j++) {
+        if (timetableRowArray[i].length < number_of_rows + 1) {
+            for (let j = 0; j < number_of_rows; j++) {
                 if (timetableRowArray[i][j] !== undefined) {
                     timetableRow[i].insertAdjacentHTML('beforeend', timetableRowArray[i][j]);
                 } else {

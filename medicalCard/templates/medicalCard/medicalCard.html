@@ -80,11 +80,10 @@
                                                                         <div class="sdf"
                                                                              style="display: flex; align-items: center; flex-wrap: wrap;">
 
-                                                                            {% if forloop.last %}
+                                                                            {% if forloop.first %}
                                                                                 <input type="text" name="Name"
                                                                                        maxlength="100"
                                                                                        value="{{ item }}"
-                                                                                       placeholder="--"
                                                                                        id="medicalcard__symptoms__0"
                                                                                        class="text-input powermail_input">
 
@@ -103,7 +102,6 @@
                                                                                 </div>
                                                                             {% else %}
                                                                                 <input type="text" maxlength="100"
-                                                                                       placeholder="--"
                                                                                        value="{{ item }}"
                                                                                        id="medicalcard__symptoms__1"
                                                                                        class="text-input powermail_input">
@@ -118,11 +116,7 @@
                                                                                         <path d="M459.313,229.648c0,22.201-17.992,40.199-40.205,40.199H40.181c-11.094,0-21.14-4.498-28.416-11.774   C4.495,250.808,0,240.76,0,229.66c-0.006-22.204,17.992-40.199,40.202-40.193h378.936   C441.333,189.472,459.308,207.456,459.313,229.648z"></path>
                                                                                     </svg>
                                                                                 </div>
-
-
                                                                             {% endif %}
-
-
                                                                         </div>
                                                                     {% endfor %}
 
@@ -132,7 +126,6 @@
                                                                         <input type="text" name="Name"
                                                                                maxlength="100"
                                                                                value="{{ foo.symptoms }}"
-                                                                               placeholder="--"
                                                                                id="medicalcard__symptoms__0"
                                                                                class="text-input powermail_input">
 
@@ -171,7 +164,8 @@
                                                                 </ul>
                                                             </div>
                                                         {% endif %}
-                                                        <button type="submit" class="submit__form" id="profile_save">
+                                                        <button type="submit" class="submit__form update__form"
+                                                                id="profile_save">
                                                             Сохранить
                                                         </button>
                                                         <button type="button"

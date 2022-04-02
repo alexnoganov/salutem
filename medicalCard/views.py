@@ -25,9 +25,26 @@ def addMR(request, pk):
         treatment = request.POST.get("treatment")
         symptoms = request.POST.get("symptoms")
         symptoms = json.loads(symptoms)
-        symptoms = '^'.join(symptoms)
+        symptoms = '!'.join(symptoms)
         MedicalCard.objects.create(purpose=destination, symptoms=symptoms, treatment=treatment, patient_id=pk,
                                    date=datetime.date.today())
+
+        return JsonResponse({'success': 'success'}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
+
+
+def updateMR(request, pk):
+    if request.method == 'POST':
+        destination = request.POST.get("destination")
+        treatment = request.POST.get("treatment")
+        recordPK = request.POST.get("recordPK")
+        symptoms = request.POST.get("symptoms")
+        symptoms = json.loads(symptoms)
+        symptoms = '!'.join(symptoms)
+        MedicalCard.objects.filter(id=recordPK).update(purpose=destination, symptoms=symptoms, treatment=treatment,
+                                                       patient_id=pk,
+                                                       date=datetime.datetime.now())
 
         return JsonResponse({'success': 'success'}, safe=False)
     else:
@@ -71,4 +88,3 @@ class EditingPatient(ListView):
         #     context['analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk']).order_by('-test_date')
 
         return context
-

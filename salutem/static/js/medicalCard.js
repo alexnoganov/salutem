@@ -6,7 +6,7 @@ function AddRemoveInput(){
         MR__plus.addEventListener("click", e => {
             let containerInput = MR__plus.closest(".enjoyer");
             let addNewInput = '<div class="sdf" style="display: flex; align-items: center; flex-wrap: wrap;"><input' +
-                ' type="text" maxlength="100" placeholder="--"\n' +
+                ' type="text" maxlength="100"\n' +
                 'id="medicalcard__symptoms__' + h + '" class="text-input powermail_input">' +
                 '<div class="medicalcard__svg" style="padding-left:7px"><svg xmlns="http://www.w3.org/2000/svg" class="medicalcard__svg__minus" style="cursor: pointer"' +
                 'width="15px"\n' +
@@ -38,10 +38,61 @@ document.querySelector("#medicalcard__search_anlz").onchange = function () {
 
 document.querySelector("#addNewMR").addEventListener("click", addNewMR)
 
+function updateMRAll() {
+    let updateMRAll = document.querySelectorAll("#content-1 .update__form");
+
+    updateMRAll.forEach(input =>{
+        input.addEventListener("click", evt => {
+            updateOneMR(input.closest(".item__accordion"));
+        });
+
+    })
+
+    function updateOneMR(recordMR){
+
+
+        let getRecord = recordMR.querySelector(".medicalcard__point").innerText.replace(/[^\d]/g, '');
+
+        if((document.querySelector("#medicalcard__reception__" + getRecord).value.trim()) !== '') {
+
+        let destinationMR = recordMR.querySelector("#medicalcard__reception__"+getRecord).value;
+        let enjoyerMR = recordMR.querySelectorAll(".enjoyer input");
+        let treatmentMR = recordMR.querySelector("#medicalcard__therapy").value;
+        let symptomsMR = [];
+
+        enjoyerMR.forEach(input=>{
+            symptomsMR.push(input.value)
+        });
+
+        $.ajax({
+            url: location.pathname  + 'updateMR/',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                destination: destinationMR,
+                treatment: treatmentMR,
+                recordPK: getRecord,
+                symptoms: JSON.stringify(symptomsMR),
+            },
+            success: (data) => {
+                if ('errors' in data) {
+                    toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
+                }
+                if ('success' in data) {
+                    toastr["success"]("Данные успешно записались!");
+                }
+            }
+        });
+
+    }
+    }
+}
+
+updateMRAll();
+
 function addNewMR() {
 
-    if((document.querySelector("#medicalcard__reception__MR").value.trim()) !== '')
-    {
+    if((document.querySelector("#medicalcard__reception__MR").value.trim()) !== '') {
         let record = document.querySelector(".item__accordion__newMR");
         let destinationMR = record.querySelector("#medicalcard__reception__MR").value;
         let enjoyerMR = record.querySelectorAll(".enjoyer input");

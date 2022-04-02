@@ -7,5 +7,6 @@ from . import views
 urlpatterns = [
     path('', login_required(views.EditingPatient.as_view()), name='medicalcard'),
     path('deleteMR/', views.deleteMR),
-    path('addMR/', views.addMR)
+    path('addMR/', views.addMR),
+    path('updateMR/', views.updateMR)
 ]

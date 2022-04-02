@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'patients',
     'medicalCard',
     'timetable',
+    'sicklist',
     'widget_tweaks',
     'crispy_forms',
 ]

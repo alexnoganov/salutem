@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/sickList.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>Медицинская карта</title>
+{% endblock %}
+
+{% block content %}
+
+    {{ medicalCard.patient }}
+    {{ medicalCard.date }}
+
+    <div class="container">
+        <div class="content__container">
+            <div class="object__tools">
+                <h1 class="search__patient">Больничный лист</h1>
+            </div>
+            <div class="sickList__container">
+                <div class="sickList_right">
+                    <div class="sickList_photo">
+                        <div class="image_patient">
+                            <div class="image">
+                                {% if profile.photo %}
+                                    <img src="{{ profile.photo.url }}" alt="аватар" id="profile_img">
+                                {% else %}
+                                    <img src="{% static 'img/unnamed.jpg' %}" alt="аватар" id="profile_img">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sickList_content">
+                        <div class="sickList_header">
+                            <div class="sickList_checkbox">
+                                <div class="sickList_primary">
+                                    <label for="primary_sickList">Первичный</label>
+                                    <input type="checkbox" id="primary_sickList">
+                                </div>
+                                <div class="sickList_duplicate">
+                                    <label for="duplicate_sickList">Дубликат</label>
+                                    <input type="checkbox" id="duplicate_sickList">
+                                </div>
+                            </div>
+                            <div class="denomination_sickList">
+                                <input type="text" id="organizations" class="sickList__input">
+                                <label for="organizations">(наименование медицинской организации)</label>
+                                <input type="text" id="address_organizations" class="sickList__input">
+                                <label for="address_organizations">(адрес медицинской организации)</label>
+                            </div>
+                        </div>
+                        <div class="sickList_orgn">
+                            <div class="dateIssue">
+                                <label for="sickList_dateIssue" style="width: 120px;">Дата выдачи</label>
+                                <input type="text" id="sickList_dateIssue" class="sickList__input"/>
+                            </div>
+                            <div class="orgn">
+                                <input type="text" id="sickList_orgn" class="sickList__input">
+                                <label for="sickList_orgn">(ОРГН)</label>
+                            </div>
+                        </div>
+                        <div class="sickList_FIO">
+                            <label for="sickList_F">ФИО</label>
+                            <input type="text" id="sickList_F" class="sickList__input">
+                        </div>
+                    </div>
+                </div>
+                <div class="sickList_additional">
+
+                    <div class="sickList_date">
+                        <div class="sickList_date_dtd">
+                            <input type="date" class="sickList__input" placeholder="yyyy-mm-dd" id="sickList_date_dtd">
+                            <label for="sickList_date_dtd">(Дата рождения)</label>
+                        </div>
+                    </div>
+                    <div class="sickList_SEX">
+                        <div class="sickList_man">
+                            <label for="sickList_man">М</label>
+                            <input type="checkbox" id="sickList_man">
+                        </div>
+                        <div class="sickList_woman">
+                            <label for="sickList_woman">Ж</label>
+                            <input type="checkbox" id="sickList_woman">
+                        </div>
+                    </div>
+                    <div class="sickList_reason">
+                        <div class="sickList_reason_code">
+                            <input type="text" class="sickList__input" id="sickList_reason_code">
+                            <label for="sickList_reason_code">Код</label>
+                        </div>
+                        <div class="sickList_reason_addit_code">
+                            <input type="text" class="sickList__input" id="sickList_reason_addit_code">
+                            <label for="sickList_reason_addit_code">Доп код</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+{% block script %}
+    <script src="{% static 'js/patients.js' %}"></script>
+
+    <script src="{% static 'js/medicalCard.js' %}"></script>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active_accordion");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.addEventListener("click", e => {
+                {% if perms.user.edit_analyzes %}
+                    if (e.target.id === "header1") {
+                        columnSort(document.querySelector("#header1"), "Patient");
+                    } else if (e.target.id === "header2") {
+                        columnSort(document.querySelector("#header2"), "Specialist")
+                    } else if (e.target.id === "header3") {
+                        columnSort(document.querySelector("#header3"), "Test Date")
+                    }
+                {% else %}
+                    if (e.target.id === "header1") {
+                        columnSort(document.querySelector("#header1"), "FIO");
+                    } else if (e.target.id === "header2") {
+                        columnSort(document.querySelector("#header2"), "Phone")
+                    } else if (e.target.id === "header3") {
+                        columnSort(document.querySelector("#header3"), "Date of Birth")
+                    } else if (e.target.id === "header4") {
+                        columnSort(document.querySelector("#header4"), "Address")
+                    } else if (e.target.id === "header5") {
+                        columnSort(document.querySelector("#header5"), "Date of Registration")
+                    }
+                {% endif %}
+            });
+        });
+    </script>
+{% endblock %}

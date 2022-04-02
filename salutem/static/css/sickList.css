@@ -1,0 +1,156 @@
+.sickList__container{
+    height: 100%;
+    display: flex;
+    max-width: 1440px;
+    margin: 30px 60px 0 60px;
+    flex-wrap: wrap;
+}
+.sickList__container input{
+    /*background-color: #333;*/
+}
+
+.sickList_checkbox{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.sickList_primary,
+.sickList_duplicate{
+    display: flex;
+    margin: 5px 10px 5px 5px;
+}
+
+.sickList_primary label,
+.sickList_duplicate label
+{
+    width: 100px;
+}
+
+.sickList__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: 1.125em;
+    border-radius: 0;
+    border: 4px solid #eceff1;
+}
+
+
+.sickList_orgn{
+    display: flex;
+}
+
+.dateIssue{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 14px 14px 28px 14px;
+}
+
+.orgn{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.FIO_zxc{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.FIO_zxc label{
+    margin: 0 10px;
+}
+
+.sickList_photo{
+    padding: 15px 0 0 0;
+    height: max-content;
+    width: max-content;
+    margin-right: 100px;
+}
+
+#profile_img{
+    height: 250px;
+    width: 250px;
+}
+
+.sickList_right{
+    width: 100%;
+    display: flex;
+}
+
+.denomination_sickList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sickList_FIO{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    flex-direction: column-reverse;
+}
+
+.select__control {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: 1.125em;
+    border-radius: 0;
+    border: 4px solid #eceff1;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.sickList_content{
+    width: 100%;
+}
+
+.sickList_additional{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: max-content;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.sickList_date, .sickList_SEX, .sickList_reason{
+    display: flex;
+}
+
+.sickList_date_dtd, .sickList_reason_code, .sickList_reason_addit_code{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.sickList_SEX{
+    /*font-size: 16px;*/
+}
+
+.sickList_man, .sickList_woman{
+        margin: 5px;
+}
+
+.sickList_reason{
+    width: 50%;
+}
+
+.sickList_reason_code{
+        margin-right: 50px;
+    width: 50%;
+}
+
+.sickList_reason_addit_code{
+        width: 50%;
+}

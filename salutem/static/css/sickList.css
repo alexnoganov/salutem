@@ -116,19 +116,28 @@
 }
 
 .sickList_additional{
-    width: 100%;
+    width: 96%;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: end; */
     height: max-content;
     flex-wrap: nowrap;
     align-items: center;
+}
+
+.sickList_date_dtd{
+    width: 95%;
+}
+
+.sickList_SEX{
+    width: 10%;
+    margin-bottom: 15px;
 }
 
 .sickList_date, .sickList_SEX, .sickList_reason{
     display: flex;
 }
 
-.sickList_date_dtd, .sickList_reason_code, .sickList_reason_addit_code{
+.sickList_date_dtd, .sickList_reason_code, .sickList_reason_addit_code, .sickList_date_dtd{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -138,19 +147,109 @@
     /*font-size: 16px;*/
 }
 
-.sickList_man, .sickList_woman{
-        margin: 5px;
+.sickList_man, .sickList_woman, .sickList_gos{
+    margin: 5px;
 }
 
 .sickList_reason{
-    width: 50%;
+    width: 100%;
 }
 
 .sickList_reason_code{
-        margin-right: 50px;
+    margin-right: 50px;
     width: 50%;
 }
 
 .sickList_reason_addit_code{
-        width: 50%;
+    width: 50%;
+}
+
+.sickList_wrap{
+    display: flex;
+    flex-wrap: wrap;
+    width: 96%;
+    margin-top: 10px;
+}
+
+.sickList_address{
+    display: flex;
+    width: 60%;
+    margin-bottom: 15px;
+}
+
+.sickList_address_organization{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sickList_disability{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 55%;
+}
+
+.sickList_gos_bhf{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sickList_gos_pg{
+    width: 100%;
+}
+
+.sickList_addi_printing{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sickList_addi_printing_hg{
+    width: 80%;
+}
+
+.origin{
+    width: 40%;
+    font-size: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: end;
+}
+
+.sickList_margin-top{
+    margin-top: 20px;
+}
+
+.sickList_work_header{
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.sickList_table_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sickList_work_input_date{
+    width: 100%;
+}
+
+.sickList_work{
+        width: 100%;
+}
+
+.nvb{
+
+}
+
+.sickList_date_jhj{
+display: flex;
+    justify-content: space-between;
 }

@@ -47,7 +47,7 @@
                             <div class="cell" id="header2">Номер телефона</div>
                             <div class="cell" id="header3">E-mail</div>
                             <div class="cell" id="header4">Дата рождения</div>
-                            <div class="cell" id="header5">Дата входа</div>
+                            <div class="cell" id="header5">Последняя активность</div>
                         </div>
                         {% for specialist in specialists %}
                             <a href="{% url 'specialist_profile' specialist.pk %}" class="row">
@@ -57,7 +57,7 @@
                                 <div class="cell" data-title="Email">{{ specialist.email }}</div>
                                 <div class="cell" data-title="Date of Birth">{{ specialist.date_of_birth }}</div>
                                 <div class="cell"
-                                     data-title="Date of Login">{{ specialist.last_login }}</div>
+                                     data-title="Date of Login">{{ specialist.last_activity }}</div>
                             </a>
                         {% endfor %}
                     </div>

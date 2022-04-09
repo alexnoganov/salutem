@@ -24,6 +24,7 @@ class Specialists(AbstractUser):
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
     specialization = models.ForeignKey("Specializations", on_delete=models.SET_NULL, null=True,
                                        verbose_name="Специализация")
+    last_activity = models.DateTimeField()
 
     REQUIRED_FIELDS = ["email"]
 
@@ -55,3 +56,10 @@ class SpecialistGroup(Group):
     class Meta:
         verbose_name = _('Группа')
         verbose_name_plural = _('Группы')
+
+
+class SpecialistsActivity(models.Model):
+    specialist = models.ForeignKey(Specialists, on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()

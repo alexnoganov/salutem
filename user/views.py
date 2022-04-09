@@ -130,9 +130,9 @@ class SpecialistListView(ListView):
             return Specialists.objects.filter(
                 Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(
                     patronymic__icontains=search) | Q(phone__icontains=search) | Q(
-                    email__icontains=search)).order_by('-last_login')
+                    email__icontains=search)).order_by('last_name')
         else:
-            return Specialists.objects.all().order_by('-last_login')
+            return Specialists.objects.all().order_by('last_name')
 
 
 class SpecialistProfile(DetailView):
@@ -201,7 +201,6 @@ def specialist_add(request):
 
 
 def redirect_to_profile(request):
-    print(request.user.is_staff)
     if request.user.is_staff:
         return HttpResponseRedirect(reverse_lazy('specialists'))
     else:

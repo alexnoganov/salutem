@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'user.middleware.UpdateLastActivityMiddleware',
 ]
 
 ROOT_URLCONF = 'salutem.urls'
@@ -88,6 +89,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'cawaq359268',
         'HOST': 'localhost',
+        'TIME_ZONE': 'Europe/Kiev'
     }
 }
 

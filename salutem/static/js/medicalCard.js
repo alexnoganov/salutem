@@ -38,6 +38,18 @@ document.querySelector("#medicalcard__search_anlz").onchange = function () {
 
 document.querySelector("#addNewMR").addEventListener("click", addNewMR)
 
+document.querySelector("#clearMR").addEventListener('click', e=> {
+    $(".item__accordion__newMR #medicalcard__reception__MR").val('');
+    $(".item__accordion__newMR #medicalcard__therapy").val('');
+    $(".item__accordion__newMR .enjoyer").html('<div class="sdf" style="display: flex; align-items: center; flex-wrap: wrap;"><input' +
+                ' type="text" maxlength="100"\n' +
+                'id="medicalcard__symptoms__' + 1 + '" class="text-input powermail_input">' +
+                '<div class="medicalcard__svg" style="padding-left: 7px;">' +
+                '<svg width="17" class="medicalcard__svg__plus" style="cursor: pointer;" height="17" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">' +
+                '<path fill="#63B64D" d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z">' +
+                '</path></svg></div></div>');
+});
+
 function updateMRAll() {
     let updateMRAll = document.querySelectorAll("#content-1 .update__form");
 
@@ -79,7 +91,7 @@ function updateMRAll() {
                     toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
                 }
                 if ('success' in data) {
-                    toastr["success"]("Данные успешно записались!");
+                    toastr["success"]("Данные успешно изменены!");
                 }
             }
         });
@@ -117,7 +129,8 @@ function addNewMR() {
                     toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
                 }
                 if ('success' in data) {
-                    toastr["success"]("Данные успешно записались!");
+                    toastr["success"]("Данные успешно добавлены!");
+                    location.reload();
                 }
             }
         });
@@ -174,7 +187,7 @@ function deleteMedicalRecords() {
 
     function ajaxDeleteMR(pk) {
         $.ajax({
-            url: location.pathname  + '/deleteMR',
+            url: location.pathname  + 'deleteMR/',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -185,7 +198,7 @@ function deleteMedicalRecords() {
                     toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
                 }
                 if ('success' in data) {
-                    toastr["success"]("Запись успешно удалилась!");
+                    toastr["success"]("Запись успешно удалена!");
                 }
             }
         })

@@ -350,6 +350,37 @@
     cursor: default;
 }
 
+#logModal .modal__table {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+#logModal .modal__table .modal__col {
+    text-align: center;
+}
+
+#logModal .modal__table .modal__col >div:not(.modal__col__name) {
+    margin: 5px 0;
+}
+
+#logModal .modal__table .modal__col__name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+#logModal .modal__search {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logModal .modal__search .modal__search__item:last-child {
+    margin-right: 10px;
+}
+
 @media all and (max-width: 1300px) {
     .page_slice {
         margin: 30px 60px 30px 60px;

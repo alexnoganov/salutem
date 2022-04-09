@@ -61,5 +61,5 @@ class SpecialistGroup(Group):
 class SpecialistsActivity(models.Model):
     specialist = models.ForeignKey(Specialists, on_delete=models.CASCADE)
     date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)

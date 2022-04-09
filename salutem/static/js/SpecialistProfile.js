@@ -20,6 +20,7 @@ toastr.options = {
 let files;
 let zxc = document.querySelector(".info_edit_main_profile_avatar_delete");
 let cxz = document.querySelector(".info_edit_main_profile_avatar_reupload");
+const search_date = $('#modalSearchDate');
 
 
 cxz.addEventListener("click", () => {
@@ -288,6 +289,69 @@ $('#reset_password').click(e => {
         }
         return flags;
     }
+});
+
+search_date.change(e => {
+    $.ajax({
+            url: '/user/activity/',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                date: search_date.val()
+            },
+            success: (data) => {
+                if ('errors' in data) {
+                    toastr.error('Произошла ошибка! Попробуйте позже.')
+                }
+                if ('success' in data) {
+                    let modal_col = document.querySelectorAll('#logModal .modal__col');
+
+                    modal_col[0].innerHTML = "<div class='modal__col__name'>Дата</div>"
+                    modal_col[1].innerHTML = "<div class='modal__col__name'>Начало</div>"
+                    modal_col[2].innerHTML = "<div class='modal__col__name'>Конец</div>"
+
+                    for (let i = 0; i < data['success'].length; i++) {
+                        modal_col[0].insertAdjacentHTML("beforeend", `<div>${data['success'][i]['date']}</div>`)
+                        modal_col[1].insertAdjacentHTML("beforeend", `<div>${data['success'][i]['start_time']}</div>`)
+                        modal_col[2].insertAdjacentHTML("beforeend", `<div>${data['success'][i]['end_time']}</div>`)
+                    }
+                }
+            }
+        });
+});
+
+search_date.keypress(e => {
+   e.preventDefault();
+});
+
+$('input[type=radio][name=dateRange]').change(function() {
+    search_date.val('');
+    $.ajax({
+            url: '/user/activity/',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                range: this.value
+            },
+            success: (data) => {
+                if ('errors' in data) {
+                    toastr.error('Произошла ошибка! Попробуйте позже.')
+                }
+                if ('success' in data) {
+                    let modal_col = document.querySelectorAll('#logModal .modal__col');
+
+                    modal_col[0].innerHTML = "<div class='modal__col__name'>Дата</div>"
+                    modal_col[1].innerHTML = "<div class='modal__col__name'>Начало</div>"
+                    modal_col[2].innerHTML = "<div class='modal__col__name'>Конец</div>"
+
+                    for (let i = 0; i < data['success'].length; i++) {
+                        modal_col[0].insertAdjacentHTML("beforeend", `<div>${data['success'][i]['date']}</div>`)
+                        modal_col[1].insertAdjacentHTML("beforeend", `<div>${data['success'][i]['start_time']}</div>`)
+                        modal_col[2].insertAdjacentHTML("beforeend", `<div>${data['success'][i]['end_time']}</div>`)
+                    }
+                }
+            }
+        });
 });
 
 OnlyNumberInputAndBRD();

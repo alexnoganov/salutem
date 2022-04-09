@@ -48,10 +48,17 @@
                                 <button class="bot8">
                                     <a href="{% url 'timetable' profile.pk %}" style="color: inherit">Расписание</a>
                                 </button>
-                                <button class="bot8">
-                                    <a href="{% url 'timetable' profile.pk %}" style="color: inherit">История
-                                        посещений</a>
-                                </button>
+                                {% if request.user.is_staff %}
+                                    {% if activity %}
+                                        <button class="bot8" onclick="$('#logModal').modal()">
+                                            <a style="color: inherit">История</a>
+                                        </button>
+                                    {% else %}
+                                        <button class="bot8" onclick="toastr.error('Нет данных')">
+                                            <a style="color: inherit">История</a>
+                                        </button>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
 
@@ -65,7 +72,7 @@
                                                 <fieldset class="fieldset">
                                                     <legend class="fieldset__legend">Данные:</legend>
                                                     <div class="input-field-wrapper__label" style="margin: 0 0 40px 0;
-                                                    font-weight: bold;">Последний вход: {{ profile.last_login }}</div>
+                                                    font-weight: bold;">Последняя активность: {{ profile.last_activity|default_if_none:"" }}</div>
                                                     <div class="fieldset__row">
                                                         <div class="form-block">
                                                             <div>
@@ -327,7 +334,8 @@
                                                             </div>
                                                             <div class="form-block">
                                                                 <div class="input-field-wrapper">
-                                                                    <label for="powermail_field_confirm_new_password" title="">
+                                                                    <label for="powermail_field_confirm_new_password"
+                                                                           title="">
                                                                     <span class="input-field-wrapper__label">
                                                                         <span>*</span>
                                                                         Подтвердите пароль
@@ -359,6 +367,45 @@
     </div>
     <div style="display: none" id="hiddenSex">{{ profile.sex }}</div>
     <div style="display: none" id="hiddenSpec">{{ profile.specialization }}</div>
+    <div id="logModal" class="modal">
+        <div class="modal__content">
+            <div class="modal__search">
+                <div class="modal__search__item">
+                    <label for="modalSearchDate">Дата</label>
+                    <input type="date" name="modalSearchDate" id="modalSearchDate" min="2020-01-01" max="2100-01-01"
+                           class="text-input"
+                           style="width: 200px;">
+                </div>
+                <div class="modal__search__item">
+                    <label for="dateRangeWeek">Неделя</label>
+                    <input type="radio" name="dateRange" id="dateRangeWeek" value="week" checked
+                           style="margin-right: 10px;">
+                    <label for="dateRangeMonth">Месяц</label>
+                    <input type="radio" name="dateRange" id="dateRangeMonth" value="month">
+                </div>
+            </div>
+            <div class="modal__table">
+                <div class="modal__col">
+                    <div class="modal__col__name">Дата</div>
+                    {% for a in activity %}
+                        <div>{{ a.date }}</div>
+                    {% endfor %}
+                </div>
+                <div class="modal__col">
+                    <div class="modal__col__name">Начало</div>
+                    {% for a in activity %}
+                        <div>{{ a.start_time }}</div>
+                    {% endfor %}
+                </div>
+                <div class="modal__col">
+                    <div class="modal__col__name">Конец</div>
+                    {% for a in activity %}
+                        <div>{{ a.end_time }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}

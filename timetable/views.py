@@ -97,34 +97,6 @@ def delete_appointment(request):
         return JsonResponse({'error': 'error'}, safe=False)
 
 
-# def get_data_for_timetable(timetable):
-#     data = {}
-#     for i in range(0, len(timetable)):
-#         data[timetable[i].date.isocalendar().week] = {
-#             0: [],
-#             1: [],
-#             2: [],
-#             3: [],
-#             4: [],
-#             5: [],
-#             6: [],
-#         }
-#     for i in range(0, len(timetable)):
-#         for key in data:
-#             if timetable[i].date.isocalendar().week == key:
-#                 for k in data[key]:
-#                     if timetable[i].date.weekday() == k:
-#                         data[key][k].append([
-#                             '{f} {i} {o}'.format(f=timetable[i].patient.Surname, i=timetable[i].patient.Name,
-#                                                  o=timetable[i].patient.Patronymic),
-#                             timetable[i].date.strftime("%d.%m.%Y %H:%M"),
-#                             timetable[i].patient.pk,
-#                             timetable[i].pk,
-#                         ])
-#     data = json.dumps(data)
-#     return data
-
-
 def get_data_for_timetable(timetable, types):
     data = {}
 

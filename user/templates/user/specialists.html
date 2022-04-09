@@ -55,7 +55,7 @@
                                      data-title="FIO">{{ specialist.last_name }} {{ specialist.patronymic }} {{ specialist.first_name }}</div>
                                 <div class="cell" data-title="Phone">{{ specialist.phone }}</div>
                                 <div class="cell" data-title="Email">{{ specialist.email }}</div>
-                                <div class="cell" data-title="Date of Birth">{{ specialist.date_of_birth }}</div>
+                                <div class="cell" data-title="Date of Birth">{{ specialist.date_of_birth|default_if_none:"" }}</div>
                                 <div class="cell"
                                      data-title="Date of Login">{{ specialist.last_activity }}</div>
                             </a>

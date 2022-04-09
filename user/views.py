@@ -1,6 +1,7 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
+import pytz
 from django import template
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
@@ -16,6 +17,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, Http40
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.views.generic import DetailView, ListView, TemplateView
@@ -23,7 +25,7 @@ from django.utils.translation import gettext as _
 
 from patients.models import Analyzes
 from .forms import LoginForm, SpecialistForm, SpecialistAddForm, SpecialistResetPasswordForm
-from .models import Specialists, SpecialistGroup
+from .models import Specialists, SpecialistGroup, SpecialistsActivity
 
 
 def user_login(request):
@@ -35,6 +37,11 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    activity, created = SpecialistsActivity.objects.get_or_create(specialist_id=user.id,
+                                                                                  date=timezone.now().date())
+                    if created:
+                        activity.start_time = user.last_login.astimezone(pytz.timezone("Europe/Kiev")).time()
+                        activity.save()
                     return redirect('home')
                 else:
                     return HttpResponse('Аккаунт отключен')
@@ -83,7 +90,8 @@ def save_user_profile(request):
                 file_storage = FileSystemStorage(location=settings.MEDIA_ROOT + "/photos/specialists/" + datetime.now(
                 ).strftime("%m/%d"))
                 file_storage.save(photo.name, photo)
-                Specialists.objects.filter(id=pk).update(photo="photos/specialists/" + datetime.now().strftime("%m/%d") + "/" + photo.name)
+                Specialists.objects.filter(id=pk).update(
+                    photo="photos/specialists/" + datetime.now().strftime("%m/%d") + "/" + photo.name)
 
             except KeyError:
                 photo = request.POST
@@ -109,7 +117,6 @@ class SpecialistListView(ListView):
         self.object_list = self.get_queryset()
         allow_empty = self.get_allow_empty()
         context = self.get_context_data()
-
         if not allow_empty:
             if self.get_paginate_by(self.object_list) is not None and hasattr(self.object_list, 'exists'):
                 is_empty = not self.object_list.exists()
@@ -156,6 +163,13 @@ class SpecialistProfile(DetailView):
         context['form'] = SpecialistForm(initial={'specializations': self.get_object().specialization_id,
                                                   'sex': self.get_object().sex})
         context['reset_form'] = SpecialistResetPasswordForm
+        if self.request.user.is_staff:
+            SpecialistsActivity.objects.filter(specialist_id=self.kwargs.get('pk'), date=timezone.now().date()) \
+                .update(end_time=self.request.user.last_activity)
+            context['activity'] = SpecialistsActivity.objects.filter(specialist_id=self.kwargs.get('pk'),
+                                                                     date__gte=datetime.now() - timedelta(
+                                                                         days=7)).values('date', 'start_time',
+                                                                                         'end_time')
         return context
 
 
@@ -214,7 +228,6 @@ def change_password(request):
             if form.is_valid():
                 current_password = request.POST.get('current_password')
                 new_password = request.POST.get('new_password')
-                confirm_new_password = request.POST.get('confirm_new_password')
                 if check_password(current_password, request.user.password):
                     if current_password == new_password:
                         return JsonResponse({'errors': 'passwords_match'}, safe=False)
@@ -271,6 +284,58 @@ def reset_password(request):
             return JsonResponse({'errors': 'error'}, safe=False)
     else:
         return JsonResponse({'errors': 'error'}, safe=False)
+
+
+def get_activity(request):
+    if request.method == 'POST':
+        if request.POST.get('range'):
+            if request.POST.get('range') == "week":
+                activity = list(SpecialistsActivity.objects.filter(
+                    specialist_id=request.META.get('HTTP_REFERER').split('/')[-2:-1][0],
+                    date__gte=datetime.now() - timedelta(days=7)).values(
+                    'date', 'start_time', 'end_time'))
+            elif request.POST.get('range') == 'month':
+                activity = list(SpecialistsActivity.objects.filter(
+                    specialist_id=request.META.get('HTTP_REFERER').split('/')[-2:-1][0],
+                    date__gte=datetime.now() - timedelta(days=30)).values(
+                    'date', 'start_time', 'end_time'))
+        else:
+            if request.POST.get('date'):
+                activity = list(SpecialistsActivity.objects.filter(
+                    specialist_id=request.META.get('HTTP_REFERER').split('/')[-2:-1][0],
+                    date=request.POST.get('date')).values(
+                    'date', 'start_time', 'end_time'))
+            else:
+                activity = list(SpecialistsActivity.objects.filter(
+                    specialist_id=request.META.get('HTTP_REFERER').split('/')[-2:-1][0],
+                    date__gte=datetime.now() - timedelta(days=7)).values(
+                    'date', 'start_time', 'end_time'))
+        if activity:
+            for a in activity:
+                a['date'] = get_date(a['date'].strftime("%d.%m.%Y"))
+                a['start_time'] = a['start_time'].strftime("%H:%M")
+                a['end_time'] = a['end_time'].strftime("%H:%M")
+        return JsonResponse({'success': activity}, safe=False)
+    else:
+        return JsonResponse({'errors': 'error'}, safe=False)
+
+
+def get_date(date):
+    day_list = ['1', '2', '3', '4',
+                '5', '6', '7', '8',
+                '9', '10', '11', '12',
+                '13', '14', '15', '16',
+                '17', '18', '19', '20',
+                '21', '22', '23',
+                '24', '25', '26',
+                '27', '28', '29',
+                '30', '31']
+    month_list = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
+                  'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря']
+    date_list = date.split('.')
+    return (day_list[int(date_list[0]) - 1] + ' ' +
+            month_list[int(date_list[1]) - 1] + ' ' +
+            date_list[2])
 
 
 def email_mask(email):

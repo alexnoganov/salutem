@@ -9,11 +9,10 @@ from medicalCard.models import MedicalCard
 from patients.models import Analyzes
 
 
-def deleteMR(request):
+def deleteMR(request, pk):
     if request.method == 'POST':
         if request.POST.get('id'):
-            MedicalCard.objects.get(id=request.POST.get("id"))
-            # добавить .delete() на запрос
+            MedicalCard.objects.filter(id=request.POST.get('id')).delete()
             return JsonResponse({'success': 'success'}, safe=False)
     else:
         return JsonResponse({'errors': 'error'}, safe=False)
@@ -63,7 +62,7 @@ class EditingPatient(ListView):
         if self.request.GET.get('medicalsearchANLZ'):
             searchANLZ = self.request.GET.get('medicalsearchANLZ')
             context['analyzes'] = Analyzes.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(
-                test_date__istartswith=searchANLZ)).order_by('-date')
+                date__istartswith=searchANLZ)).order_by('-date')
         else:
             context['analyzes'] = Analyzes.objects.filter(patient_id=self.kwargs['pk']).order_by('-date')
         if self.request.GET.get('medicalsearch'):

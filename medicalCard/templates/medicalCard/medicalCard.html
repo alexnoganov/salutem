@@ -243,9 +243,7 @@
                                                                    for="medicalcard__therapy">Результат:</label>
                                                             <textarea id="medicalcard__therapy" class="text-input
                                                         powermail_input" style="resize: none;height: 150px;" disabled
-                                                            >{% if anlz.result is None %}The result is missing
-                                                                {% else %}{{ anlz.result }}
-                                                            {% endif %} </textarea>
+                                                            >{{ anlz.result|default_if_none:"" }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -321,7 +319,7 @@
                                             <button type="submit" class="submit__form" id="addNewMR">
                                                 Сохранить
                                             </button>
-                                            <button type="button" class="submit__form deleteMR"
+                                            <button type="button" class="submit__form"
                                                     id="clearMR">
                                                 Очистить
                                             </button>

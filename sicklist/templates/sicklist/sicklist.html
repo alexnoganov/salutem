@@ -76,13 +76,14 @@
                 <div class="sickList_addi_printing sickList_margin-top">
                     <div class="sickList_addi_printing_hg">
                         <div class="sickList_additional">
+
                             <div class="sickList_date">
                                 <div class="sickList_date_dtd">
                                     <input type="date" class="sickList__input" placeholder="yyyy-mm-dd" id="sickList_date_dtd">
                                     <label for="sickList_date_dtd">(Дата рождения)</label>
                                 </div>
                             </div>
-                            <div class="sickList_SEX">
+                            <div class="sickList_SEX" style="align-items: center;margin-bottom: 45px;">
                                 <div class="sickList_man">
                                     <label for="sickList_man">М</label>
                                     <input type="checkbox" id="sickList_man">
@@ -92,11 +93,12 @@
                                     <input type="checkbox" id="sickList_woman">
                                 </div>
                             </div>
+
                             <div class="sickList_reason">
                                 <div class="sickList_disability">
                                     <span>Причина нетрудоспособности</span>
                                 </div>
-                                <div class="sickList_reason_code">
+                                <div class="sickList_reason_code" style="flex-direction: column;">
                                     <input type="text" class="sickList__input" id="sickList_reason_code">
                                     <label for="sickList_reason_code">Код</label>
                                 </div>
@@ -141,43 +143,48 @@
 
                         </div>
                     </div>
-                    <div class="sickList_printing" style="text-align: center;">
-                        <span>Печать медицинской организации</span>
-                    </div>
+{#                    <div class="sickList_printing" style="text-align: center;">#}
+{#                        <span>Печать медицинской организации</span>#}
+{#                    </div>#}
                 </div>
 
                 <div class="sickList_work sickList_margin-top">
                     <div class="sickList_work_header">
                         <h3>ОСВОБОЖДЕНИЕ ОТ РАБОТЫ</h3>
                     </div>
-                    <div class="sickList_table_input">
-                        <div class="sickList_table_input_column">
-                            <span>С какого числа</span>
-                            <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                   id="sickList_date_dtd">
-                        </div>
-                        <div class="sickList_table_input_column">
-                            <span>По какое число</span>
-                            <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                   id="sickList_date_dtd">
-                        </div>
-                        <div class="sickList_table_input_column">
-                            <span>Должность врача</span>
-                            <input type="text" class="sickList__input nvb" id="sickList_date_dtd">
-                        </div>
-                        <div class="sickList_table_input_column">
-                            <span>Фамилия и инициалы врача</span>
-                            <input type="text" class="sickList__input nvb" placeholder="Константинов В.B."
-                                   id="sickList_date_dtd">
-                        </div>
-                        <div class="sickList_table_input_column">
-                            <span>Подпись врача</span>
-                            <input type="text" class="sickList__input nvb" id="sickList_date_dtd">
+                    <div class="nvbjj">
+                        <div class="sickList_table_input">
+                            <div class="sickList_table_input_column">
+                                <span>С какого числа</span>
+                                <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                       id="sickList_date_dtd">
+                            </div>
+                            <div class="sickList_table_input_column">
+                                <span>По какое число</span>
+                                <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                       id="sickList_date_dtd">
+                            </div>
+                            <div class="sickList_table_input_column">
+                                <span>Должность врача</span>
+                                <input type="text" class="sickList__input nvb" id="sickList_date_dtd">
+                            </div>
+                            <div class="sickList_table_input_column bcvvj">
+                                <span>Фамилия и инициалы врача</span>
+                                <input type="text" class="sickList__input nvb" placeholder="Константинов В.B."
+                                       id="sickList_date_dtd">
+                            </div>
+                            <div class="sickList_table_input_column hfgmbvbvn">
+                                <span>Подпись врача</span>
+                                <input type="text" class="sickList__input nvb" id="sickList_date_dtd">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="sickList_submut_btn sickList_margin-top">
                     <button type="submit" class="submit__form" id="submit__analysis__result">Сохранить</button>
+                    <div class="sickList_printing" >
+                        <span>Печать медицинской <br>организации</span>
+                    </div>
                 </div>
 
             </div>

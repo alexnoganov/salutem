@@ -371,103 +371,6 @@
     display: none;
 }
 
-@media screen and (max-width: 846px) {
-
-    .hfgmbvbvn{
-        display: flex;
-    }
-
-    header{
-        display: none;
-    }
-
-    .sickList_submut_btn{
-        width: 100%;
-    }
-
-    .sickList_printing{
-        text-align: center;display: flex;justify-content: end;
-    }
-
-    #submit__analysis__result{
-        display: none;
-    }
-
-    .search__patient:after{
-        display: none;
-    }
-
-
-
-    .sickList_disability {
-        margin: 0 10px 17px;
-    }
-
-    .sickList_additional, .origin {
-        font-size: 14px;
-    }
-
-    .sickList_reason_addit_code {
-        text-align: center;
-    }
-
-    .sickList_wrap {
-        margin-top: 25px;
-    }
-
-    .sickList_address_organization label{
-        text-align: center;
-    }
-
-    .origin {
-        width: 45%;
-        margin-bottom: 45px;
-    }
-
-    .sickList_address{
-        width: 45%;
-    }
-
-    .sickList_table_input_column {
-        width: 29%;
-        margin-top: 20px;
-        margin-right: 20px;
-    }
-
-    .bcvvj{
-        width: 59.5%;
-    }
-
-    .sickList_table_input {
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: flex-start;
-    }
-    .sickList_work_header {
-        margin-bottom: 10px;
-    }
-    /*.sickList_printing{*/
-    /*    text-align: center;*/
-    /*    display: flex;*/
-    /*    width: 30%;*/
-    /*    align-items: end;*/
-    /*}*/
-
-    .button-4{
-        display: none;
-    }
-
-    .sickList_photo {
-        margin-right: 45px;
-    }
-
-    .nvbjj{
-        display: flex;
-        justify-content: center;
-    }
-
-}
-
 @media print
 {
     * { -webkit-print-color-adjust: exact; }
@@ -559,12 +462,7 @@
 .sickList_work_header {
     margin-bottom: 10px;
 }
-/*.sickList_printing{*/
-/*    text-align: center;*/
-/*    display: flex;*/
-/*    width: 30%;*/
-/*    align-items: end;*/
-/*}*/
+
 
 .button-4{
     display: none;

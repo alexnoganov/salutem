@@ -18,6 +18,10 @@
         <div class="content__container">
             <div class="object__tools">
                 <h1 class="search__patient">Больничный лист</h1>
+                <span>
+                    <button class="button-4" role="button" >Печать</button>
+                    <button class="button-4" role="button" style="margin: 0 60px 0 30px;">Отправить на email</button>
+                </span>
             </div>
             <div class="sickList__container">
                 <div class="sickList_right">
@@ -146,46 +150,34 @@
                     <div class="sickList_work_header">
                         <h3>ОСВОБОЖДЕНИЕ ОТ РАБОТЫ</h3>
                     </div>
-                    <div class="sickList_table_header">
-                        <span>С какого числа</span>
-                        <span>По какое число</span>
-                        <span>Должность врача</span>
-                        <span>Фамилия и инициалы врача или идентификационный номер</span>
-                        <span>Подпись врача</span>
-                    </div>
-                    <div class="sickList_work_input_date">
-                        <div class="sickList_input_date">
-                            <div class="sickList_date">
-                                <div class="sickList_date_jhj">
-                                    <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                           id="sickList_date_dtd">
-                                    <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                           id="sickList_date_dtd">
-                                    <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                           id="sickList_date_dtd">
-                                    <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                           id="sickList_date_dtd">
-                                    <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                           id="sickList_date_dtd">
-                                </div>
-                            </div>
+                    <div class="sickList_table_input">
+                        <div class="sickList_table_input_column">
+                            <span>С какого числа</span>
+                            <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                   id="sickList_date_dtd">
                         </div>
-                        {#                        <div class="sickList_additional sickList_wrap">#}
-                        {#                            <div class="sickList_address">#}
-                        {#                                <div class="sickList_address_organization">#}
-                        {#                                    <input type="text" class="sickList__input" id="sickList_address_organization">#}
-                        {#                                    <label for="sickList_address_organization">(Место работы-наименованние организации)</label>#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {##}
-                        {#                            <div class="sickList_reason" style="width: 100%">#}
-                        {#                                <div class="sickList_reason_code" style="flex-wrap: nowrap;align-items: center;">#}
-                        {#                                    <label for="sickList_reason_code" style="margin-right: 10px">№</label>#}
-                        {#                                    <input type="text" class="sickList__input" id="sickList_reason_code">#}
-                        {#                                </div>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
+                        <div class="sickList_table_input_column">
+                            <span>По какое число</span>
+                            <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                   id="sickList_date_dtd">
+                        </div>
+                        <div class="sickList_table_input_column">
+                            <span>Должность врача</span>
+                            <input type="text" class="sickList__input nvb" id="sickList_date_dtd">
+                        </div>
+                        <div class="sickList_table_input_column">
+                            <span>Фамилия и инициалы врача</span>
+                            <input type="text" class="sickList__input nvb" placeholder="Константинов В.B."
+                                   id="sickList_date_dtd">
+                        </div>
+                        <div class="sickList_table_input_column">
+                            <span>Подпись врача</span>
+                            <input type="text" class="sickList__input nvb" id="sickList_date_dtd">
+                        </div>
                     </div>
+                </div>
+                <div class="sickList_submut_btn sickList_margin-top">
+                    <button type="submit" class="submit__form" id="submit__analysis__result">Сохранить</button>
                 </div>
 
             </div>
@@ -199,50 +191,4 @@
 {% block script %}
     <script src="{% static 'js/patients.js' %}"></script>
 
-    <script src="{% static 'js/medicalCard.js' %}"></script>
-
-    <script>
-        var acc = document.getElementsByClassName("accordion");
-        var i;
-
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active_accordion");
-                var panel = this.nextElementSibling;
-                if (panel.style.display === "block") {
-                    panel.style.display = "none";
-                } else {
-                    panel.style.display = "block";
-                }
-            });
-        }
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            document.addEventListener("click", e => {
-                {% if perms.user.edit_analyzes %}
-                    if (e.target.id === "header1") {
-                        columnSort(document.querySelector("#header1"), "Patient");
-                    } else if (e.target.id === "header2") {
-                        columnSort(document.querySelector("#header2"), "Specialist")
-                    } else if (e.target.id === "header3") {
-                        columnSort(document.querySelector("#header3"), "Test Date")
-                    }
-                {% else %}
-                    if (e.target.id === "header1") {
-                        columnSort(document.querySelector("#header1"), "FIO");
-                    } else if (e.target.id === "header2") {
-                        columnSort(document.querySelector("#header2"), "Phone")
-                    } else if (e.target.id === "header3") {
-                        columnSort(document.querySelector("#header3"), "Date of Birth")
-                    } else if (e.target.id === "header4") {
-                        columnSort(document.querySelector("#header4"), "Address")
-                    } else if (e.target.id === "header5") {
-                        columnSort(document.querySelector("#header5"), "Date of Registration")
-                    }
-                {% endif %}
-            });
-        });
-    </script>
 {% endblock %}

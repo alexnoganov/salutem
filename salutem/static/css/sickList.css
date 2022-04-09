@@ -150,6 +150,10 @@
 .sickList_man, .sickList_woman, .sickList_gos{
     margin: 5px;
 }
+.sickList_gos{
+    display: flex;
+    justify-content: center;
+}
 
 .sickList_reason{
     width: 100%;
@@ -199,6 +203,8 @@
 
 .sickList_gos_pg{
     width: 100%;
+
+    margin-right: 10px;
 }
 
 .sickList_addi_printing{
@@ -207,9 +213,9 @@
     align-items: center;
 }
 
-.sickList_addi_printing_hg{
-    width: 80%;
-}
+/*.sickList_addi_printing_hg{*/
+/*    width: 80%;*/
+/*}*/
 
 .origin{
     width: 40%;
@@ -220,14 +226,14 @@
 }
 
 .sickList_margin-top{
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .sickList_work_header{
     text-align: center;
     font-size: 17px;
     font-weight: 700;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 .sickList_table_header{
@@ -242,14 +248,141 @@
 }
 
 .sickList_work{
-        width: 100%;
+    width: 100%;
 }
 
-.nvb{
+.sickList_table_input{
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: end;
+}
+
+.sickList_table_input_column{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.submit__form {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 25px;
+    margin: 30px 0 50px 0;
+    outline: none;
+    height: 46px;
+    line-height: 46px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgb(76 184 47);
+    box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    touch-action: manipulation;
+    vertical-align: top;
+}
+
+.search__patient:after {
+    bottom: 0 !important;
+}
+
+.submit__form:hover {
+    background-color: rgb(24 173 47);
+    transition: 0.15s;
+}
+
+
+/* CSS */
+.button-4 {
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.button-4:hover {
+    background-color: #F3F4F6;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+.button-4:disabled {
+    background-color: #FAFBFC;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959DA5;
+    cursor: default;
+}
+
+.button-4:active {
+    background-color: #EDEFF2;
+    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+    transition: none 0s;
+}
+
+.button-4:focus {
+    outline: 1px transparent;
+}
+
+.button-4:before {
+    display: none;
+}
+
+.button-4::-webkit-details-marker {
+    display: none;
+}
+
+/*.sickList_printing{*/
+/*    display: none;*/
+/*}*/
+
+/*@page  {*/
+/*    size: A4;*/
+/*    margin: 0;*/
+/*}*/
+
+@media print
+{
+    * { -webkit-print-color-adjust: exact; }
+
+    header{
+        display: none;
+    }
+
+    .sickList_printing{
+        display: block;
+    }
+
+    .origin {
+        justify-content: end;
+    }
 
 }
 
 .sickList_date_jhj{
-display: flex;
+    display: flex;
     justify-content: space-between;
 }

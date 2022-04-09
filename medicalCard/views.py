@@ -34,7 +34,9 @@ def addMR(request, pk):
 
 
 def updateMR(request, pk):
+
     if request.method == 'POST':
+        print(request.POST)
         destination = request.POST.get("destination")
         treatment = request.POST.get("treatment")
         recordPK = request.POST.get("recordPK")
@@ -58,7 +60,6 @@ class EditingPatient(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         if self.request.GET.get('medicalsearchANLZ'):
             searchANLZ = self.request.GET.get('medicalsearchANLZ')
             context['analyzes'] = Analyzes.objects.filter(Q(patient_id=self.kwargs['pk']) & Q(

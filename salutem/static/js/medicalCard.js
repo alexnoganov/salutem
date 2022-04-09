@@ -52,7 +52,7 @@ document.querySelector("#clearMR").addEventListener('click', e=> {
 
 function updateMRAll() {
     let updateMRAll = document.querySelectorAll("#content-1 .update__form");
-
+    console.log(updateMRAll)
     updateMRAll.forEach(input =>{
         input.addEventListener("click", evt => {
             updateOneMR(input.closest(".item__accordion"));
@@ -61,7 +61,6 @@ function updateMRAll() {
     })
 
     function updateOneMR(recordMR){
-
 
         let getRecord = recordMR.querySelector(".medicalcard__point").innerText.replace(/[^\d]/g, '');
 
@@ -155,15 +154,15 @@ function searchParameters(form, input) {
         }
         form.submit();
     }
-    if(location.search.includes('medicalsearch') && form.id === 'MD__search__anlz'){
+    if(location.search.includes('medicalsearch=') && form.id === 'MD__search__anlz'){
         c.value = document.querySelector("#medicalcard__search").value;
         form.submit();
     }
-    if(location.search.includes('medicalsearchANLZ') && form.id === 'MD__search'){
+    if(location.search.includes('medicalsearchANLZ=') && form.id === 'MD__search'){
         b.value = document.querySelector("#medicalcard__search_anlz").value;
         form.submit();
     }
-    if(!location.search.includes('medicalsearchANLZ') && !location.search.includes('medicalsearch')){
+    if(location.search === ''){
         form[1].remove();
         form.submit();
     }

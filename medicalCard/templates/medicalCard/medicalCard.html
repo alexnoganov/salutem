@@ -34,7 +34,6 @@
                     <div class="content__main">
                         <div class="union">
                             <form method="get" id="MD__search">
-                                {% csrf_token %}
                                 <div class="union__search">
                                     <label for="medicalcard__search">Найти запись:</label>
                                     <input type="date" name="medicalsearch" id="medicalcard__search"
@@ -188,7 +187,6 @@
                     <div class="content__main">
                         <div class="union">
                             <form method="get" id="MD__search__anlz">
-                                {% csrf_token %}
                                 <div class="union__search">
                                     <label for="medicalcard__search_anlz">Найти анализы:</label>
                                     <input type="date" style="width: 70%;" name="medicalsearchANLZ"
@@ -335,6 +333,7 @@
             </div>
         </div>
     </div>
+    {% csrf_token %}
 {% endblock %}
 
 

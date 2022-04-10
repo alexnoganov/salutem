@@ -24,7 +24,7 @@ class Patients(models.Model):
     # Medical_card = models.OneToOneField(on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.Name + self.Surname
+        return self.Surname + " " + self.Name + " " + self.Patronymic
 
 
 class AnalyzesType(models.Model):

@@ -1,0 +1,1 @@
+document.querySelector("#print_btn").addEventListener("click", e=>{window.print()})

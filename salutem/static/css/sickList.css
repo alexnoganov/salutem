@@ -371,8 +371,23 @@
     display: none;
 }
 
+.sickList_table_input_column span {
+    margin-bottom: 5px;
+}
+
+
 @media print
 {
+
+    @page {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    body  {
+        padding-top: 40px;
+        padding-bottom: 82px ;
+    }
+
     * { -webkit-print-color-adjust: exact; }
 
     *{margin: 0}
@@ -380,6 +395,11 @@
     .hfgmbvbvn{
         display: flex;
     }
+
+    /*body > *:not(main) {*/
+    /*    display: none;*/
+    /*}*/
+
 
     .sickList_disability{
         width: 55%;
@@ -438,44 +458,44 @@
     .origin {
         width: 50%;
         margin-bottom: 45px;
-}
+    }
 
-.sickList_address{
-    width: 45%;
-}
+    .sickList_address{
+        width: 45%;
+    }
 
-.sickList_table_input_column {
-    width: 29%;
-    margin-top: 20px;
-    margin-right: 20px;
-}
+    .sickList_table_input_column {
+        width: 29%;
+        margin-top: 20px;
+        margin-right: 20px;
+    }
 
-.bcvvj{
-    width: 61.5%;
-}
+    .bcvvj{
+        width: 61.5%;
+    }
 
-.sickList_table_input {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-}
-.sickList_work_header {
-    margin-bottom: 10px;
-}
+    .sickList_table_input {
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    .sickList_work_header {
+        margin-bottom: 10px;
+    }
 
 
-.button-4{
-    display: none;
-}
+    .button-4{
+        display: none;
+    }
 
-.sickList_photo {
-    margin-right: 45px;
-}
+    .sickList_photo {
+        margin-right: 45px;
+    }
 
-.nvbjj{
-    display: flex;
-    justify-content: center;
-}
+    .nvbjj{
+        display: flex;
+        justify-content: center;
+    }
 
 }
 

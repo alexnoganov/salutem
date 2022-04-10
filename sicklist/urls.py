@@ -6,4 +6,5 @@ from . import views
 
 urlpatterns = [
     path('', login_required(views.sickListPatient.as_view()), name="sickList"),
+    path('addSickList/', views.addSickList),
 ]

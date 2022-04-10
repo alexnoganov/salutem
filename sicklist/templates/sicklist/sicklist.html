@@ -38,7 +38,7 @@
                             <div class="sickList_checkbox">
                                 <div class="sickList_primary">
                                     <label for="primary_sickList">Первичный</label>
-                                    <input type="checkbox" id="primary_sickList">
+                                    <input type="checkbox" id="primary_sickList" checked>
                                 </div>
                                 <div class="sickList_duplicate">
                                     <label for="duplicate_sickList">Дубликат</label>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="sickList_FIO">
                             <label for="sickList_F">ФИО</label>
-                            <input type="text" id="sickList_F" class="sickList__input" value="{{ patient }}">
+                            <input type="text" id="sickList_F" class="sickList__input" value="{{ patient }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                             <div class="sickList_date">
                                 <div class="sickList_date_dtd">
                                     <input type="date" class="sickList__input" placeholder="yyyy-mm-dd"
-                                           id="sickList_date_dtd" value="{{ patient.Date_of_birth |date:"Y-m-d" }}">
+                                           id="sickList_date_dtd" value="{{ patient.Date_of_birth |date:"Y-m-d" }}" disabled>
                                     <label for="sickList_date_dtd">(Дата рождения)</label>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                             <div class="sickList_checkbox origin">
                                 <div class="sickList_man">
                                     <label for="sickList_based">Основное</label>
-                                    <input type="checkbox" id="sickList_based">
+                                    <input type="checkbox" id="sickList_based" checked>
                                 </div>
                                 <div class="sickList_woman">
                                     <label for="sickList_addit">По совместительству</label>
@@ -137,7 +137,7 @@
                             <div class="sickList_reason" style="width: 100%">
                                 <div class="sickList_reason_code" style="flex-wrap: nowrap;align-items: center;">
                                     <label for="sickList_reason_code" style="margin-right: 10px">№</label>
-                                    <input type="text" class="sickList__input" id="sickList_reason_code">
+                                    <input type="text" class="sickList__input" id="sickList_reason_code_number">
                                 </div>
                                 <div class="sickList_gos">
                                     <div class="sickList_gos_bhf">
@@ -152,9 +152,6 @@
 
                         </div>
                     </div>
-                    {#                    <div class="sickList_printing" style="text-align: center;">#}
-                    {#                        <span>Печать медицинской организации</span>#}
-                    {#                    </div>#}
                 </div>
 
                 <div class="sickList_work sickList_margin-top">
@@ -166,33 +163,40 @@
                             <div class="sickList_table_input_column">
                                 <span>С какого числа</span>
                                 <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                       id="sickList_date_dtd">
+                                       id="sickList_date_dtd_p">
                             </div>
                             <div class="sickList_table_input_column">
                                 <span>По какое число</span>
                                 <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                       id="sickList_date_dtd">
+                                       id="sickList_date_dtd_t">
                             </div>
                             <div class="sickList_table_input_column">
                                 <span>Должность врача</span>
-                                <input type="text" class="sickList__input nvb" id="sickList_date_dtd" value="
-{{ request.user.specialization }}">
+                                <input type="text" class="sickList__input nvb" id="sickList_specialist_post" value="
+{{ request.user.specialization }}" disabled>
                             </div>
                             <div class="sickList_table_input_column bcvvj">
                                 <span>Фамилия и инициалы врача</span>
                                 <input type="text" class="sickList__input nvb" placeholder="Константинов В.B."
-                                       id="sickList_date_dtd" value="{{ request.user.last_name }}
-  {{ request.user.first_name|first}}.{{ request.user.patronymic|first}}.">
+                                       id="sickList_specialist_FIO" value="{{ request.user.last_name }}
+  {{ request.user.first_name|first}}.{{ request.user.patronymic|first}}." disabled>
                             </div>
                             <div class="sickList_table_input_column hfgmbvbvn">
                                 <span>Подпись врача</span>
-                                <input type="text" class="sickList__input nvb" id="sickList_date_dtd">
+                                <input type="text" class="sickList__input nvb" id="sickList_specialist_init">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="sickList_submut_btn sickList_margin-top">
-                    <button type="submit" class="submit__form" id="submit__analysis__result">Сохранить</button>
+                    <div class="btn_message">
+                        <button type="submit" class="submit__form" id="submit__analysis__result">Сохранить</button>
+                        <div class="invalid-feedback" id="invalid_message" style="display: none">
+                            Это поле не может быть пустым или иметь <br> не
+                            корректные значения.
+                        </div>
+                    </div>
+
                     <div class="sickList_printing" >
                         <span>Печать медицинской <br>организации</span>
                     </div>
@@ -201,6 +205,7 @@
             </div>
         </div>
     </div>
+    {% csrf_token %}
 {% endblock %}
 
 

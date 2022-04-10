@@ -375,6 +375,22 @@
     margin-bottom: 5px;
 }
 
+input:disabled {
+    background: #FFFFFF;
+    color: black;
+}
+
+.invalid-feedback{
+    margin: 30px 0 50px 30px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f84147;
+}
+
+.btn_message{
+    display: flex;
+    align-items: center;
+}
 
 @media print
 {

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+        <div class="content__container">
+            <div class="object__tools">
+                <h1 class="search__patient">Больничный лист</h1>
+            </div>
+            <div class="sickList__container">
+                <div class="sickList_right">
+                    <div class="sickList_photo">
+                        <div class="image_patient">
+                            <div class="image">
+                                <img src="" alt="аватар" id="profile_img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sickList_content">
+                        <div class="sickList_header">
+                            <div class="sickList_checkbox">
+                                <div class="sickList_primary">
+                                    <label for="primary_sickList">Первичный</label>
+                                    <input type="checkbox" id="primary_sickList" checked>
+                                </div>
+                                <div class="sickList_duplicate">
+                                    <label for="duplicate_sickList">Дубликат</label>
+                                    <input type="checkbox" id="duplicate_sickList">
+                                </div>
+                            </div>
+                            <div class="denomination_sickList">
+                                <input type="text" id="organizations" class="sickList__input">
+                                <label for="organizations">(наименование медицинской организации)</label>
+                                <input type="text" id="address_organizations" class="sickList__input">
+                                <label for="address_organizations">(адрес медицинской организации)</label>
+                            </div>
+                        </div>
+                        <div class="sickList_orgn">
+                            <div class="dateIssue">
+                                <label for="sickList_dateIssue" style="width: 120px;">Дата выдачи</label>
+                                <input type="text" id="sickList_dateIssue" class="sickList__input"/>
+                            </div>
+                            <div class="orgn">
+                                <input type="text" id="sickList_orgn" class="sickList__input">
+                                <label for="sickList_orgn">(ОРГН)</label>
+                            </div>
+                        </div>
+                        <div class="sickList_FIO">
+                            <label for="sickList_F">ФИО</label>
+                            <input type="text" id="sickList_F" class="sickList__input" value="{{ patient }}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sickList_addi_printing sickList_margin-top">
+                    <div class="sickList_addi_printing_hg">
+                        <div class="sickList_additional">
+
+                            <div class="sickList_date">
+                                <div class="sickList_date_dtd">
+                                    <input type="date" class="sickList__input" placeholder="yyyy-mm-dd"
+                                           id="sickList_date_dtd" value="{{ patient.Date_of_birth |date:"Y-m-d" }}" disabled>
+                                    <label for="sickList_date_dtd">(Дата рождения)</label>
+                                </div>
+                            </div>
+                            <div class="sickList_SEX" style="align-items: center;margin-bottom: 45px;">
+                                {% if patient.Sex == 'Мужчина'%}
+                                    <div class="sickList_man">
+                                        <label for="sickList_man">М</label>
+                                        <input type="checkbox" id="sickList_man" checked>
+                                    </div>
+                                    <div class="sickList_woman">
+                                        <label for="sickList_woman">Ж</label>
+                                        <input type="checkbox" id="sickList_woman">
+                                    </div>
+                                {% else %}
+                                    <div class="sickList_man">
+                                        <label for="sickList_man">М</label>
+                                        <input type="checkbox" id="sickList_man">
+                                    </div>
+                                    <div class="sickList_woman">
+                                        <label for="sickList_woman">Ж</label>
+                                        <input type="checkbox" id="sickList_woman" checked>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                            <div class="sickList_reason">
+                                <div class="sickList_disability">
+                                    <span>Причина нетрудоспособности</span>
+                                </div>
+                                <div class="sickList_reason_code" style="flex-direction: column;">
+                                    <input type="text" class="sickList__input" id="sickList_reason_code">
+                                    <label for="sickList_reason_code">Код</label>
+                                </div>
+                                <div class="sickList_reason_addit_code">
+                                    <input type="text" class="sickList__input" id="sickList_reason_addit_code">
+                                    <label for="sickList_reason_addit_code">Доп код</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sickList_additional sickList_wrap">
+                            <div class="sickList_address">
+                                <div class="sickList_address_organization">
+                                    <input type="text" class="sickList__input" id="sickList_address_organization">
+                                    <label for="sickList_address_organization">(Место работы-наименованние организации)</label>
+                                </div>
+                            </div>
+                            <div class="sickList_checkbox origin">
+                                <div class="sickList_man">
+                                    <label for="sickList_based">Основное</label>
+                                    <input type="checkbox" id="sickList_based" checked>
+                                </div>
+                                <div class="sickList_woman">
+                                    <label for="sickList_addit">По совместительству</label>
+                                    <input type="checkbox" id="sickList_addit">
+                                </div>
+                            </div>
+                            <div class="sickList_reason" style="width: 100%">
+                                <div class="sickList_reason_code" style="flex-wrap: nowrap;align-items: center;">
+                                    <label for="sickList_reason_code" style="margin-right: 10px">№</label>
+                                    <input type="text" class="sickList__input" id="sickList_reason_code_number">
+                                </div>
+                                <div class="sickList_gos">
+                                    <div class="sickList_gos_bhf">
+                                        <div class="sickList_gos_pg">
+                                            <label for="sickList_pluralism">Состоит на учёте в государственных учреждениях
+                                                службы занятости</label>
+                                        </div>
+                                        <input type="checkbox" id="sickList_pluralism">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sickList_work sickList_margin-top">
+                    <div class="sickList_work_header">
+                        <h3>ОСВОБОЖДЕНИЕ ОТ РАБОТЫ</h3>
+                    </div>
+                    <div class="nvbjj">
+                        <div class="sickList_table_input">
+                            <div class="sickList_table_input_column">
+                                <span>С какого числа</span>
+                                <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                       id="sickList_date_dtd_p">
+                            </div>
+                            <div class="sickList_table_input_column">
+                                <span>По какое число</span>
+                                <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                       id="sickList_date_dtd_t">
+                            </div>
+                            <div class="sickList_table_input_column">
+                                <span>Должность врача</span>
+                                <input type="text" class="sickList__input nvb" id="sickList_specialist_post" value="
+{{ request.user.specialization }}" disabled>
+                            </div>
+                            <div class="sickList_table_input_column bcvvj">
+                                <span>Фамилия и инициалы врача</span>
+                                <input type="text" class="sickList__input nvb" placeholder="Константинов В.B."
+                                       id="sickList_specialist_FIO" value="{{ request.user.last_name }}
+  {{ request.user.first_name|first}}.{{ request.user.patronymic|first}}." disabled>
+                            </div>
+                            <div class="sickList_table_input_column hfgmbvbvn">
+                                <span>Подпись врача</span>
+                                <input type="text" class="sickList__input nvb" id="sickList_specialist_init">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sickList_submut_btn sickList_margin-top">
+                    <div class="btn_message">
+                        <button type="submit" class="submit__form" id="submit__analysis__result">Сохранить</button>
+                        <div class="invalid-feedback" id="invalid_message" style="display: none">
+                            Это поле не может быть пустым или иметь <br> не
+                            корректные значения.
+                        </div>
+                    </div>
+
+                    <div class="sickList_printing" >
+                        <span>Печать медицинской <br>организации</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

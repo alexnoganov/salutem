@@ -5,196 +5,736 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .sickList__container {
+            height: 100%;
+            /*display: flex;*/
+            max-width: 1440px;
+            margin: 30px 60px 0 60px;
+            /*flex-wrap: wrap;*/
+        }
 
-    <title>Document</title>
+        .sickList__container input {
+            /*background-color: #333;*/
+        }
+
+        .sickList_checkbox {
+            display: flex;
+            flex-direction: row;
+        }
+
+
+        .sickList_primary,
+        .sickList_duplicate {
+            display: flex;
+            margin: 5px 10px 5px 5px;
+        }
+
+        .sickList_primary label,
+        .sickList_duplicate label {
+            width: 100px;
+        }
+
+        .sickList__input {
+            box-sizing: border-box;
+            width: 100%;
+            height: 50px;
+            padding: 10px 20px;
+            font-size: 1.125em;
+            border-radius: 0;
+            border: 4px solid #eceff1;
+        }
+
+
+        .sickList_orgn {
+            display: flex;
+        }
+
+        .dateIssue {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 14px 14px 28px 14px;
+        }
+
+        .orgn {
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .FIO_zxc {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .FIO_zxc label {
+            margin: 0 10px;
+        }
+
+        .sickList_photo {
+            padding: 15px 0 0 0;
+            height: max-content;
+            width: max-content;
+            margin-right: 100px;
+        }
+
+        #profile_img {
+            height: 250px;
+            width: 250px;
+        }
+
+        .sickList_right {
+            width: 100%;
+            display: flex;
+        }
+
+        .denomination_sickList {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sickList_FIO {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            flex-direction: column-reverse;
+        }
+
+        .select__control {
+            box-sizing: border-box;
+            width: 100%;
+            height: 50px;
+            padding: 10px 20px;
+            font-size: 1.125em;
+            border-radius: 0;
+            border: 4px solid #eceff1;
+            margin: 0;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .sickList_content {
+            width: 100%;
+        }
+
+        .sickList_additional {
+            width: 96%;
+            display: flex;
+            height: max-content;
+            flex-wrap: nowrap;
+        }
+
+        .sickList_date_dtd {
+            width: 95%;
+        }
+
+        .sickList_SEX {
+            width: 10%;
+            margin-bottom: 15px;
+        }
+
+        .sickList_date, .sickList_SEX, .sickList_reason {
+            display: flex;
+        }
+
+        .sickList_date_dtd, .sickList_reason_code, .sickList_reason_addit_code, .sickList_date_dtd {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .sickList_SEX {
+            /*font-size: 16px;*/
+        }
+
+        .sickList_man, .sickList_woman, .sickList_gos {
+            margin: 5px;
+        }
+
+        .sickList_gos {
+            display: flex;
+            justify-content: center;
+        }
+
+        .sickList_reason {
+            width: 100%;
+            margin-bottom: 28px;
+        }
+
+        .sickList_reason_code {
+            margin-right: 50px;
+            width: 50%;
+            flex-wrap: wrap;
+            align-items: center;
+            flex-direction: column-reverse;
+        }
+
+        .sickList_reason_addit_code {
+            width: 50%;
+        }
+
+        .sickList_wrap {
+            display: flex;
+            width: 96%;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .sickList_address {
+            display: flex;
+            width: 60%;
+            margin-bottom: 15px;
+        }
+
+        .sickList_address_organization {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sickList_disability {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 40%;
+        }
+
+        .sickList_gos_bhf {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sickList_gos_pg {
+            width: 100%;
+
+            margin-right: 10px;
+        }
+
+        .sickList_addi_printing {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /*.sickList_addi_printing_hg{*/
+        /*    width: 80%;*/
+        /*}*/
+
+        .origin {
+            width: 60%;
+            margin-right: 10px;
+            font-size: 16px;
+            margin-bottom: 45px;
+            display: flex;
+            justify-content: end;
+        }
+
+        .sickList_margin-top {
+            margin-top: 30px;
+        }
+
+        .sickList_work_header {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .sickList_table_header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .sickList_work_input_date {
+            width: 100%;
+        }
+
+        .sickList_work {
+            width: 100%;
+        }
+
+        .sickList_table_input {
+            display: flex;
+            width: 100%;
+            flex-wrap: nowrap;
+            align-items: end;
+        }
+
+        .sickList_table_input_column {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-right: 50px;
+        }
+
+        .submit__form {
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 0 25px;
+            margin: 30px 0 50px 0;
+            outline: none;
+            height: 46px;
+            line-height: 46px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            color: #fff;
+            background-color: rgb(76 184 47);
+            box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+            cursor: pointer;
+            user-select: none;
+            appearance: none;
+            touch-action: manipulation;
+            vertical-align: top;
+        }
+
+        .search__patient:after {
+            bottom: 0 !important;
+        }
+
+        .submit__form:hover {
+            background-color: rgb(24 173 47);
+            transition: 0.15s;
+        }
+
+        .sickList_date_dtd label {
+            margin-bottom: 25px;
+        }
+
+
+        /* CSS */
+        .button-4 {
+            appearance: none;
+            background-color: #FAFBFC;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+            box-sizing: border-box;
+            color: #24292E;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            list-style: none;
+            padding: 6px 16px;
+            position: relative;
+            transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: middle;
+            white-space: nowrap;
+            word-wrap: break-word;
+        }
+
+        .button-4:hover {
+            background-color: #F3F4F6;
+            text-decoration: none;
+            transition-duration: 0.1s;
+        }
+
+        .button-4:disabled {
+            background-color: #FAFBFC;
+            border-color: rgba(27, 31, 35, 0.15);
+            color: #959DA5;
+            cursor: default;
+        }
+
+        .button-4:active {
+            background-color: #EDEFF2;
+            box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+            transition: none 0s;
+        }
+
+        .button-4:focus {
+            outline: 1px transparent;
+        }
+
+        .button-4:before {
+            display: none;
+        }
+
+        .button-4::-webkit-details-marker {
+            display: none;
+        }
+
+        .hfgmbvbvn {
+            display: none;
+        }
+
+        .sickList_printing {
+            display: none;
+        }
+
+        .sickList_table_input_column span {
+            margin-bottom: 5px;
+        }
+
+        input:disabled {
+            background: #FFFFFF;
+            color: black;
+        }
+
+        .invalid-feedback {
+            margin: 30px 0 50px 30px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #f84147;
+        }
+
+        .btn_message {
+            display: flex;
+            align-items: center;
+        }
+
+        @media print {
+
+            @page {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            body {
+                padding-top: 40px;
+                padding-bottom: 82px;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact;
+            }
+
+            * {
+                margin: 0
+            }
+
+            .hfgmbvbvn {
+                display: flex;
+            }
+
+            /*body > *:not(main) {*/
+            /*    display: none;*/
+            /*}*/
+            .sickList_disability {
+                width: 55%;
+            }
+
+            header {
+                display: none;
+            }
+
+            .sickList_printing {
+                display: none;
+            }
+
+            .sickList_wrap {
+                flex-wrap: wrap;
+            }
+
+            .sickList_submut_btn {
+                width: 100%;
+            }
+
+            .sickList_printing {
+                text-align: center;
+                display: flex;
+                justify-content: end;
+            }
+
+            #submit__analysis__result {
+                display: none;
+            }
+
+            .search__patient:after {
+                display: none;
+            }
+
+
+            .sickList_disability {
+                margin: 0 10px 17px;
+            }
+
+            .sickList_additional, .origin {
+                font-size: 14px;
+            }
+
+            .sickList_reason_addit_code {
+                text-align: center;
+            }
+
+            .sickList_wrap {
+                margin-top: 25px;
+            }
+
+            .sickList_address_organization label {
+                text-align: center;
+            }
+
+            .origin {
+                width: 50%;
+                margin-bottom: 45px;
+            }
+
+            .sickList_address {
+                width: 45%;
+            }
+
+            .sickList_table_input_column {
+                width: 29%;
+                margin-top: 20px;
+                margin-right: 20px;
+            }
+
+            .bcvvj {
+                width: 61.5%;
+            }
+
+            .sickList_table_input {
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .sickList_work_header {
+                margin-bottom: 10px;
+            }
+
+
+            .button-4 {
+                display: none;
+            }
+
+            .sickList_photo {
+                margin-right: 45px;
+            }
+
+            .nvbjj {
+                display: flex;
+                justify-content: center;
+            }
+
+        }
+
+        .sickList_date_jhj {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+    <title>Больничный лист</title>
 </head>
 <body>
 <div class="container">
-        <div class="content__container">
-            <div class="object__tools">
-                <h1 class="search__patient">Больничный лист</h1>
-            </div>
-            <div class="sickList__container">
-                <div class="sickList_right">
-                    <div class="sickList_photo">
-                        <div class="image_patient">
-                            <div class="image">
-                                <img src="" alt="аватар" id="profile_img">
-                            </div>
-                        </div>
-                    </div>
+    <div class="content__container">
+        <div class="object__tools">
+            <h1 class="search__patient">Больничный лист</h1>
+        </div>
+        <div class="sickList__container">
+            <div class="sickList_right">
+                <div class="sickList_photo">
+                    <div class="image_patient">
+                        <div class="image">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="250" height="250" viewBox="0 0 600.000000 600.000000"
+                                 preserveAspectRatio="xMidYMid meet">
 
-                    <div class="sickList_content">
-                        <div class="sickList_header">
-                            <div class="sickList_checkbox">
-                                <div class="sickList_primary">
-                                    <label for="primary_sickList">Первичный</label>
-                                    <input type="checkbox" id="primary_sickList" checked>
-                                </div>
-                                <div class="sickList_duplicate">
-                                    <label for="duplicate_sickList">Дубликат</label>
-                                    <input type="checkbox" id="duplicate_sickList">
-                                </div>
-                            </div>
-                            <div class="denomination_sickList">
-                                <input type="text" id="organizations" class="sickList__input">
-                                <label for="organizations">(наименование медицинской организации)</label>
-                                <input type="text" id="address_organizations" class="sickList__input">
-                                <label for="address_organizations">(адрес медицинской организации)</label>
-                            </div>
-                        </div>
-                        <div class="sickList_orgn">
-                            <div class="dateIssue">
-                                <label for="sickList_dateIssue" style="width: 120px;">Дата выдачи</label>
-                                <input type="text" id="sickList_dateIssue" class="sickList__input"/>
-                            </div>
-                            <div class="orgn">
-                                <input type="text" id="sickList_orgn" class="sickList__input">
-                                <label for="sickList_orgn">(ОРГН)</label>
-                            </div>
-                        </div>
-                        <div class="sickList_FIO">
-                            <label for="sickList_F">ФИО</label>
-                            <input type="text" id="sickList_F" class="sickList__input" value="{{ patient }}" disabled>
+                                <g transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)"
+                                   fill="#000000" stroke="none">
+                                    <path d="M2800 5709 c-235 -24 -439 -92 -616 -205 -74 -48 -206 -174 -259
+-249 -96 -134 -164 -308 -185 -473 -10 -82 -9 -113 10 -265 12 -95 32 -233 44
+-307 l23 -135 -27 -22 c-67 -54 -98 -180 -80 -323 24 -189 71 -275 181 -331
+74 -37 91 -63 119 -187 47 -204 95 -304 219 -451 34 -41 71 -92 82 -113 27
+-53 37 -141 28 -260 -9 -131 -30 -212 -82 -318 -35 -72 -57 -101 -146 -190
+-167 -166 -348 -262 -821 -440 -517 -193 -823 -337 -1051 -492 -98 -66 -203
+-170 -224 -222 -12 -29 -15 -99 -15 -381 l0 -345 3000 0 3000 0 0 363 c0 396
+3 369 -60 443 -150 174 -626 421 -1225 636 -264 94 -500 203 -655 303 -41 26
+-118 91 -171 144 -80 81 -104 112 -137 182 -51 106 -72 186 -82 319 -8 117 1
+204 30 260 10 20 47 70 81 111 120 143 168 241 215 436 14 59 32 120 40 135 8
+15 44 45 82 67 37 21 77 50 88 63 47 51 76 134 94 268 18 136 -6 244 -69 306
+l-37 37 22 136 c12 75 32 212 44 304 19 148 20 180 10 265 -48 395 -309 713
+-706 855 -201 72 -503 102 -764 76z"></path>
+                                </g>
+                            </svg>
                         </div>
                     </div>
                 </div>
 
-                <div class="sickList_addi_printing sickList_margin-top">
-                    <div class="sickList_addi_printing_hg">
-                        <div class="sickList_additional">
-
-                            <div class="sickList_date">
-                                <div class="sickList_date_dtd">
-                                    <input type="date" class="sickList__input" placeholder="yyyy-mm-dd"
-                                           id="sickList_date_dtd" value="{{ patient.Date_of_birth |date:"Y-m-d" }}" disabled>
-                                    <label for="sickList_date_dtd">(Дата рождения)</label>
-                                </div>
+                <div class="sickList_content">
+                    <div class="sickList_header">
+                        <div class="sickList_checkbox">
+                            <div class="sickList_primary">
+                                <label for="primary_sickList">Первичный</label>
+                                <input type="checkbox" id="primary_sickList" checked>
                             </div>
-                            <div class="sickList_SEX" style="align-items: center;margin-bottom: 45px;">
-                                {% if patient.Sex == 'Мужчина'%}
-                                    <div class="sickList_man">
-                                        <label for="sickList_man">М</label>
-                                        <input type="checkbox" id="sickList_man" checked>
-                                    </div>
-                                    <div class="sickList_woman">
-                                        <label for="sickList_woman">Ж</label>
-                                        <input type="checkbox" id="sickList_woman">
-                                    </div>
-                                {% else %}
-                                    <div class="sickList_man">
-                                        <label for="sickList_man">М</label>
-                                        <input type="checkbox" id="sickList_man">
-                                    </div>
-                                    <div class="sickList_woman">
-                                        <label for="sickList_woman">Ж</label>
-                                        <input type="checkbox" id="sickList_woman" checked>
-                                    </div>
-                                {% endif %}
-
-                            </div>
-
-                            <div class="sickList_reason">
-                                <div class="sickList_disability">
-                                    <span>Причина нетрудоспособности</span>
-                                </div>
-                                <div class="sickList_reason_code" style="flex-direction: column;">
-                                    <input type="text" class="sickList__input" id="sickList_reason_code">
-                                    <label for="sickList_reason_code">Код</label>
-                                </div>
-                                <div class="sickList_reason_addit_code">
-                                    <input type="text" class="sickList__input" id="sickList_reason_addit_code">
-                                    <label for="sickList_reason_addit_code">Доп код</label>
-                                </div>
+                            <div class="sickList_duplicate">
+                                <label for="duplicate_sickList">Дубликат</label>
+                                <input type="checkbox" id="duplicate_sickList">
                             </div>
                         </div>
-                        <div class="sickList_additional sickList_wrap">
-                            <div class="sickList_address">
-                                <div class="sickList_address_organization">
-                                    <input type="text" class="sickList__input" id="sickList_address_organization">
-                                    <label for="sickList_address_organization">(Место работы-наименованние организации)</label>
-                                </div>
+                        <div class="denomination_sickList">
+                            <input type="text" id="organizations" class="sickList__input">
+                            <label for="organizations">(наименование медицинской организации)</label>
+                            <input type="text" id="address_organizations" class="sickList__input">
+                            <label for="address_organizations">(адрес медицинской организации)</label>
+                        </div>
+                    </div>
+                    <div class="sickList_orgn">
+                        <div class="dateIssue">
+                            <label for="sickList_dateIssue" style="width: 120px;">Дата выдачи</label>
+                            <input type="text" id="sickList_dateIssue" class="sickList__input"/>
+                        </div>
+                        <div class="orgn">
+                            <input type="text" id="sickList_orgn" class="sickList__input">
+                            <label for="sickList_orgn">(ОРГН)</label>
+                        </div>
+                    </div>
+                    <div class="sickList_FIO">
+                        <label for="sickList_F">ФИО</label>
+                        <input type="text" id="sickList_F" class="sickList__input" value="{{ patient }}" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sickList_addi_printing sickList_margin-top">
+                <div class="sickList_addi_printing_hg">
+                    <div class="sickList_additional">
+
+                        <div class="sickList_date">
+                            <div class="sickList_date_dtd">
+                                <input type="date" class="sickList__input" placeholder="yyyy-mm-dd"
+                                       id="sickList_date_dtd" value="{{ patient.Date_of_birth |date:"Y-m-d" }}"
+                                       disabled>
+                                <label for="sickList_date_dtd">(Дата рождения)</label>
                             </div>
-                            <div class="sickList_checkbox origin">
+                        </div>
+                        <div class="sickList_SEX" style="align-items: center;margin-bottom: 45px;">
+                            {% if patient.Sex == 'Мужчина' %}
                                 <div class="sickList_man">
-                                    <label for="sickList_based">Основное</label>
-                                    <input type="checkbox" id="sickList_based" checked>
+                                    <label for="sickList_man">М</label>
+                                    <input type="checkbox" id="sickList_man" checked>
                                 </div>
                                 <div class="sickList_woman">
-                                    <label for="sickList_addit">По совместительству</label>
-                                    <input type="checkbox" id="sickList_addit">
+                                    <label for="sickList_woman">Ж</label>
+                                    <input type="checkbox" id="sickList_woman">
                                 </div>
+                            {% else %}
+                                <div class="sickList_man">
+                                    <label for="sickList_man">М</label>
+                                    <input type="checkbox" id="sickList_man">
+                                </div>
+                                <div class="sickList_woman">
+                                    <label for="sickList_woman">Ж</label>
+                                    <input type="checkbox" id="sickList_woman" checked>
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="sickList_reason">
+                            <div class="sickList_disability">
+                                <span>Причина нетрудоспособности</span>
                             </div>
-                            <div class="sickList_reason" style="width: 100%">
-                                <div class="sickList_reason_code" style="flex-wrap: nowrap;align-items: center;">
-                                    <label for="sickList_reason_code" style="margin-right: 10px">№</label>
-                                    <input type="text" class="sickList__input" id="sickList_reason_code_number">
-                                </div>
-                                <div class="sickList_gos">
-                                    <div class="sickList_gos_bhf">
-                                        <div class="sickList_gos_pg">
-                                            <label for="sickList_pluralism">Состоит на учёте в государственных учреждениях
-                                                службы занятости</label>
-                                        </div>
-                                        <input type="checkbox" id="sickList_pluralism">
+                            <div class="sickList_reason_code" style="flex-direction: column;">
+                                <input type="text" class="sickList__input" id="sickList_reason_code">
+                                <label for="sickList_reason_code">Код</label>
+                            </div>
+                            <div class="sickList_reason_addit_code">
+                                <input type="text" class="sickList__input" id="sickList_reason_addit_code">
+                                <label for="sickList_reason_addit_code">Доп код</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sickList_additional sickList_wrap">
+                        <div class="sickList_address">
+                            <div class="sickList_address_organization">
+                                <input type="text" class="sickList__input" id="sickList_address_organization">
+                                <label for="sickList_address_organization">(Место работы-наименованние
+                                    организации)</label>
+                            </div>
+                        </div>
+                        <div class="sickList_checkbox origin">
+                            <div class="sickList_man">
+                                <label for="sickList_based">Основное</label>
+                                <input type="checkbox" id="sickList_based" checked>
+                            </div>
+                            <div class="sickList_woman">
+                                <label for="sickList_addit">По совместительству</label>
+                                <input type="checkbox" id="sickList_addit">
+                            </div>
+                        </div>
+                        <div class="sickList_reason" style="width: 100%">
+                            <div class="sickList_reason_code" style="flex-wrap: nowrap;align-items: center;">
+                                <label for="sickList_reason_code" style="margin-right: 10px">№</label>
+                                <input type="text" class="sickList__input" id="sickList_reason_code_number">
+                            </div>
+                            <div class="sickList_gos">
+                                <div class="sickList_gos_bhf">
+                                    <div class="sickList_gos_pg">
+                                        <label for="sickList_pluralism">Состоит на учёте в государственных учреждениях
+                                            службы занятости</label>
                                     </div>
+                                    <input type="checkbox" id="sickList_pluralism">
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-
-                <div class="sickList_work sickList_margin-top">
-                    <div class="sickList_work_header">
-                        <h3>ОСВОБОЖДЕНИЕ ОТ РАБОТЫ</h3>
-                    </div>
-                    <div class="nvbjj">
-                        <div class="sickList_table_input">
-                            <div class="sickList_table_input_column">
-                                <span>С какого числа</span>
-                                <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                       id="sickList_date_dtd_p">
-                            </div>
-                            <div class="sickList_table_input_column">
-                                <span>По какое число</span>
-                                <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
-                                       id="sickList_date_dtd_t">
-                            </div>
-                            <div class="sickList_table_input_column">
-                                <span>Должность врача</span>
-                                <input type="text" class="sickList__input nvb" id="sickList_specialist_post" value="
-{{ request.user.specialization }}" disabled>
-                            </div>
-                            <div class="sickList_table_input_column bcvvj">
-                                <span>Фамилия и инициалы врача</span>
-                                <input type="text" class="sickList__input nvb" placeholder="Константинов В.B."
-                                       id="sickList_specialist_FIO" value="{{ request.user.last_name }}
-  {{ request.user.first_name|first}}.{{ request.user.patronymic|first}}." disabled>
-                            </div>
-                            <div class="sickList_table_input_column hfgmbvbvn">
-                                <span>Подпись врача</span>
-                                <input type="text" class="sickList__input nvb" id="sickList_specialist_init">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sickList_submut_btn sickList_margin-top">
-                    <div class="btn_message">
-                        <button type="submit" class="submit__form" id="submit__analysis__result">Сохранить</button>
-                        <div class="invalid-feedback" id="invalid_message" style="display: none">
-                            Это поле не может быть пустым или иметь <br> не
-                            корректные значения.
-                        </div>
-                    </div>
-
-                    <div class="sickList_printing" >
-                        <span>Печать медицинской <br>организации</span>
-                    </div>
-                </div>
-
             </div>
+
+            <div class="sickList_work sickList_margin-top">
+                <div class="sickList_work_header">
+                    <h3>ОСВОБОЖДЕНИЕ ОТ РАБОТЫ</h3>
+                </div>
+                <div class="nvbjj">
+                    <div class="sickList_table_input">
+                        <div class="sickList_table_input_column">
+                            <span>С какого числа</span>
+                            <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                   id="sickList_date_dtd_p">
+                        </div>
+                        <div class="sickList_table_input_column">
+                            <span>По какое число</span>
+                            <input type="date" class="sickList__input nvb" placeholder="yyyy-mm-dd"
+                                   id="sickList_date_dtd_t">
+                        </div>
+                        <div class="sickList_table_input_column">
+                            <span>Должность врача</span>
+                            <input type="text" class="sickList__input nvb" id="sickList_specialist_post" value="
+{{ request.user.specialization }}" disabled>
+                        </div>
+                        <div class="sickList_table_input_column bcvvj">
+                            <span>Фамилия и инициалы врача</span>
+                            <input type="text" class="sickList__input nvb" placeholder="Константинов В.B."
+                                   id="sickList_specialist_FIO" value="{{ request.user.last_name }}
+  {{ request.user.first_name|first }}.{{ request.user.patronymic|first }}." disabled>
+                        </div>
+                        <div class="sickList_table_input_column hfgmbvbvn">
+                            <span>Подпись врача</span>
+                            <input type="text" class="sickList__input nvb" id="sickList_specialist_init">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sickList_submut_btn sickList_margin-top">
+                <div class="sickList_printing">
+                    <span>Печать медицинской <br>организации</span>
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
 </body>
 </html>

@@ -1,29 +1,109 @@
-.sickList__container{
+.sickList__container {
     height: 100%;
-    display: flex;
+    /*display: flex;*/
     max-width: 1440px;
     margin: 30px 60px 0 60px;
-    flex-wrap: wrap;
+    /*flex-wrap: wrap;*/
 }
-.sickList__container input{
+
+.sickList__container input {
     /*background-color: #333;*/
 }
 
-.sickList_checkbox{
+.sickList_checkbox {
     display: flex;
     flex-direction: row;
 }
 
+body {
+    font-family: "Montserrat", serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0
+}
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+:active,
+:focus {
+    outline: 0
+}
+
+a:active,
+a:focus {
+    outline: 0
+}
+
+aside,
+footer,
+header,
+nav {
+    display: block
+}
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+
+button,
+input,
+textarea {
+    font-family: inherit
+}
+
+input::-ms-clear {
+    display: none
+}
+
+button {
+    cursor: pointer
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
+
+a,
+a:visited {
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: none
+}
+
+ul li {
+    list-style: none
+}
+
+img {
+    vertical-align: top
+}
 
 .sickList_primary,
-.sickList_duplicate{
+.sickList_duplicate {
     display: flex;
     margin: 5px 10px 5px 5px;
 }
 
 .sickList_primary label,
-.sickList_duplicate label
-{
+.sickList_duplicate label {
     width: 100px;
 }
 
@@ -38,11 +118,11 @@
 }
 
 
-.sickList_orgn{
+.sickList_orgn {
     display: flex;
 }
 
-.dateIssue{
+.dateIssue {
     width: 40%;
     display: flex;
     justify-content: center;
@@ -50,7 +130,7 @@
     margin: 14px 14px 28px 14px;
 }
 
-.orgn{
+.orgn {
     width: 60%;
     display: flex;
     justify-content: center;
@@ -58,40 +138,40 @@
     flex-direction: column;
 }
 
-.FIO_zxc{
+.FIO_zxc {
     display: flex;
     align-items: center;
     margin: 10px 0;
 }
 
-.FIO_zxc label{
+.FIO_zxc label {
     margin: 0 10px;
 }
 
-.sickList_photo{
+.sickList_photo {
     padding: 15px 0 0 0;
     height: max-content;
     width: max-content;
     margin-right: 100px;
 }
 
-#profile_img{
+#profile_img {
     height: 250px;
     width: 250px;
 }
 
-.sickList_right{
+.sickList_right {
     width: 100%;
     display: flex;
 }
 
-.denomination_sickList{
+.denomination_sickList {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.sickList_FIO{
+.sickList_FIO {
     display: flex;
     align-items: center;
     margin: 10px 0;
@@ -111,54 +191,55 @@
     cursor: pointer;
 }
 
-.sickList_content{
+.sickList_content {
     width: 100%;
 }
 
-.sickList_additional{
+.sickList_additional {
     width: 96%;
     display: flex;
     height: max-content;
     flex-wrap: nowrap;
 }
 
-.sickList_date_dtd{
+.sickList_date_dtd {
     width: 95%;
 }
 
-.sickList_SEX{
+.sickList_SEX {
     width: 10%;
     margin-bottom: 15px;
 }
 
-.sickList_date, .sickList_SEX, .sickList_reason{
+.sickList_date, .sickList_SEX, .sickList_reason {
     display: flex;
 }
 
-.sickList_date_dtd, .sickList_reason_code, .sickList_reason_addit_code, .sickList_date_dtd{
+.sickList_date_dtd, .sickList_reason_code, .sickList_reason_addit_code, .sickList_date_dtd {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.sickList_SEX{
+.sickList_SEX {
     /*font-size: 16px;*/
 }
 
-.sickList_man, .sickList_woman, .sickList_gos{
+.sickList_man, .sickList_woman, .sickList_gos {
     margin: 5px;
 }
-.sickList_gos{
+
+.sickList_gos {
     display: flex;
     justify-content: center;
 }
 
-.sickList_reason{
+.sickList_reason {
     width: 100%;
     margin-bottom: 28px;
 }
 
-.sickList_reason_code{
+.sickList_reason_code {
     margin-right: 50px;
     width: 50%;
     flex-wrap: wrap;
@@ -166,50 +247,50 @@
     flex-direction: column-reverse;
 }
 
-.sickList_reason_addit_code{
+.sickList_reason_addit_code {
     width: 50%;
 }
 
-.sickList_wrap{
+.sickList_wrap {
     display: flex;
     width: 96%;
     align-items: center;
     margin-top: 10px;
 }
 
-.sickList_address{
+.sickList_address {
     display: flex;
     width: 60%;
     margin-bottom: 15px;
 }
 
-.sickList_address_organization{
+.sickList_address_organization {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.sickList_disability{
+.sickList_disability {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     width: 40%;
 }
 
-.sickList_gos_bhf{
+.sickList_gos_bhf {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.sickList_gos_pg{
+.sickList_gos_pg {
     width: 100%;
 
     margin-right: 10px;
 }
 
-.sickList_addi_printing{
+.sickList_addi_printing {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -228,40 +309,40 @@
     justify-content: end;
 }
 
-.sickList_margin-top{
+.sickList_margin-top {
     margin-top: 30px;
 }
 
-.sickList_work_header{
+.sickList_work_header {
     text-align: center;
     font-size: 17px;
     font-weight: 700;
     margin-bottom: 30px;
 }
 
-.sickList_table_header{
+.sickList_table_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.sickList_work_input_date{
+.sickList_work_input_date {
     width: 100%;
 }
 
-.sickList_work{
+.sickList_work {
     width: 100%;
 }
 
-.sickList_table_input{
+.sickList_table_input {
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
     align-items: end;
 }
 
-.sickList_table_input_column{
+.sickList_table_input_column {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -299,10 +380,9 @@
     transition: 0.15s;
 }
 
-.sickList_date_dtd label{
+.sickList_date_dtd label {
     margin-bottom: 25px;
 }
-
 
 
 /* CSS */
@@ -363,11 +443,11 @@
     display: none;
 }
 
-.hfgmbvbvn{
+.hfgmbvbvn {
     display: none;
 }
 
-.sickList_printing{
+.sickList_printing {
     display: none;
 }
 
@@ -380,75 +460,78 @@ input:disabled {
     color: black;
 }
 
-.invalid-feedback{
+.invalid-feedback {
     margin: 30px 0 50px 30px;
     font-size: 15px;
     font-weight: 700;
     color: #f84147;
 }
 
-.btn_message{
+.btn_message {
     display: flex;
     align-items: center;
 }
 
-@media print
-{
+@media print {
 
     @page {
         margin-top: 0;
         margin-bottom: 0;
     }
-    body  {
+
+    body {
         padding-top: 40px;
-        padding-bottom: 82px ;
+        padding-bottom: 82px;
     }
 
-    * { -webkit-print-color-adjust: exact; }
+    * {
+        -webkit-print-color-adjust: exact;
+    }
 
-    *{margin: 0}
+    * {
+        margin: 0
+    }
 
-    .hfgmbvbvn{
+    .hfgmbvbvn {
         display: flex;
     }
 
     /*body > *:not(main) {*/
     /*    display: none;*/
     /*}*/
-
-
-    .sickList_disability{
+    .sickList_disability {
         width: 55%;
     }
 
-    header{
+    header {
         display: none;
     }
 
-    .sickList_printing{
+    .sickList_printing {
         display: none;
     }
 
-    .sickList_wrap{
+    .sickList_wrap {
         flex-wrap: wrap;
     }
 
-    .sickList_submut_btn{
+    .sickList_submut_btn {
         width: 100%;
     }
 
-    .sickList_printing{
-        text-align: center;display: flex;justify-content: end;
+    .sickList_printing {
+        text-align: center;
+        display: flex;
+        justify-content: end;
     }
 
-    #submit__analysis__result{
+    #submit__analysis__result {
         display: none;
     }
 
-    .search__patient:after{
+    .search__patient:after {
         display: none;
     }
-
 
 
     .sickList_disability {
@@ -467,7 +550,7 @@ input:disabled {
         margin-top: 25px;
     }
 
-    .sickList_address_organization label{
+    .sickList_address_organization label {
         text-align: center;
     }
 
@@ -476,7 +559,7 @@ input:disabled {
         margin-bottom: 45px;
     }
 
-    .sickList_address{
+    .sickList_address {
         width: 45%;
     }
 
@@ -486,7 +569,7 @@ input:disabled {
         margin-right: 20px;
     }
 
-    .bcvvj{
+    .bcvvj {
         width: 61.5%;
     }
 
@@ -495,12 +578,13 @@ input:disabled {
         align-items: center;
         justify-content: flex-start;
     }
+
     .sickList_work_header {
         margin-bottom: 10px;
     }
 
 
-    .button-4{
+    .button-4 {
         display: none;
     }
 
@@ -508,14 +592,14 @@ input:disabled {
         margin-right: 45px;
     }
 
-    .nvbjj{
+    .nvbjj {
         display: flex;
         justify-content: center;
     }
 
 }
 
-.sickList_date_jhj{
+.sickList_date_jhj {
     display: flex;
     justify-content: space-between;
 }

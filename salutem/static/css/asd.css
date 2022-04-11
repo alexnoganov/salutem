@@ -1,0 +1,535 @@
+
+.sickList__container {
+    height: 100%;
+    max-width: 1440px;
+    margin: 30px 60px 0 60px;
+}
+
+.sickList_checkbox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+
+.sickList_primary,
+.sickList_duplicate {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 5px 10px 5px 5px;
+}
+
+.sickList_primary label,
+.sickList_duplicate label {
+    width: 100px;
+}
+
+.sickList__input {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: 1.125em;
+    border-radius: 0;
+    border: 4px solid #eceff1;
+}
+
+
+.container {
+    margin: 0 auto;
+    max-width: 1400px;
+}
+
+.dateIssue {
+    width: 40%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 14px 14px 28px 14px;
+}
+
+.orgn {
+    width: 60%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.FIO_zxc label {
+    margin: 0 10px;
+}
+
+.sickList_photo {
+    padding: 15px 0 0 0;
+    height: max-content;
+    width: -moz-max-content;
+    width: max-content;
+    margin-right: 100px;
+    float: left;
+}
+
+.sickList_right {
+    width: 100%;
+}
+
+.denomination_sickList {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.sickList_FIO {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 10px 0;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+}
+
+.sickList_content {
+    width: 100%;
+}
+
+.sickList_additional {
+    width: 96%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: max-content;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.sickList_date_dtd {
+    width: 95%;
+}
+
+.sickList_SEX {
+    width: 10%;
+    margin-bottom: 15px;
+}
+
+.sickList_date, .sickList_SEX, .sickList_reason {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.sickList_date_dtd, .sickList_reason_code, .sickList_reason_addit_code, .sickList_date_dtd {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.sickList_man, .sickList_woman, .sickList_gos {
+    margin: 5px;
+}
+
+.sickList_gos {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.sickList_reason {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.sickList_reason_code {
+    margin-right: 50px;
+    width: 50%;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+}
+
+.sickList_reason_addit_code {
+    width: 50%;
+}
+
+.sickList_wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 96%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.sickList_address {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 60%;
+    margin-bottom: 15px;
+}
+
+.sickList_address_organization {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.sickList_disability {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 40%;
+}
+
+.sickList_gos_bhf {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.sickList_gos_pg {
+    width: 100%;
+
+    margin-right: 10px;
+}
+
+.sickList_addi_printing {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.origin {
+    width: 60%;
+    margin-right: 10px;
+    font-size: 16px;
+    margin-bottom: 45px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: end;
+}
+
+.sickList_margin-top {
+    margin-top: 30px;
+}
+
+.sickList_work_header {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.sickList_work {
+    width: 100%;
+}
+
+.sickList_table_input {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: end;
+}
+
+.sickList_table_input_column {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.submit__form {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 25px;
+    margin: 30px 0 50px 0;
+    outline: none;
+    height: 46px;
+    line-height: 46px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgb(76 184 47);
+    -webkit-box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+    box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    vertical-align: top;
+}
+
+.search__patient:after {
+    bottom: 0 !important;
+}
+
+.submit__form:hover {
+    background-color: rgb(24 173 47);
+    -webkit-transition: 0.15s;
+    -o-transition: 0.15s;
+    transition: 0.15s;
+}
+
+.sickList_date_dtd label {
+    margin-bottom: 25px;
+}
+
+.hfgmbvbvn {
+    display: none;
+}
+
+.sickList_printing {
+    display: none;
+}
+
+.sickList_table_input_column span {
+    margin-bottom: 5px;
+}
+
+input:disabled {
+    background: #FFFFFF;
+    color: black;
+}
+
+.invalid-feedback {
+    margin: 30px 0 50px 30px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f84147;
+}
+
+.btn_message {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+@page {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+body {
+    padding-top: 40px;
+    padding-bottom: 82px;
+}
+
+* {
+    -webkit-print-color-adjust: exact;
+}
+
+* {
+    margin: 0
+}
+
+.hfgmbvbvn {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.sickList_disability {
+    width: 55%;
+}
+
+header {
+    display: none;
+}
+
+.sickList_printing {
+    display: none;
+}
+
+.sickList_wrap {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.sickList_submut_btn {
+    width: 100%;
+}
+
+.sickList_printing {
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: end;
+}
+
+#submit__analysis__result {
+    display: none;
+}
+
+.search__patient:after {
+    display: none;
+}
+
+
+.sickList_disability {
+    margin: 0 10px 17px;
+}
+
+.sickList_additional, .origin {
+    font-size: 14px;
+}
+
+.sickList_reason_addit_code {
+    text-align: center;
+}
+
+.sickList_wrap {
+    margin-top: 25px;
+}
+
+.sickList_address_organization label {
+    text-align: center;
+}
+
+.origin {
+    width: 50%;
+    margin-bottom: 45px;
+}
+
+.sickList_address {
+    width: 45%;
+}
+
+.sickList_table_input_column {
+    width: 29%;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.bcvvj {
+    width: 61.5%;
+}
+
+.sickList_table_input {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+
+.sickList_work_header {
+    margin-bottom: 10px;
+}
+
+.sickList_photo {
+    margin-right: 45px;
+}
+
+.nvbjj {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}

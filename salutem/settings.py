@@ -155,7 +155,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'salutemdjango@gmail.com'
+EMAIL_HOST_USER = 'salutemdjango2@gmail.com'
 EMAIL_HOST_PASSWORD = 'L8rPKT7gSVDmteS'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+WKHTMLTOPDF_CMD_OPTIONS = {
+    'quiet': True,
+}

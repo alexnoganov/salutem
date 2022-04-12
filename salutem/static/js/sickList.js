@@ -24,26 +24,31 @@ function onlyOneCheckedBox() {
 
 document.querySelector("#submit__analysis__result").addEventListener("click", e=>{
 
-    let allInput = document.querySelectorAll("input:not(#sickList_F, #sickList_date_dtd, #sickList_specialist_FIO," +
-        " #sickList_specialist_init,[type='checkbox'], [name='csrfmiddlewaretoken'])");
-    let checkboxCheck = document.querySelectorAll(".sickList_checkbox input[type='checkbox']:checked");
-    console.log(checkboxCheck);
-    console.log(allInput);
     if(validator()){
         let allInput = document.querySelectorAll("input:not(#sickList_F, #sickList_date_dtd, #sickList_specialist_FIO," +
-            " #sickList_specialist_init,[type='checkbox'])");
+            " #sickList_specialist_init,[type='checkbox'], [name='csrfmiddlewaretoken']," +
+            "#sickList_specialist_post)");
+        let checkboxCheck = document.querySelectorAll(".sickList_checkbox input[type='checkbox']:checked," +
+            "#sickList_pluralism:checked");
         let valueInput  = [];
-        console.log(allInput);
+        let check  = [];
+
         allInput.forEach(input=>{
             valueInput.push(input.value);
         });
+        checkboxCheck.forEach(input=>{
+            check.push(input.checked);
+        });
 
-        console.log(valueInput);
+
         $.ajax({
             url: 'addSickList/',
             type: 'POST',
             dataType: 'json',
-            data: JSON.stringify(allInput),
+            data: {
+                data: JSON.stringify(valueInput),
+                checkbox: JSON.stringify(check),
+            },
             success: (data) => {
                 if ('errors' in data) {
                     toastr["error"]("Произошла ошибка! Повторите позже или обновите страницу.");
@@ -54,7 +59,6 @@ document.querySelector("#submit__analysis__result").addEventListener("click", e=
             }
         });
 
-        console.log(allInput);
     }
 })
 
@@ -91,7 +95,11 @@ function OnlyNumberInputAndBRD() {
 } // Валидация
 
 function validator() {
-    let allInput = document.querySelectorAll("input:not(#sickList_specialist_init)");
+
+    let allInput = document.querySelectorAll("input:not(#sickList_F, #sickList_date_dtd, #sickList_specialist_FIO," +
+        " #sickList_specialist_init,[type='checkbox'], [name='csrfmiddlewaretoken']," +
+        " #sickList_reason_addit_code, #sickList_specialist_post)");
+
     let invalid_message = document.querySelector("#invalid_message");
     let flags = true;
     invalid_message.style.display = "none";

@@ -6,12 +6,12 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
-import weasyprint
-import wkhtmltopdf
+# import weasyprint
+# import wkhtmltopdf
 from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
-from wkhtmltopdf.views import PDFTemplateResponse
+# from wkhtmltopdf.views import PDFTemplateResponse
 
-import pdfkit
+# import pdfkit
 from django.db.models import Q
 from django.http import JsonResponse, Http404
 from django.shortcuts import render
@@ -20,14 +20,15 @@ from django.template.loader import get_template, render_to_string
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
-from xhtml2pdf import pisa
+# from xhtml2pdf import pisa
 
 from patients.models import Patients
 from salutem import settings
 from sicklist.models import sickList
 from user.models import Specialists
 
-os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
+
+# os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
 
 
 class sickListPatient(ListView):
@@ -83,10 +84,20 @@ def addSickList(request, pk):
     if request.method == 'POST':
         try:
             data = json.loads(request.POST.get('data'))
-            print(data)
-            pass
+            checkbox = json.loads(request.POST.get('checkbox'))
+            sickList.objects.create(md_organization=data[0], address_of_md_organization=data[1], dateIssue=data[2],
+                                    orgn=data[3], disability_code=data[4], disability_code_addit=data[5],
+                                    place_of_work=data[6], based=checkbox[0], currently=checkbox[1],
+                                    number_work=data[7], public_organizations=checkbox[2], from_what_date=data[8],
+                                    by_what_number=data[9], patient_id=pk, specialist_id=request.user.pk)
         except KeyError:
-            pass
+            data = json.loads(request.POST.get('data'))
+            checkbox = json.loads(request.POST.get('checkbox'))
+            sickList.objects.create(md_organization=data[0], address_of_md_organization=data[1], dateIssue=data[2],
+                                    orgn=data[3], disability_code=data[4], disability_code_addit=data[5],
+                                    place_of_work=data[6], based=checkbox[0], currently=checkbox[1],
+                                    number_work=data[7], from_what_date=data[8], by_what_number=data[9], patient_id=pk,
+                                    specialist_id=request.user.pk)
         return JsonResponse({'success': 'success'}, safe=False)
     return JsonResponse({'errors': 'errors'}, safe=False)
 

@@ -14,9 +14,9 @@ class sickList(models.Model):
     based = models.BooleanField(default=False)
     currently = models.BooleanField(default=False)
     number_work = models.CharField(max_length=100, blank=True)
-    public_organizations = models.CharField(max_length=100, blank=True)
+    public_organizations = models.BooleanField(default=False)
     from_what_date = models.DateTimeField(auto_now=True)
     by_what_number = models.DateTimeField(auto_now=True)
-    patient = models.ForeignKey(Patients, on_delete=models.CASCADE, null=True)
-    specialist = models.ForeignKey(Specialists, on_delete=models.CASCADE, null=True)
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
+    specialist = models.ForeignKey(Specialists, on_delete=models.CASCADE)
 

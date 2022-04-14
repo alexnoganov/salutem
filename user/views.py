@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 
 import pytz
 from django import template
-from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
@@ -11,7 +10,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
-from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
+from django.core.mail import BadHeaderError, EmailMultiAlternatives
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
@@ -23,7 +22,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.views.generic import DetailView, ListView, TemplateView
 from django.utils.translation import gettext as _
 
-from patients.models import Analyzes
 from .forms import LoginForm, SpecialistForm, SpecialistAddForm, SpecialistResetPasswordForm
 from .models import Specialists, SpecialistGroup, SpecialistsActivity
 

@@ -24,7 +24,7 @@ class Specialists(AbstractUser):
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
     specialization = models.ForeignKey("Specializations", on_delete=models.SET_NULL, null=True,
                                        verbose_name="Специализация")
-    last_activity = models.DateTimeField()
+    last_activity = models.DateTimeField(null=True)
 
     REQUIRED_FIELDS = ["email"]
 

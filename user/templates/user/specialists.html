@@ -57,7 +57,7 @@
                                 <div class="cell" data-title="Email">{{ specialist.email }}</div>
                                 <div class="cell" data-title="Date of Birth">{{ specialist.date_of_birth|default_if_none:"" }}</div>
                                 <div class="cell"
-                                     data-title="Date of Login">{{ specialist.last_activity }}</div>
+                                     data-title="Date of Login">{{ specialist.last_activity|default_if_none:"" }}</div>
                             </a>
                         {% endfor %}
                     </div>

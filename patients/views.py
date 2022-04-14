@@ -40,7 +40,7 @@ def get_analysis(request):
                               "Пациент: {surname} {name} {patronymic}\nВрач: {specialist}\nНазначение анализа: {type}\nДата сдачи: {test_date}\nРезультат: {result}".format(
                                   surname=analysis.patient.Surname, name=analysis.patient.Name,
                                   patronymic=analysis.patient.Patronymic, type=analysis.type,
-                                  specialist=analysis.specialist.full_name(), date=analysis.date.date(),
+                                  specialist=analysis.specialist.full_name(), test_date=analysis.date.date(),
                                   result=analysis.result),
                               'admin@salutem.com',
                               [analysis.patient.Email, analysis.specialist.email])

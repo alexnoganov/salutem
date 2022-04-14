@@ -75,8 +75,8 @@
                                                                         <span>*</span>
                                                                         Отчество
                                                                     </span>
-                                        {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
                                     </label>
+                                        {% render_field form.Patronymic class="text-input powermail_input" id="powermail_field_Patronymic" placeholder="Владиславович" value=profile.Patronymic %}
                                     <div class="invalid-feedback" id="invalid_patronymic"
                                          style="display: none">
                                         Это поле не может быть пустым или иметь не
@@ -92,6 +92,11 @@
                                                                     </span>
                                     </label>
                                     {% render_field form.Date_of_birth type="date" class="text-input powermail_input" id="powermail_field_geburtsdatum" placeholder="yyyy-mm-dd" value=profile.Date_of_birth %}
+                                <div class="invalid-feedback" id="invalid_date"
+                                         style="display: none">
+                                        Это поле не может быть пустым или иметь не
+                                        корректные значения.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -212,6 +217,7 @@
                             document.querySelectorAll('.page_form select').forEach(item => {
                                 item.selectedIndex = 0;
                             });
+                            setTimeout(() => location.reload(), 3000);
                         }
                     }
                 })
@@ -234,6 +240,7 @@
             let patronymic = document.querySelector("#powermail_field_Patronymic");
             let phone = document.querySelector("#powermail_field_telefonnummer");
             let email = $('#powermail_field_e_mail').val();
+            let date = document.querySelector("#powermail_field_geburtsdatum");
             let invalids = document.querySelectorAll(".invalid-feedback");
 
             invalids.forEach(item => {
@@ -258,6 +265,10 @@
             }
             if (!validateFIO(phone)) {
                 document.querySelector("#invalid_phone").style.display = "block";
+                flags = false;
+            }
+            if (!validateFIO(date)) {
+                document.querySelector("#invalid_date").style.display = "block";
                 flags = false;
             }
             return flags;

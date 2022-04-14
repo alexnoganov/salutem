@@ -14,8 +14,11 @@ class UpdateLastActivityMiddleware(object):
         assert hasattr(request,
                        'user'), 'The UpdateLastActivityMiddleware requires authentication middleware to be installed.'
         if request.user.is_authenticated:
-            if request.user.last_activity.date() < timezone.now().date():
-                Specialists.objects.filter(pk=request.user.id).update(last_activity=timezone.now())
-                logout(request)
+            if request.user.last_activity:
+                if request.user.last_activity.date() < timezone.now().date():
+                    Specialists.objects.filter(pk=request.user.id).update(last_activity=timezone.now())
+                    logout(request)
+                else:
+                    Specialists.objects.filter(pk=request.user.id).update(last_activity=timezone.now())
             else:
                 Specialists.objects.filter(pk=request.user.id).update(last_activity=timezone.now())

@@ -1,7 +1,7 @@
-document.querySelector("#print_btn").addEventListener("click", e=>{
+document.querySelector("#print_btn").addEventListener("click", e => {
     document.querySelectorAll("input").forEach(input => {
         input.placeholder = "";
-        if(input.type === "date" && input.id !== "sickList_date_dtd" && input.value === '')
+        if (input.type === "date" && input.id !== "sickList_date_dtd" && input.value === '')
             input.style.color = "transparent"
     });
     window.print()
@@ -9,34 +9,36 @@ document.querySelector("#print_btn").addEventListener("click", e=>{
 
 function onlyOneCheckedBox() {
     let checkbox_duplicate = document.querySelectorAll(".sickList_checkbox input[type='checkbox']");
-    function f(e,t) {
-        e.addEventListener("click", g=>{
+
+    function f(e, t) {
+        e.addEventListener("click", g => {
             t.checked = e.checked === false;
         });
-        t.addEventListener("click", g=>{
+        t.addEventListener("click", g => {
             e.checked = t.checked === false;
         });
     }
-    f(checkbox_duplicate[0],checkbox_duplicate[1]);
-    f(checkbox_duplicate[2],checkbox_duplicate[3]);
+
+    f(checkbox_duplicate[0], checkbox_duplicate[1]);
+    f(checkbox_duplicate[2], checkbox_duplicate[3]);
 
 }
 
-document.querySelector("#submit__analysis__result").addEventListener("click", e=>{
+document.querySelector("#submit__analysis__result").addEventListener("click", e => {
 
-    if(validator()){
+    if (validator()) {
         let allInput = document.querySelectorAll("input:not(#sickList_F, #sickList_date_dtd, #sickList_specialist_FIO," +
             " #sickList_specialist_init,[type='checkbox'], [name='csrfmiddlewaretoken']," +
             "#sickList_specialist_post)");
         let checkboxCheck = document.querySelectorAll(".sickList_checkbox input[type='checkbox']:checked," +
             "#sickList_pluralism:checked");
-        let valueInput  = [];
-        let check  = [];
+        let valueInput = [];
+        let check = [];
 
-        allInput.forEach(input=>{
+        allInput.forEach(input => {
             valueInput.push(input.value);
         });
-        checkboxCheck.forEach(input=>{
+        checkboxCheck.forEach(input => {
             check.push(input.checked);
         });
 
@@ -62,6 +64,14 @@ document.querySelector("#submit__analysis__result").addEventListener("click", e=
     }
 })
 
+document.querySelector(".submit__form.reset").addEventListener("click", e => {
+    let inputs = document.querySelectorAll(".sickList__input");
+    for (let i = 0; i < inputs.length; i++) {
+        if (i !== 4 && i !== 5 && i < 12) {
+            inputs[i].value = "";
+        }
+    }
+})
 
 function OnlyNumberInputAndBRD() {
     let ogrn = document.querySelector("#sickList_orgn");
@@ -104,7 +114,7 @@ function validator() {
     let flags = true;
     invalid_message.style.display = "none";
     allInput.forEach(input => {
-        if((input.value).trim() === "") {
+        if ((input.value).trim() === "") {
             flags = false;
             invalid_message.style.display = "block";
         }
